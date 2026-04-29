@@ -30,7 +30,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 a:hover~.cur,.btn:hover~.cur{width:20px;height:20px;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5%;background:linear-gradient(to bottom,rgba(7,9,15,.95) 0%,rgba(7,9,15,0) 100%);transition:background .4s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5%;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);transition:background .4s;}
 nav.scrolled{background:rgba(7,9,15,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);}
 .nav-logo img{height:44px;width:auto;filter:brightness(0) invert(1);}
 /* white logo on dark bg */
@@ -178,7 +178,7 @@ section{padding:8rem 5%;}
 .c-val{font-size:1rem;color:#6e6e73;font-weight:300;}
 .c-val a{color:inherit;text-decoration:none;transition:color .3s;}
 .c-val a:hover{color:var(--text);}
-.contact-form{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem;}
+.contact-form{background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:2.5rem;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
 .form-field{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;}
 .form-field label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#6e6e73;}
@@ -320,15 +320,22 @@ footer{border-top:1px solid var(--border);padding:3rem 5%;display:flex;justify-c
       <span class="badge-dot"></span>
       <span data-i18n="hero.badge">AV Systémový Integrátor</span>
     </div>
-    <h1 class="hero-title">
+        <div style="max-width:620px;margin:0 auto 2rem;padding:1.2rem 2rem;background:rgba(255,0,0,.05);border-left:3px solid #ff4444;border-radius:8px;">
+      <p style="font-size:.9rem;color:#d63031;line-height:1.6;margin:0;">
+        <strong>5 minút do meetingu.</strong> Technika nefunguje. IT nedvíha.<br>
+        <span style="opacity:.8;">Poznáte to? My to vieme vyriešiť.</span>
+      </p>
+    </div>
+    
+<h1 class="hero-title">
       <span data-i18n="hero.t1">Konferenčné</span><br>
       <span data-i18n="hero.t2">miestnosti</span><br>
       <span class="accent" data-i18n="hero.t3">na jeden klik.</span>
     </h1>
     <p class="hero-sub" data-i18n="hero.sub">Navrhujeme, inštalujeme a spravujeme AV systémy, ktoré fungujú jednoducho — bez technických problémov, bez zbytočnej zložitosti.</p>
     <div class="hero-btns">
-      <a href="#contact" class="btn-prim" data-i18n="hero.cta1">Nezáväzná konzultácia</a>
-      <a href="#work" class="btn-ghost" data-i18n="hero.cta2">Naše projekty</a>
+      <a href="#contact" class="btn-prim" data-i18n="hero.cta1">Zdarma audit vašej zasadačky</a>
+      <a href="#work" class="btn-ghost" data-i18n="hero.cta2">Pozrite ako to funguje</a>
     </div>
     <div class="hero-stats">
       <div>
@@ -617,64 +624,57 @@ footer{border-top:1px solid var(--border);padding:3rem 5%;display:flex;justify-c
 </section>
 
 <!-- SPOLUPRACUJEME S -->
-<section id="partners">
-  <div class="section-inner">
-    <div class="section-label reveal"><span data-i18n="part.label">Spolupracujeme s</span></div>
-    <div class="partners-intro">
-      <h2 class="section-heading reveal reveal-d1"><span data-i18n="part.h1">Prémiové</span> <span class="hl" data-i18n="part.h2">značky</span></h2>
-      <p class="reveal reveal-d2" data-i18n="part.sub">Pracujeme výhradne s overenými technológiami od svetových lídrov v oblasti AV a konferenčných systémov.</p>
-    </div>
-    <div class="partners-grid reveal">
-      <div class="partner-item p-samsung">
-        <svg width="80" height="24" viewBox="0 0 80 24" fill="none"><text x="0" y="20" font-family="Outfit,sans-serif" font-size="20" font-weight="700" fill="#424245">SAMSUNG</text></svg>
-        <div class="partner-cat">Display & LED</div>
-      </div>
-      <div class="partner-item p-lg">
-        <svg width="42" height="32" viewBox="0 0 42 32" fill="none">
-          <circle cx="18" cy="16" r="14" stroke="#424245" stroke-width="2" fill="none"/>
-          <text x="8" y="21" font-family="Outfit,sans-serif" font-size="14" font-weight="700" fill="#424245">LG</text>
-        </svg>
-        <div class="partner-cat">Display & OLED</div>
-      </div>
-      <div class="partner-item p-sony">
-        <svg width="60" height="20" viewBox="0 0 60 20" fill="none"><text x="0" y="16" font-family="Outfit,sans-serif" font-size="16" font-weight="700" letter-spacing="-0.5" fill="#424245">SONY</text></svg>
-        <div class="partner-cat">Projektory & AV</div>
-      </div>
-      <div class="partner-item p-shure">
-        <svg width="60" height="20" viewBox="0 0 60 20" fill="none"><text x="0" y="16" font-family="Outfit,sans-serif" font-size="15" font-weight="700" fill="#424245">SHURE</text></svg>
-        <div class="partner-cat">Mikrofóny & Audio</div>
-      </div>
-      <div class="partner-item p-logitech">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="12" stroke="#6e6e73" stroke-width="1.5" fill="none"/>
-          <text x="9" y="20" font-family="Outfit,sans-serif" font-size="14" font-weight="700" fill="#424245">L</text>
-        </svg>
-        <div class="partner-cat">Logitech — Konf. kamery</div>
-      </div>
-      <div class="partner-item p-crestron">
-        <svg width="80" height="18" viewBox="0 0 80 18" fill="none"><text x="0" y="15" font-family="Outfit,sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#424245">CRESTRON</text></svg>
-        <div class="partner-cat">Riadiace systémy</div>
-      </div>
-      <div class="partner-item p-neat">
-        <svg width="50" height="20" viewBox="0 0 50 20" fill="none"><text x="0" y="16" font-family="Outfit,sans-serif" font-size="16" font-weight="700" fill="#424245">Neat</text></svg>
-        <div class="partner-cat">Video systémy</div>
-      </div>
-      <div class="partner-item p-jbl">
-        <svg width="40" height="22" viewBox="0 0 40 22" fill="none"><text x="0" y="18" font-family="Outfit,sans-serif" font-size="18" font-weight="800" fill="#424245">JBL</text></svg>
-        <div class="partner-cat">Reproduktory</div>
-      </div>
-      <div class="partner-item p-jabra">
-        <svg width="60" height="20" viewBox="0 0 60 20" fill="none"><text x="0" y="16" font-family="Outfit,sans-serif" font-size="15" font-weight="700" fill="#424245">Jabra</text></svg>
-        <div class="partner-cat">Headset & Speaker</div>
-      </div>
-      <div class="partner-item p-epson">
-        <svg width="62" height="18" viewBox="0 0 62 18" fill="none"><text x="0" y="15" font-family="Outfit,sans-serif" font-size="14" font-weight="700" fill="#424245">EPSON</text></svg>
-        <div class="partner-cat">Projektory</div>
+<section id="partners" style="background:var(--bg2);padding:5rem 5%;">
+    <div style="max-width:1080px;margin:0 auto;text-align:center;">
+      <p class="section-label">Certifikovaní partneri</p>
+      <h2 class="section-heading">Pracujeme s <span class="hl">najlepšími</span></h2>
+      <p style="font-size:.88rem;color:var(--muted);max-width:480px;margin:1rem auto 3rem;">
+        Sme certifikovaní partneri vedúcich svetových značiek. Váš systém bude postavený na prémiovej technológii.
+      </p>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem;margin-top:3rem;">
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Logitech</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Crestron</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">HP</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Jabra</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Shure</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">JBL</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Bose</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">LG</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Samsung</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Sony</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Neat</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Huddly</span>
+        </div>
+        <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;cursor:default;">
+          <span style="font-size:1.1rem;font-weight:600;color:#1d1d1f;">Barco</span>
+        </div>
       </div>
     </div>
-    <p class="reveal" style="margin-top:2rem;font-size:.78rem;color:#6e6e73;text-align:center;" data-i18n="part.note">a ďalší certifikovaní partneri podľa potrieb projektu</p>
-  </div>
-</section>
+  </section>
 
 <!-- KONTAKT -->
 <section id="contact">
