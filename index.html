@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InoVision s.r.o. — We Design Your Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#ffffff;
+  --bg2:#f5f5f7;
+  --bg3:#fbfbfd;
+  --accent:#6c5ce7;
+  --accent-glow:rgba(108,92,231,0.15);
+  --teal:#00c9a7;
+  --teal-glow:rgba(0,201,167,0.15);
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --border:#d2d2d7;
+  --border-hover:#6c5ce7;
+  --card:#fbfbfd;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s;mix-blend-mode:multiply;}
+.cur-ring{width:36px;height:36px;border:1px solid rgba(108,92,231,.45);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease-out;}
+a:hover~.cur,.btn:hover~.cur{width:20px;height:20px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5%;background:rgba(255,255,255,.95);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.1);box-shadow:0 1px 3px rgba(0,0,0,.05);transition:background .4s;}
+nav.scrolled{background:rgba(7,9,15,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);}
+.nav-logo img{height:44px;width:auto;filter:brightness(0) invert(1);}
+/* white logo on dark bg */
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nav-links a{color:#6e6e73;text-decoration:none;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--text);}
+.lang-switcher{display:flex;gap:.15rem;margin-left:1.5rem;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.lang-btn{background:transparent;border:none;color:#6e6e73;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.12em;padding:.35rem .55rem;cursor:none;transition:background .2s,color .2s;text-transform:uppercase;}
+.lang-btn.active{background:var(--accent);color:#fff;}
+.lang-btn:hover:not(.active){background:rgba(108,92,231,.15);color:var(--text);}
+.nav-cta{background:var(--accent);color:#fff;border:none;padding:.6rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:background .3s,transform .3s;border-radius:3px;}
+.nav-cta:hover{background:#7d6ef0;transform:translateY(-1px);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 5% 5rem;}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(108,92,231,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(108,92,231,.05) 1px,transparent 1px);background-size:60px 60px;}
+.hero-glow-1{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(108,92,231,.18),transparent 70%);top:-100px;right:0;border-radius:50%;animation:float1 10s ease-in-out infinite;}
+.hero-glow-2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(0,201,167,.12),transparent 70%);bottom:-50px;left:10%;border-radius:50%;animation:float2 12s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,40px);}}
+@keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+
+/* AV room animation */
+.hero-visual{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:42%;max-width:580px;opacity:.85;}
+.room-svg{width:100%;height:auto;}
+
+.hero-content{position:relative;z-index:2;max-width:600px;}
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(108,92,231,.12);border:1px solid rgba(108,92,231,.25);border-radius:100px;padding:.4rem 1rem .4rem .6rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;animation:fadeUp 1s ease both;}
+.badge-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+
+.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(2.6rem,5.5vw,5rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.5rem;animation:fadeUp 1s .15s ease both;}
+.hero-title .accent{color:var(--accent);}
+.hero-title .teal{color:var(--teal);}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.75;font-weight:300;max-width:480px;margin-bottom:2.5rem;animation:fadeUp 1s .3s ease both;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 1s .45s ease both;}
+.btn-prim{background:var(--accent);color:#fff;padding:.85rem 2rem;text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border-radius:3px;transition:background .3s,transform .3s,box-shadow .3s;cursor:none;}
+.btn-prim:hover{background:#7d6ef0;transform:translateY(-2px);box-shadow:0 12px 40px rgba(108,92,231,.35);}
+.btn-ghost{background:transparent;color:var(--text);padding:.85rem 2rem;text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border-hover);border-radius:3px;transition:border-color .3s,transform .3s,background .3s;cursor:none;}
+.btn-ghost:hover{border-color:var(--accent);background:rgba(108,92,231,.08);transform:translateY(-2px);}
+
+.hero-stats{display:flex;gap:3rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border);animation:fadeUp 1s .6s ease both;}
+.hero-stat-num{font-family:'Outfit',sans-serif;font-size:2rem;font-weight:700;color:var(--accent);}
+.hero-stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* SCROLL LINE */
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;}
+.scroll-hint span{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#6e6e73;}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* MARQUEE */
+.marquee-wrap{padding:1.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:rgba(108,92,231,.03);}
+.marquee-track{display:flex;gap:3.5rem;animation:marquee 25s linear infinite;white-space:nowrap;}
+.mq-item{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#6e6e73;flex-shrink:0;}
+.mq-dot{color:var(--accent);flex-shrink:0;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS COMMON */
+section{padding:8rem 5%;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-label{display:flex;align-items:center;gap:.8rem;font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
+.section-label::before{content:'';width:32px;height:1px;background:var(--accent);}
+.section-heading{font-family:'Outfit',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;}
+.section-heading .hl{color:var(--accent);}
+
+/* ABOUT */
+#about{background:var(--bg);}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:6rem;align-items:start;margin-top:5rem;}
+.about-left .section-heading{margin-bottom:2rem;}
+.about-step{display:flex;gap:1.5rem;margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border);}
+.about-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.step-num{font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:rgba(108,92,231,.18);line-height:1;flex-shrink:0;width:60px;}
+.step-title{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:.5rem;}
+.step-body{font-size:.88rem;color:var(--muted);line-height:1.75;font-weight:300;}
+.about-right-img{width:100%;border-radius:4px;overflow:hidden;position:relative;background:var(--card);border:1px solid var(--border);}
+.about-right-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-room-placeholder{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg3),var(--bg2));}
+
+/* Animated room schematic SVG in about */
+.room-schema{width:85%;max-width:400px;}
+
+/* WORK */
+#work{background:var(--bg2);}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
+.work-card{position:relative;overflow:hidden;border-radius:4px;background:var(--card);border:1px solid var(--border);cursor:none;group:true;transition:border-color .4s,transform .4s;}
+.work-card:hover{border-color:rgba(108,92,231,.4);transform:translateY(-4px);}
+.work-card:nth-child(1){grid-column:span 2;}
+.work-thumb{aspect-ratio:16/10;overflow:hidden;position:relative;}
+.work-card:nth-child(1) .work-thumb{aspect-ratio:21/10;}
+.work-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94);filter:brightness(.8);}
+.work-card:hover .work-thumb img{transform:scale(1.06);filter:brightness(.95);}
+.work-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,9,15,.9) 0%,transparent 50%);}
+.work-info{padding:1.5rem;}
+.work-tag{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.work-title{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:600;margin-bottom:.4rem;}
+.work-sub{font-size:.82rem;color:var(--muted);font-weight:300;}
+.work-arrow{position:absolute;top:1.2rem;right:1.2rem;width:36px;height:36px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;transition:all .3s;background:rgba(7,9,15,.5);}
+.work-card:hover .work-arrow{border-color:var(--accent);color:var(--accent);background:rgba(108,92,231,.1);}
+.work-cta{text-align:center;margin-top:3rem;}
+
+/* SERVICES */
+#services{background:var(--bg);}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3.5rem;}
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem;position:relative;overflow:hidden;transition:border-color .4s,transform .4s;cursor:none;}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,92,231,.06),transparent);opacity:0;transition:opacity .4s;}
+.service-card:hover{border-color:rgba(108,92,231,.35);transform:translateY(-3px);}
+.service-card:hover::before{opacity:1;}
+.service-icon{width:48px;height:48px;background:rgba(108,92,231,.12);border:1px solid rgba(108,92,231,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;}
+.service-icon svg{width:22px;height:22px;}
+.service-title{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:600;margin-bottom:.8rem;}
+.service-body{font-size:.87rem;color:var(--muted);line-height:1.75;font-weight:300;}
+.service-num{position:absolute;top:1.5rem;right:1.5rem;font-family:'Outfit',sans-serif;font-size:3rem;font-weight:800;color:rgba(108,92,231,.07);line-height:1;}
+
+/* PARTNERS */
+#partners{background:var(--bg2);}
+.partners-intro{max-width:600px;margin-bottom:4rem;}
+.partners-intro p{font-size:.95rem;color:var(--muted);line-height:1.75;font-weight:300;margin-top:1rem;}
+.partners-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.partner-item{background:var(--card);padding:2rem 1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;transition:background .3s;cursor:none;text-align:center;}
+.partner-item:hover{background:rgba(108,92,231,.08);}
+.partner-logo-text{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:.03em;color:#6e6e73;transition:color .3s;}
+.partner-item:hover .partner-logo-text{color:var(--text);}
+.partner-cat{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#6e6e73;margin-top:.2rem;}
+/* Brand-specific colors on hover */
+.p-samsung:hover .partner-logo-text{color:#1428A0;}
+.p-lg:hover .partner-logo-text{color:#A50034;}
+.p-sony:hover .partner-logo-text{color:#fff;}
+.p-shure:hover .partner-logo-text{color:#D4001A;}
+.p-logitech:hover .partner-logo-text{color:#00B2E3;}
+.p-crestron:hover .partner-logo-text{color:#009CDE;}
+.p-neat:hover .partner-logo-text{color:#5BC4BF;}
+.p-jbl:hover .partner-logo-text{color:#FF6B00;}
+.p-jabra:hover .partner-logo-text{color:#6C2D91;}
+.p-epson:hover .partner-logo-text{color:#003087;}
+
+/* CONTACT */
+#contact{background:var(--bg);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;margin-top:4rem;align-items:start;}
+.contact-info{margin-top:3rem;}
+.contact-item{margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border);}
+.contact-item:last-child{border-bottom:none;}
+.c-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.c-val{font-size:1rem;color:#6e6e73;font-weight:300;}
+.c-val a{color:inherit;text-decoration:none;transition:color .3s;}
+.c-val a:hover{color:var(--text);}
+.contact-form{background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:2.5rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.form-field{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;}
+.form-field label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#6e6e73;}
+.form-field input,.form-field textarea,.form-field select{background:#6e6e73;border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:300;padding:.75rem 1rem;outline:none;transition:border-color .3s,background .3s;width:100%;}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:rgba(108,92,231,.5);background:rgba(108,92,231,.05);}
+.form-field textarea{min-height:120px;resize:none;}
+.form-field select option{background:var(--bg3);}
+.form-field input::placeholder,.form-field textarea::placeholder{color:#6e6e73;}
+.btn-submit{width:100%;background:var(--accent);color:#fff;border:none;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:none;transition:background .3s,transform .3s,box-shadow .3s;border-radius:3px;margin-top:.5rem;}
+.btn-submit:hover{background:#7d6ef0;transform:translateY(-2px);box-shadow:0 12px 40px rgba(108,92,231,.3);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:3rem 5%;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;}
+.footer-logo img{height:36px;opacity:.9;}
+.footer-copy{font-size:.75rem;color:#6e6e73;letter-spacing:.08em;}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#6e6e73;text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--accent);}
+
+/* REVEAL */
+.reveal{opacity:1;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:.1s;}
+.reveal-d2{transition-delay:.2s;}
+.reveal-d3{transition-delay:.3s;}
+.reveal-d4{transition-delay:.4s;}
+
+/* MOBILE */
+@media(max-width:900px){
+  .hero-visual{display:none;}
+  .about-grid,.services-grid,.contact-grid{grid-template-columns:1fr;gap:3rem;}
+  .work-card:nth-child(1){grid-column:span 1;}
+  .work-grid{grid-template-columns:1fr;}
+  .partners-grid{grid-template-columns:repeat(3,1fr);}
+  nav{padding:1rem 5%;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <img id="navLogo" src="" alt="InoVision" style="height:68px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="nav.about">O nás</a></li>
+    <li><a href="#work" data-i18n="nav.work">Práce</a></li>
+    <li><a href="#services" data-i18n="nav.services">Služby</a></li>
+    <li><a href="#partners" data-i18n="nav.partners">Partneri</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Kontakt</a></li>
+    <li>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="sk">SK</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="hu">HU</button>
+        <button class="lang-btn" data-lang="pl">PL</button>
+      </div>
+    </li>
+    <li><button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" data-i18n="nav.cta">Nezáväzná konzultácia</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+
+  <!-- Animated AV room schematic -->
+  <div class="hero-visual">
+    <svg class="room-svg" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Room outline -->
+      <rect x="30" y="30" width="460" height="320" rx="4" stroke="rgba(108,92,231,0.2)" stroke-width="1.5" fill="rgba(11,14,28,0.6)"/>
+      <!-- Grid floor perspective -->
+      <line x1="30" y1="240" x2="490" y2="240" stroke="rgba(108,92,231,0.08)" stroke-width="1"/>
+      <line x1="30" y1="280" x2="490" y2="280" stroke="rgba(108,92,231,0.06)" stroke-width="1"/>
+      <line x1="150" y1="240" x2="100" y2="350" stroke="rgba(108,92,231,0.05)" stroke-width="1"/>
+      <line x1="260" y1="240" x2="260" y2="350" stroke="rgba(108,92,231,0.05)" stroke-width="1"/>
+      <line x1="370" y1="240" x2="420" y2="350" stroke="rgba(108,92,231,0.05)" stroke-width="1"/>
+      <!-- Display / Screen -->
+      <rect x="120" y="55" width="280" height="155" rx="3" stroke="rgba(108,92,231,0.5)" stroke-width="1.5" fill="rgba(108,92,231,0.04)"/>
+      <rect x="128" y="63" width="264" height="139" rx="2" stroke="rgba(108,92,231,0.25)" stroke-width="1" fill="rgba(11,14,28,0.9)"/>
+      <!-- Screen content lines -->
+      <rect x="148" y="80" width="180" height="8" rx="2" fill="rgba(108,92,231,0.3)" class="pulse-el"/>
+      <rect x="148" y="96" width="120" height="5" rx="2" fill="#6e6e73"/>
+      <rect x="148" y="108" width="200" height="5" rx="2" fill="#6e6e73"/>
+      <rect x="148" y="120" width="160" height="5" rx="2" fill="#6e6e73"/>
+      <!-- Video call grid on screen -->
+      <rect x="280" y="78" width="96" height="72" rx="2" fill="rgba(0,201,167,0.08)" stroke="rgba(0,201,167,0.3)" stroke-width="1"/>
+      <rect x="284" y="82" width="40" height="28" rx="2" fill="rgba(0,201,167,0.1)"/>
+      <rect x="328" y="82" width="44" height="28" rx="2" fill="rgba(108,92,231,0.1)"/>
+      <rect x="284" y="114" width="44" height="28" rx="2" fill="rgba(108,92,231,0.08)"/>
+      <rect x="332" y="114" width="40" height="28" rx="2" fill="rgba(0,201,167,0.08)"/>
+      <!-- Screen stand -->
+      <line x1="260" y1="210" x2="260" y2="230" stroke="rgba(108,92,231,0.3)" stroke-width="2"/>
+      <rect x="230" y="228" width="60" height="5" rx="2" fill="rgba(108,92,231,0.2)"/>
+      <!-- Conference table -->
+      <ellipse cx="260" cy="300" rx="150" ry="45" stroke="#6e6e73" stroke-width="1.5" fill="rgba(16,20,38,0.8)"/>
+      <ellipse cx="260" cy="300" rx="135" ry="35" stroke="#6e6e73" stroke-width="1" fill="none"/>
+      <!-- Chairs around table -->
+      <rect x="85" y="290" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <rect x="155" y="275" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <rect x="238" y="265" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <rect x="321" y="275" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <rect x="391" y="290" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <rect x="155" y="317" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <rect x="321" y="317" width="24" height="18" rx="9" stroke="#6e6e73" stroke-width="1" fill="#6e6e73"/>
+      <!-- Camera/Speakerbar -->
+      <rect x="205" y="47" width="110" height="9" rx="4" fill="rgba(108,92,231,0.35)" stroke="rgba(108,92,231,0.6)" stroke-width="1"/>
+      <circle cx="260" cy="51" r="3" fill="rgba(0,201,167,0.8)" class="cam-light"/>
+      <!-- Microphone on table -->
+      <ellipse cx="260" cy="298" rx="16" ry="8" fill="rgba(108,92,231,0.15)" stroke="rgba(108,92,231,0.4)" stroke-width="1"/>
+      <line x1="260" y1="290" x2="260" y2="285" stroke="rgba(108,92,231,0.5)" stroke-width="1.5"/>
+      <!-- Signal lines from mic -->
+      <path d="M245,288 Q237,285 235,278" stroke="rgba(108,92,231,0.25)" stroke-width="1" fill="none" stroke-dasharray="2,3"/>
+      <path d="M275,288 Q283,285 285,278" stroke="rgba(108,92,231,0.25)" stroke-width="1" fill="none" stroke-dasharray="2,3"/>
+      <!-- Control panel / touch panel -->
+      <rect x="420" y="170" width="44" height="30" rx="3" fill="rgba(16,20,38,0.9)" stroke="rgba(108,92,231,0.4)" stroke-width="1"/>
+      <rect x="424" y="174" width="36" height="18" rx="2" fill="rgba(108,92,231,0.15)"/>
+      <circle cx="432" cy="208" r="3" fill="rgba(0,201,167,0.5)"/>
+      <!-- Connection dots -->
+      <circle cx="400" cy="180" r="3" fill="rgba(0,201,167,0.6)" class="pulse-el"/>
+      <circle cx="350" cy="145" r="3" fill="rgba(108,92,231,0.8)" class="pulse-el"/>
+      <circle cx="170" cy="145" r="3" fill="rgba(108,92,231,0.8)" class="pulse-el"/>
+      <!-- Signal arcs -->
+      <path d="M170,145 Q220,120 260,130 Q300,120 350,145" stroke="rgba(108,92,231,0.2)" stroke-width="1" fill="none" stroke-dasharray="3,4"/>
+      <!-- One-button touch indicator -->
+      <circle cx="442" cy="185" r="8" fill="rgba(108,92,231,0.2)" stroke="rgba(108,92,231,0.5)" stroke-width="1"/>
+      <circle cx="442" cy="185" r="3" fill="rgba(0,201,167,0.9)"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span data-i18n="hero.badge">AV Systémový Integrátor</span>
+    </div>
+        <div style="max-width:620px;margin:0 auto 2rem;padding:1.2rem 2rem;background:rgba(255,0,0,.05);border-left:3px solid #ff4444;border-radius:8px;">
+      <p style="font-size:.9rem;color:#d63031;line-height:1.6;margin:0;">
+        <strong>5 minút do meetingu.</strong> Technika nefunguje. IT nedvíha.<br>
+        <span style="opacity:.8;">Poznáte to? My to vieme vyriešiť.</span>
+      </p>
+    </div>
+    
+<h1 class="hero-title">
+      <span data-i18n="hero.t1">Konferenčné</span><br>
+      <span data-i18n="hero.t2">miestnosti</span><br>
+      <span class="accent" data-i18n="hero.t3">na jeden klik.</span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">Navrhujeme, inštalujeme a spravujeme AV systémy, ktoré fungujú jednoducho — bez technických problémov, bez zbytočnej zložitosti.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-prim" data-i18n="hero.cta1">Zdarma audit vašej zasadačky</a>
+      <a href="#work" class="btn-ghost" data-i18n="hero.cta2">Pozrite ako to funguje</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">120+</div>
+        <div class="hero-stat-label" data-i18n="hero.s1">Realizovaných projektov</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label" data-i18n="hero.s2">Spokojnosť klientov</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">24/7</div>
+        <div class="hero-stat-label" data-i18n="hero.s3">Servisná podpora</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span data-i18n="hero.scroll">Scrolluj</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mq-item">Audio & Video</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Konferenčné systémy</span><span class="mq-dot">✦</span>
+    <span class="mq-item">One-click control</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Prezentačná technika</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Videokonferencie</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Smart Boardroom</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Servis & Podpora</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Audio & Video</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Konferenčné systémy</span><span class="mq-dot">✦</span>
+    <span class="mq-item">One-click control</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Prezentačná technika</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Videokonferencie</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Smart Boardroom</span><span class="mq-dot">✦</span>
+    <span class="mq-item">Servis & Podpora</span><span class="mq-dot">✦</span>
+  </div>
+</div>
+
+
+
+<!-- ONE-CLICK INTERACTIVE DEMO -->
+<section style="background:#ffffff;padding:5rem 5% 6rem;">
+<div class="one-click-demo" style="max-width:800px;margin:0 auto;text-align:center;">
+  <p style="font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;"><span data-i18n="widget.try">Vyskúšajte sami</span></p>
+  <h3 style="font-size:1.8rem;font-weight:700;margin-bottom:3rem;letter-spacing:-.02em;"><span data-i18n="widget.title">Jeden klik. Meeting je ON.</span></h3>
+  
+  <div id="demoWidget" style="position:relative;background:#f5f5f7;border-radius:20px;padding:3rem 2rem;box-shadow:0 8px 30px rgba(0,0,0,.1);">
+    
+    <!-- Main Display Screen - FIXED HEIGHT -->
+    <div id="roomView" style="position:relative;margin-bottom:1rem;">
+      <div id="displayScreen" style="background:#000;border-radius:12px;padding:0;transition:all .6s ease;overflow:hidden;height:420px;display:flex;align-items:center;justify-content:center;">
+        
+        <!-- Screen OFF state -->
+        <div id="screenOff" style="text-align:center;color:#444;">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="1.5" style="margin:0 auto 1rem;">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <p style="font-size:.85rem;opacity:.6;"><span data-i18n="widget.screen_off">Displej vypnutý</span></p>
+        </div>
+        
+        <!-- Screen ON state - Teams Room UI -->
+        <div id="screenOn" style="display:none;width:100%;height:100%;background:#1a1a1a;position:relative;">
+          <div style="display:grid;grid-template-columns:280px 1fr;height:100%;">
+            
+            <!-- Left sidebar -->
+            <div style="background:#252525;padding:1.5rem;color:#fff;text-align:left;border-right:1px solid #333;">
+              <div style="font-size:.7rem;opacity:.6;margin-bottom:1rem;"><span data-i18n="widget.agenda">AGENDA</span></div>
+              <div style="background:#333;border-radius:8px;padding:1rem;margin-bottom:1.5rem;">
+                <div style="font-size:.75rem;font-weight:600;margin-bottom:.3rem;"><span data-i18n="widget.demo_name">InoVision Demo</span></div>
+                <div style="font-size:.65rem;opacity:.6;" id="meetingTime">Just now</div>
+              </div>
+              <div style="font-size:.7rem;opacity:.6;margin-bottom:.8rem;margin-top:2rem;"><span data-i18n="widget.chat">CHAT</span></div>
+              <div style="font-size:.7rem;line-height:1.6;opacity:.7;">
+                <div style="margin-bottom:.8rem;">
+                  <div style="font-weight:600;margin-bottom:.2rem;"><span data-i18n="widget.visitor">Návštevník</span></div>
+                  <div><span data-i18n="widget.comment">Skvelý systém!</span></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right side - Presentation + Video -->
+            <div style="position:relative;background:#2a2a2a;">
+              <!-- Main content -->
+              <div style="padding:2rem;height:280px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e6bcbc 0%,#d4a5a5 50%,#c48e8e 100%);">
+                <div style="text-align:center;color:#fff;">
+                  <div style="font-size:2rem;font-weight:300;opacity:.9;margin-bottom:.5rem;">InoVision</div>
+                  <div style="font-size:1.2rem;font-weight:600;opacity:.8;"><span data-i18n="widget.subtitle">One-Click Meetings</span></div>
+                  <div style="width:150px;height:80px;margin:1rem auto;position:relative;">
+                    <svg viewBox="0 0 150 80" style="width:100%;height:100%;">
+                      <path d="M10,70 Q40,20 70,40 T130,10" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+                      <path d="M10,75 L50,60 L90,45 L130,30" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Video participants -->
+              <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;">
+                <div style="background:#1a1a1a;border-radius:8px;padding:.8rem;text-align:center;border:2px solid #444;">
+                  <div style="width:60px;height:60px;margin:0 auto;background:#555;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:1.5rem;font-weight:600;">V</div>
+                  <div style="font-size:.65rem;color:#aaa;margin-top:.5rem;"><span data-i18n="widget.visitor">Návštevník</span></div>
+                </div>
+                <div style="background:#1a1a1a;border-radius:8px;padding:.8rem;text-align:center;border:2px solid #6c5ce7;">
+                  <div style="width:60px;height:60px;margin:0 auto;background:#555;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:1.5rem;font-weight:600;">I</div>
+                  <div style="font-size:.65rem;color:#6c5ce7;margin-top:.5rem;">InoVision</div>
+                </div>
+                <div style="background:#1a1a1a;border-radius:8px;padding:.8rem;text-align:center;border:2px solid #444;">
+                  <div style="width:60px;height:60px;margin:0 auto;background:#555;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:1.5rem;font-weight:600;">T</div>
+                  <div style="font-size:.65rem;color:#aaa;margin-top:.5rem;"><span data-i18n="widget.technician">Technik</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Shure Room Bar (videobar) - smaller -->
+      <div style="background:#1a1a1a;border-radius:0 0 8px 8px;padding:.5rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,.2);max-width:500px;margin:0 auto;">
+        <!-- Microphone indicators -->
+        <div style="display:flex;gap:.3rem;">
+          <div id="micLed1" style="width:5px;height:5px;border-radius:50%;background:#444;transition:background .3s;"></div>
+          <div id="micLed2" style="width:5px;height:5px;border-radius:50%;background:#444;transition:background .3s;"></div>
+          <div id="micLed3" style="width:5px;height:5px;border-radius:50%;background:#444;transition:background .3s;"></div>
+        </div>
+        
+        <!-- Camera lens -->
+        <div style="position:relative;">
+          <div style="width:50px;height:40px;background:#0a0a0a;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid #333;">
+            <div id="cameraLens" style="width:22px;height:22px;background:radial-gradient(circle,#1a3a4a 0%,#0a1a2a 70%,#000 100%);border-radius:50%;border:1.5px solid #2a4a5a;transition:all .3s;"></div>
+          </div>
+          <div id="cameraLed" style="position:absolute;top:5px;right:5px;width:4px;height:4px;border-radius:50%;background:#444;transition:background .3s;"></div>
+        </div>
+        
+        <!-- Speaker indicators -->
+        <div style="display:flex;gap:.3rem;">
+          <div id="spkLed1" style="width:5px;height:5px;border-radius:50%;background:#444;transition:background .3s;"></div>
+          <div id="spkLed2" style="width:5px;height:5px;border-radius:50%;background:#444;transition:background .3s;"></div>
+          <div id="spkLed3" style="width:5px;height:5px;border-radius:50%;background:#444;transition:background .3s;"></div>
+        </div>
+      </div>
+      
+      <div id="statusIndicators" style="display:none;text-align:center;margin-top:1rem;">
+        <div style="display:inline-flex;align-items:center;gap:.5rem;background:#00c9a7;color:white;padding:.5rem 1rem;border-radius:20px;font-size:.8rem;font-weight:600;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><span data-i18n="widget.ready">Meeting pripravený</span></span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Control Panel -->
+    <div style="background:#2a2a2a;border-radius:16px;padding:1.5rem;max-width:500px;margin:2rem auto 0;box-shadow:0 4px 20px rgba(0,0,0,.3);">
+      
+      <!-- Real-time clock -->
+      <div style="text-align:left;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid #444;">
+        <div id="liveTime" style="color:#fff;font-size:1.8rem;font-weight:300;">--:--</div>
+        <div id="liveDate" style="color:#888;font-size:.7rem;margin-top:.2rem;">Loading...</div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:1fr 180px;gap:1rem;">
+        
+        <!-- Action buttons -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;">
+          <div style="background:#3a3a3a;border-radius:10px;padding:1.2rem .8rem;text-align:center;color:#ccc;font-size:.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin:0 auto 6px;">
+              <rect x="2" y="7" width="20" height="15" rx="2"/>
+              <polyline points="17 2 12 7 7 2"/>
+            </svg>
+            <div><span data-i18n="widget.office">Office now</span></div>
+          </div>
+          <div style="background:#3a3a3a;border-radius:10px;padding:1.2rem .8rem;text-align:center;color:#ccc;font-size:.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin:0 auto 6px;">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <div><span data-i18n="widget.call">Call</span></div>
+          </div>
+          <div style="background:#3a3a3a;border-radius:10px;padding:1.2rem .8rem;text-align:center;color:#ccc;font-size:.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin:0 auto 6px;">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <div><span data-i18n="widget.share">Share</span></div>
+          </div>
+          <div style="background:#3a3a3a;border-radius:10px;padding:1.2rem .8rem;text-align:center;color:#ccc;font-size:.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin:0 auto 6px;">
+              <circle cx="12" cy="12" r="1"/>
+              <circle cx="19" cy="12" r="1"/>
+              <circle cx="5" cy="12" r="1"/>
+            </svg>
+            <div><span data-i18n="widget.more">More</span></div>
+          </div>
+        </div>
+        
+        <!-- Meeting schedule -->
+        <div style="background:#1a1a1a;border-radius:10px;padding:1rem;color:#fff;">
+          <div style="font-size:.65rem;opacity:.6;margin-bottom:.6rem;"><span data-i18n="widget.upcoming">UPCOMING</span></div>
+          <div style="background:#2a2a2a;border-radius:6px;padding:.6rem;margin-bottom:.5rem;font-size:.7rem;">
+            <div style="font-weight:600;margin-bottom:.2rem;"><span data-i18n="widget.demo_name">InoVision Demo</span></div>
+            <div style="opacity:.6;font-size:.65rem;" id="controlTime">Just now</div>
+          </div>
+          <button id="startMeetingBtn" style="width:100%;background:#6c5ce7;color:white;border:none;padding:1rem;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 15px rgba(108,92,231,.5);margin-top:.5rem;">
+            <span id="btnText">JOIN</span>
+          </button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <p style="margin-top:2rem;font-size:.8rem;color:#6e6e73;">
+      <strong><span data-i18n="widget.realtime">Reálny čas:</span></strong> <span data-i18n="widget.timing">Od vstupu do miestnosti po spustený meeting — 10 sekúnd.</span>
+    </p>
+  </div>
+</div>
+</section>
+
+<script>
+(function() {
+  // Get current language
+  let currentLang = 'sk';
+  try {
+    currentLang = document.documentElement.lang || 'sk';
+  } catch(e) {}
+  
+  // Real-time clock update
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    
+    const days = {
+      sk: ['Nedeľa','Pondelok','Utorok','Streda','Štvrtok','Piatok','Sobota'],
+      en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+      hu: ['Vasárnap','Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat'],
+      pl: ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota']
+    };
+    
+    const months = {
+      sk: ['január','február','marec','apríl','máj','jún','júl','august','september','október','november','december'],
+      en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      hu: ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'],
+      pl: ['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień']
+    };
+    
+    const lang = currentLang || 'sk';
+    const dayNames = days[lang] || days.sk;
+    const monthNames = months[lang] || months.sk;
+    
+    const timeStr = hours + ':' + minutes;
+    const dateStr = dayNames[now.getDay()] + ', ' + monthNames[now.getMonth()] + ' ' + now.getDate();
+    
+    const liveTime = document.getElementById('liveTime');
+    const liveDate = document.getElementById('liveDate');
+    const controlTime = document.getElementById('controlTime');
+    
+    if (liveTime) liveTime.textContent = timeStr;
+    if (liveDate) liveDate.textContent = dateStr;
+    if (controlTime) controlTime.textContent = timeStr;
+  }
+  
+
+  // Listen for language changes
+  window.addEventListener('languageChanged', () => {
+    currentLang = document.documentElement.lang || 'sk';
+    updateClock();
+  });
+  
+  updateClock();
+  setInterval(updateClock, 1000);
+  
+  // Widget interaction
+  const btn = document.getElementById('startMeetingBtn');
+  if (!btn) return;
+  
+  const btnText = document.getElementById('btnText');
+  const screenOff = document.getElementById('screenOff');
+  const screenOn = document.getElementById('screenOn');
+  const statusIndicators = document.getElementById('statusIndicators');
+  
+  // Room bar LEDs
+  const micLeds = [document.getElementById('micLed1'), document.getElementById('micLed2'), document.getElementById('micLed3')];
+  const spkLeds = [document.getElementById('spkLed1'), document.getElementById('spkLed2'), document.getElementById('spkLed3')];
+  const cameraLed = document.getElementById('cameraLed');
+  const cameraLens = document.getElementById('cameraLens');
+  
+  let isActive = false;
+  
+  btn.addEventListener('click', function() {
+    if (isActive) {
+      isActive = false;
+      screenOff.style.display = 'block';
+      screenOn.style.display = 'none';
+      statusIndicators.style.display = 'none';
+      btnText.setAttribute('data-i18n', 'widget.join'); btnText.textContent = T[currentLang]['widget.join'] || 'JOIN';
+      btn.style.background = '#6c5ce7';
+      
+      // Turn off room bar
+      micLeds.forEach(led => led.style.background = '#444');
+      spkLeds.forEach(led => led.style.background = '#444');
+      if (cameraLed) cameraLed.style.background = '#444';
+      if (cameraLens) cameraLens.style.boxShadow = 'none';
+    } else {
+      isActive = true;
+      btn.style.background = '#00c9a7';
+      btnText.setAttribute('data-i18n', 'widget.joining'); btnText.textContent = T[currentLang]['widget.joining'] || 'Joining...';
+      
+      setTimeout(() => {
+        screenOff.style.display = 'none';
+        screenOn.style.display = 'block';
+        statusIndicators.style.display = 'block';
+        btnText.setAttribute('data-i18n', 'widget.leave'); btnText.textContent = T[currentLang]['widget.leave'] || 'Leave';
+        btn.style.background = '#dc3545';
+        
+        // Turn on room bar
+        micLeds.forEach(led => led.style.background = '#00c9a7');
+        spkLeds.forEach(led => led.style.background = '#6c5ce7');
+        if (cameraLed) cameraLed.style.background = '#00c9a7';
+        if (cameraLens) cameraLens.style.boxShadow = '0 0 15px rgba(0,201,167,.6)';
+      }, 800);
+    }
+  });
+  
+  btn.addEventListener('mouseenter', function() {
+    if (!isActive) {
+      btn.style.transform = 'translateY(-2px)';
+      btn.style.boxShadow = '0 6px 20px rgba(108,92,231,.6)';
+    }
+  });
+  
+  btn.addEventListener('mouseleave', function() {
+    btn.style.transform = 'translateY(0)';
+    btn.style.boxShadow = '0 4px 15px rgba(108,92,231,.5)';
+  });
+})();
+</script>
+
+<!-- O NÁS -->
+<section id="about" style="padding:8rem 5%;background:var(--bg);">
+  <div class="section-inner">
+
+    <!-- HOOK — pain point -->
+    <div class="reveal" style="max-width:860px;margin-bottom:6rem;">
+      <div class="section-label" style="margin-bottom:1.5rem;"><span>O nás</span></div>
+      <h2 style="font-family:'Outfit',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:2rem;">
+        Technika nefunguje.<br>
+        Meeting o 5 minút.<br>
+        <span style="color:var(--accent);">IT nedvíha telefón.</span>
+      </h2>
+      <p style="font-size:1.1rem;color:var(--muted);line-height:1.85;font-weight:300;max-width:680px;">
+        Tento scenár pozná každá firma. Drahá technika v zasadačke, na ktorú nikto nepáchne, pretože je príliš zložitá. Frustrácia pred klientmi. Stres, ktorý nemá čo robiť v profesionálnom prostredí. <strong style="color:var(--text);font-weight:500;">Práve preto existuje InoVision.</strong>
+      </p>
+    </div>
+
+    <!-- MAIN GRID: filozofia + kto sme -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-bottom:6rem;">
+
+      <!-- LEFT: filozofia -->
+      <div>
+        <div class="reveal" style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--accent),var(--teal));"></div>
+          <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;">Naša filozofia</div>
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:1rem;line-height:1.3;">Iné firmy predávajú čo najviac zariadení. My predávame <span style="color:var(--teal);">jednoduchosť.</span></h3>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.8;font-weight:300;">Náš cieľ nie je naplniť zasadačku drahým hardvérom. Náš cieľ je, aby váš tím zvládol spustiť videohovor bez jediného telefonátu na IT. Naša práca je neviditeľná — a práve to je najväčší kompliment.</p>
+        </div>
+        <div class="reveal reveal-d1" style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--teal),var(--accent));"></div>
+          <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;">Náš prístup</div>
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:1rem;line-height:1.3;">Dokážeme všetko. Robíme <span style="color:var(--accent);">len to, čo skutočne potrebujete.</span></h3>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.8;font-weight:300;">Od malej firemnej zasadačky až po komplexné multi-room riešenia pre banky a korporáty — vždy s rovnakou prioritou. Stabilita. Jednoduchosť. Spoľahlivosť. Bez zbytočných kompromisov.</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: kto sme -->
+      <div class="reveal reveal-d2">
+        <div style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;">Kto sme</div>
+        <p style="font-size:1rem;color:#6e6e73;line-height:1.85;font-weight:300;margin-bottom:1.5rem;">
+          InoVision je mladá firma s dlhoročnými skúsenosťami. Za dvoma konateľmi stojí tím desiatich odborníkov — IT špecialistov, logistikov a servisných technikov, ktorí vedia presne čo robia.
+        </p>
+        <p style="font-size:1rem;color:#6e6e73;line-height:1.85;font-weight:300;margin-bottom:2.5rem;">
+          Sme certifikovanými partnermi svetových AV značiek. To znamená priamy prístup k technickej podpore, najnovším riešeniam a podmienkam, ktoré prenášame na vás. Naše referencie siahajú od malých firiem až po inštitúcie ako <strong style="color:var(--text);font-weight:500;">významné verejné inštitúcie.</strong>
+        </p>
+
+        <!-- Certifications strip -->
+        <div style="border-top:1px solid var(--border);padding-top:2rem;">
+          <div style="font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:#6e6e73;margin-bottom:1rem;">Certifikovaní partneri</div>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Logitech</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Crestron</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Shure</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Samsung</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Sony</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">JBL</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Jabra</span>
+            <span style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:#6e6e73;">Birdog</span>
+            <span style="background:rgba(0,201,167,.08);border:1px solid rgba(0,201,167,.2);border-radius:3px;padding:.3rem .7rem;font-size:.72rem;letter-spacing:.08em;color:rgba(0,201,167,.7);">+ ďalší</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PULL QUOTE -->
+    <div class="reveal" style="border-left:3px solid var(--accent);padding:2rem 2.5rem;background:rgba(108,92,231,.05);border-radius:0 4px 4px 0;margin-bottom:6rem;">
+      <p style="font-family:'Outfit',sans-serif;font-size:clamp(1.1rem,2vw,1.5rem);font-weight:500;line-height:1.5;color:var(--text);font-style:italic;">"Jeden klik. Všetko funguje. To je štandard, ktorý od seba vyžadujeme na každom jednom projekte."</p>
+      <div style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-top:1rem;">— InoVision s.r.o.</div>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+      <div style="background:var(--card);padding:2.5rem 2rem;text-align:center;">
+        <div style="font-family:'Outfit',sans-serif;font-size:2.8rem;font-weight:800;color:var(--accent);line-height:1;">120+</div>
+        <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.5rem;">Realizovaných projektov</div>
+      </div>
+      <div style="background:var(--card);padding:2.5rem 2rem;text-align:center;">
+        <div style="font-family:'Outfit',sans-serif;font-size:2.8rem;font-weight:800;color:var(--accent);line-height:1;">10+</div>
+        <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.5rem;">Rokov skúseností v obore</div>
+      </div>
+      <div style="background:var(--card);padding:2.5rem 2rem;text-align:center;">
+        <div style="font-family:'Outfit',sans-serif;font-size:2.8rem;font-weight:800;color:var(--teal);line-height:1;">98%</div>
+        <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.5rem;">Spokojnosť klientov</div>
+      </div>
+      <div style="background:var(--card);padding:2.5rem 2rem;text-align:center;">
+        <div style="font-family:'Outfit',sans-serif;font-size:2.8rem;font-weight:800;color:var(--teal);line-height:1;">24/7</div>
+        <div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.5rem;">Servisná podpora</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRÁCE -->
+<section id="work">
+  <div class="section-inner">
+    <div class="section-label reveal"><span data-i18n="work.label">Referencie</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;">
+      <h2 class="section-heading reveal reveal-d1"><span data-i18n="work.h1">Vybrané</span> <span class="hl" data-i18n="work.h2">projekty</span></h2>
+      <p class="reveal reveal-d2" style="font-size:.82rem;color:var(--muted);max-width:340px;text-align:right;font-weight:300;" data-i18n="work.sub">Každý projekt je jedinečný. Tu je výber toho, na čo sme hrdí.</p>
+    </div>
+    <div class="work-grid">
+      <div class="work-card reveal reveal-d1">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&auto=format&fit=crop" alt="Boardroom">
+          <div class="work-thumb-overlay"></div>
+        </div>
+        <div class="work-info">
+          <div class="work-tag" data-i18n="work.t1tag">Zasadačka · Bratislava</div>
+          <div class="work-title" data-i18n="work.t1title">Executive Boardroom</div>
+          <div class="work-sub" data-i18n="work.t1sub">Kompletný AV systém pre 12-miestnu zasadaciu miestnosť s integrovaným videokonferenčným riešením.</div>
+        </div>
+        <div class="work-arrow">→</div>
+      </div>
+      <div class="work-card reveal reveal-d2">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&auto=format&fit=crop" alt="Conference">
+          <div class="work-thumb-overlay"></div>
+        </div>
+        <div class="work-info">
+          <div class="work-tag" data-i18n="work.t2tag">Konferencie · Žilina</div>
+          <div class="work-title" data-i18n="work.t2title">Konferenčné centrum</div>
+          <div class="work-sub" data-i18n="work.t2sub">Multi-room AV riešenie s centrálnym riadením pre 3 konferenčné sály.</div>
+        </div>
+        <div class="work-arrow">→</div>
+      </div>
+      <div class="work-card reveal reveal-d3">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=600&auto=format&fit=crop" alt="Training room">
+          <div class="work-thumb-overlay"></div>
+        </div>
+        <div class="work-info">
+          <div class="work-tag" data-i18n="work.t3tag">Školiaca miestnosť · Košice</div>
+          <div class="work-title" data-i18n="work.t3title">Training & Huddle Room</div>
+          <div class="work-sub" data-i18n="work.t3sub">Flexibilný prezentačný priestor s bezdrôtovým zdieľaním obrazu a akustickou úpravou.</div>
+        </div>
+        <div class="work-arrow">→</div>
+      </div>
+      <div class="work-card reveal reveal-d1">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&auto=format&fit=crop" alt="Office">
+          <div class="work-thumb-overlay"></div>
+        </div>
+        <div class="work-info">
+          <div class="work-tag" data-i18n="work.t4tag">Open Space · Bratislava</div>
+          <div class="work-title" data-i18n="work.t4title">Korporátny Headquarters</div>
+          <div class="work-sub" data-i18n="work.t4sub">12 zasadacích miestností + recepccia + lobby displeje. Jeden systém riadenia pre celú budovu.</div>
+        </div>
+        <div class="work-arrow">→</div>
+      </div>
+      <div class="work-card reveal reveal-d2">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&auto=format&fit=crop" alt="Huddle">
+          <div class="work-thumb-overlay"></div>
+        </div>
+        <div class="work-info">
+          <div class="work-tag" data-i18n="work.t5tag">Huddle Rooms · Trnava</div>
+          <div class="work-title" data-i18n="work.t5title">5× Mini Meeting Room</div>
+          <div class="work-sub" data-i18n="work.t5sub">Päť identicky vybavených Huddle rooms pre rýchle porady a remote hovory.</div>
+        </div>
+        <div class="work-arrow">→</div>
+      </div>
+    </div>
+    <div class="work-cta reveal">
+      <a href="#contact" class="btn-ghost" data-i18n="work.cta">Chcem podobný projekt →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SLUŽBY -->
+<section id="services">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-bottom:1rem;">
+      <div>
+        <div class="section-label reveal"><span data-i18n="serv.label">Služby</span></div>
+        <h2 class="section-heading reveal reveal-d1"><span data-i18n="serv.h1">Čo</span> <span class="hl" data-i18n="serv.h2">ponúkame</span></h2>
+      </div>
+      <p class="reveal reveal-d2" style="font-size:.92rem;color:var(--muted);line-height:1.8;font-weight:300;margin-top:4.5rem;" data-i18n="serv.intro">Od prvého rozhovoru až po dlhodobú servisnú starostlivosť — sme váš partner pre všetko, čo súvisí s AV technológiami.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-d1">
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div class="service-title" data-i18n="serv.s1t">Návrh projektu na mieru</div>
+        <div class="service-body" data-i18n="serv.s1b">Komplexný návrh AV systému prispôsobený vášmu priestoru, tímu a pracovným procesom. Zahŕňa akustickú analýzu, výber technológií, projektovú dokumentáciu a 3D vizualizáciu.</div>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+          </svg>
+        </div>
+        <div class="service-title" data-i18n="serv.s2t">Realizácia a inštalácia</div>
+        <div class="service-body" data-i18n="serv.s2b">Profesionálna montáž a konfigurácia všetkých AV komponentov — displeje, projektory, kamery, mikrofóny, zosilňovače, riadiace systémy. Odovzdávame funkčné, otestované riešenie.</div>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <div class="service-num">03</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="service-title" data-i18n="serv.s3t">Servisná starostlivosť</div>
+        <div class="service-body" data-i18n="serv.s3b">Preventívna údržba, vzdialený monitoring a rýchla reakcia na poruchy. SLA zmluvy s garantovanou dobou odozvy. Váš systém bude vždy funkčný, keď ho potrebujete.</div>
+      </div>
+      <div class="service-card reveal reveal-d4">
+        <div class="service-num">04</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/>
+          </svg>
+        </div>
+        <div class="service-title" data-i18n="serv.s4t">Videokonferenčné riešenia</div>
+        <div class="service-body" data-i18n="serv.s4b">Integrácia s Microsoft Teams, Zoom, Google Meet a inými platformami. Hardvérové riešenia pre plynulú komunikáciu medzi miestnosťami aj s externými partnermi.</div>
+      </div>
+      <div class="service-card reveal reveal-d1">
+        <div class="service-num">05</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="service-title" data-i18n="serv.s5t">Riadiace systémy (One-Click)</div>
+        <div class="service-body" data-i18n="serv.s5b">Programovanie a inštalácia centrálnych riadiacich systémov Crestron, AMX a podobných. Jedno dotykovým panelom ovládate všetko — obraz, zvuk, rolety, klimatizáciu.</div>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <div class="service-num">06</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="service-title" data-i18n="serv.s6t">Konzultácia a audit</div>
+        <div class="service-body" data-i18n="serv.s6b">Bezplatná konzultácia pre nové projekty. Audit existujúcich AV systémov s odporúčaniami na modernizáciu. Pomôžeme vám rozhodúť sa správne.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOLUPRACUJEME S -->
+<section id="partners" style="background:var(--bg2);padding:5rem 5%;">
+  <div style="max-width:1080px;margin:0 auto;text-align:center;">
+    <p class="section-label">Certifikovaní partneri</p>
+    <h2 class="section-heading">Pracujeme s <span class="hl">najlepšími</span></h2>
+    <p style="font-size:.88rem;color:var(--muted);max-width:480px;margin:1rem auto 3rem;">
+      Sme certifikovaní partneri vedúcich svetových značiek v AV technológiách.
+    </p>
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.5rem;margin-top:3rem;">
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/logitech/00B8FC" alt="Logitech" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/samsung/1428A0" alt="Samsung" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/sony/000000" alt="Sony" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/lg/A50034" alt="LG" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/hp/0096D6" alt="HP" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/bose/000000" alt="Bose" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.simpleicons.org/jbl/FF3300" alt="JBL" style="height:40px;width:auto;max-width:100%;" />
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <span style="font-size:1.2rem;font-weight:700;color:#0066B3;letter-spacing:-.02em;">Crestron</span>
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <span style="font-size:1.2rem;font-weight:700;color:#00A8E1;letter-spacing:-.02em;">Jabra</span>
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <span style="font-size:1.2rem;font-weight:700;color:#FF3E00;letter-spacing:-.02em;">Shure</span>
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <span style="font-size:1.2rem;font-weight:700;color:#6C5CE7;letter-spacing:-.02em;">Neat</span>
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <span style="font-size:1.2rem;font-weight:700;color:#FF6B6B;letter-spacing:-.02em;">Huddly</span>
+      </div>
+      <div style="background:white;border:1px solid #e5e5e5;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:100px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <span style="font-size:1.2rem;font-weight:700;color:#E31E24;letter-spacing:-.02em;">Barco</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal"><span data-i18n="cont.label">Kontakt</span></div>
+    <h2 class="section-heading reveal reveal-d1"><span data-i18n="cont.h1">Začnime</span> <span class="hl" data-i18n="cont.h2">projekt</span></h2>
+    <div class="contact-grid">
+      <div>
+        <p class="reveal" style="font-size:.95rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:2.5rem;" data-i18n="cont.intro">Máte projekt? Máte priestor, ktorý potrebuje AV riešenie? Napíšte nám alebo zavolajte — radi prídeme na obhliadku a poradíme bezplatne.</p>
+        <div class="contact-info reveal reveal-d1">
+          <div class="contact-item">
+            <div class="c-label" data-i18n="cont.email">Email</div>
+            <div class="c-val"><a href="mailto:info@inovision.space">info@inovision.space</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-label" data-i18n="cont.phone">Telefón</div>
+            <div class="c-val"><a href="tel:+421900000000">0911 846 667 / 0910 727 028</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-label" data-i18n="cont.addr">Adresa</div>
+            <div class="c-val">Horná Potôň 864, 930 36</div>
+          </div>
+          <div class="contact-item" style="border-bottom:none;">
+            <div class="c-label" data-i18n="cont.hours">Pracovné hodiny</div>
+            <div class="c-val" data-i18n="cont.hoursval">Po–Pia: 8:00 – 17:00</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-d2">
+        <div class="form-row">
+          <div class="form-field">
+            <label data-i18n="cont.fname">Meno a priezvisko</label>
+            <input type="text" placeholder="Ján Novák">
+          </div>
+          <div class="form-field">
+            <label data-i18n="cont.fcompany">Spoločnosť</label>
+            <input type="text" placeholder="Firma s.r.o.">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label data-i18n="cont.femail">E-mail</label>
+            <input type="email" placeholder="jan@firma.sk">
+          </div>
+          <div class="form-field">
+            <label data-i18n="cont.fphone">Telefón</label>
+            <input type="tel" placeholder="+421 9xx xxx xxx">
+          </div>
+        </div>
+        <div class="form-field">
+          <label data-i18n="cont.fservice">Záujem o</label>
+          <select>
+            <option data-i18n="cont.fopt0">— Vyberte službu —</option>
+            <option data-i18n="cont.fopt1">Návrh projektu na mieru</option>
+            <option data-i18n="cont.fopt2">Realizácia a inštalácia</option>
+            <option data-i18n="cont.fopt3">Servisná starostlivosť</option>
+            <option data-i18n="cont.fopt4">Videokonferenčné riešenie</option>
+            <option data-i18n="cont.fopt5">Konzultácia / Audit</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label data-i18n="cont.fmsg">Správa</label>
+          <textarea placeholder="Popíšte váš projekt, priestor, požiadavky..."></textarea>
+        </div>
+        <button class="btn-submit" data-i18n="cont.fsend">Odoslať správu</button>
+        <p style="font-size:.72rem;color:#6e6e73;margin-top:1rem;text-align:center;" data-i18n="cont.gdpr">Vaše údaje spracovávame iba za účelom odpovede na vašu správu. GDPR compliant.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#"><img id="footerLogo" src="" alt="InoVision" style="height:52px;opacity:.7;"></a>
+  <div class="footer-copy" data-i18n="foot.copy">© 2025 InoVision s.r.o. — Všetky práva vyhradené.</div>
+  <div class="footer-links">
+    <a href="#" data-i18n="foot.gdpr">Ochrana osobných údajov</a>
+    <a href="#" data-i18n="foot.cookies">Cookies</a>
+    <a href="#contact" data-i18n="foot.contact">Kontakt</a>
+  </div>
+</footer>
+
+<script>
+// ——— LOGO (base64 embedded) ———
+const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAgoAAAGDCAYAAABKljjYAADfP0lEQVR4nOz9abRsx3XfCf52RJxzcrjTmzDPIAYSIDiLsziJIiXSpERRsiyVVJZdJXdNXUN3rf5Qn6q716pa1V5VXW13lV1l2W5bZVsSNVgyKYkSSZHiCFLiCALEDBDDm9+dcjjnRMTuD3Eyb9777gVAAuAD8OKHlcj7bubNjDyZeeIfO/b+b1FVMplMJpPJZPbDXOgBZDKZTCaTeeGShUImk8lkMpkDyUIhk8lkMpnMgWShkMlkMplM5kCyUMhkMplMJnMgWShkMplMJpM5kCwUMplMJpPJHEgWCplMJpPJZA4kC4VMJpPJZDIHkoVCJpPJZDKZA8lCIZPJZDKZzIFkoZDJZDKZTOZAslDIZDKZTCZzIFkoZDKZTCaTOZAsFDKZTCaTyRxIFgqZTCaTyWQOJAuFTCaTyWQyB5KFQiaTyWQymQPJQiGTyWQymcyBZKGQyWQymUzmQLJQyGQymUwmcyBZKGQymUwmkzmQLBQymUwmk8kcSBYKmUwmk8lkDiQLhUwmk8lkMgeShUImk8lkMpkDyUIhk8lkMpnMgWShkMlkMplM5kCyUMhkMplMJnMgWShkMplMJpM5kCwUMplMJpPJHEgWCplMJpPJZA4kC4VMJpPJZDIHkoVCJpPJZDKZA8lCIZPJZDKZzIFkoZDJZDKZTOZAslDIZDKZTCZzIFkoZDKZTCaTOZAsFDKZTCaTyRxIFgqZTCaTyWQOJAuFTCaTyWQyB5KFQiaTyWQymQPJQiGTyWQymcyBZKGQyWQymUzmQLJQyGQymUwmcyBZKGQymUwmkzmQLBQymUwmk8kciLvQA8hkMs+G+DS357VAJpP54VHVfBbJZF5amIXr/PXOZDLPDhFBVPVCjyOTyfyoWPy6ywUbRSaTeREQQkBE8tZDJpPJZDKZ8wkhADlHIZN58fNMgoKy5zqTyWSehrquUdW89ZDJvOg56Css3W1ZHGQymWdBjihkMi92nkoI7LotkhIcZ9eZTCZzMN57gBxRyGReuiwKg/1+D1kwZDKZg1DVnMyYybw0OMhLIc6vddf+hO4JQhhUlRjT/UVkfslkMhcvs3NAjihkMi9q4p7rH5Tst5DJZJ6aHFHIZF7EeO8RoztRACRFDzRFCYx5ahGgOst4XPydMltAWGufr6FnMpkXCTmikMm8qDkokpAEwuJ2wmJmo8b0z6fREZlMJpOFQibzUiFFAro9xe53B6YZdGWTUWGv2Hi6KEQmk7m4yEIhk3kRE2dzfPc1FtktDrS7fe/XfHYfMcxVxWzLYfGckLceMplMFgqZzIuZA76+MSQR4dxT3K+LKMxyHDKZTGY/cjJjJvOsWAzbPz8he93vH5ouGiEoEKBuoZnAaALNBK09tJOI1wgBQtcuVkVwxmCM0h9Yykro9ZF+H6oeWLsTabCWA+2fz5cWkfNzJvarqtivUiNXX2QyL1SyUMhkfmgOmhjPX8CHGDDGIN30Grs/FcDYnT/wAawDBJSQurfZIv2dQggQPGgAUXjoAfT4cXj04ZonnjzFaHNC0yqhFXxQ2joSVUGVSEA0glFMVyVRlUOcMxQlWvVhZbXgqmuOcNPL+lx2JXLoCLgibVWELgHSzs4aMY3BGEAiEIAaJYIKIg4oADNPnowxgPguiTIi8+NX7hy/A6IfmUzmwpC3HjKZH5pFobB7RTz7VoUYsMbuuV9CuoeIAUJQXCmIQJePSBvAGvAextuwtQ1nT6MPP7jNPd99iEceXieGVXxT4VsFHEKJUKDREQOUZS+NRxXVABIR0RQxAHwdMQbERJSayAQxNUXR4sqaY5cOuPLqQ9x88+VceXXFocNIbwBFCUZAQrpWAWM9YgIQibHFmIIQBcGhahGRTiB4IpG6GdEvy+6YOMCC7hNVyCIhk7mgZKGQyTwrFuyQD1wJR5RIGxpijBRFgcEQVfG1xVqLK0CJRI0Eb3FGCAEm23D3XejXvvIk9913gvG2IKZCo8V7BSqMsRjpJly1oA4Ri4ihbcI8OVEJgCKiSTCYiHUBVc9skhaxqAoaIjE2GNcidooxY4qqZe1wwU23XMXr33AJt9yCWNMlRnb5DqbbqgghoLQ4uxO0jHFWUZGOV9u2FIVl15bD4jGcC4R9tnd0730ymczzRRYKmcyz4ak6N86J+NgiZu5u0F12QvNNDb4L5TdTeOh+9O7vHuc733yC0XbFeNvRNiXWDLEmiYIYI2LTJBpjMl+KIT2DcwXWWjTOyhtiJxg6oQAgHqQlxJbg08rfmj7WlBgKICImoDQgNZERbbuB2CmrawOOHnW88c03cOutfS6/Im0+qEBZgHHshEwWoikxstse+im3GWZ/O2uB2YmMfcVEJpN5vshCIZP5YVF25sCZn5Gcvx2h2s1nAorHx5qoNc46lJKmKaisJXq48wvon33yIR5/dISTFcajgHU9nCtBDKpCDKBquslW9+3NsFPmGHeVO6bxzYZsUZlFH2a5E5EQWjQEYgxYK0T1iChFaRCN+NBgDFRVxPszrKwqL7/9St7+zsu58WbEGJg20BtA2yoxepy1OJdETAhpe8LaYp6UuesYAuD3HOBZHafLQiGT+RGThUIm88Oyr1Bo2T25FbsmtjaklX9ZGRBD28KpU/Ctv17XL/zFgzz6QGBQXUNhD7GxPmF5eUiUlqg1qmkbQaNltlXgnCPGTgxITDkOmibnEFucc/uXPmoSHY1XjHFYm4TGLJfBSsqXKIoC7z0htBhjMMZ0YiKgsQGmDJeFtj1NlLO84pVX8K5338bNr0AGfebzu8ZuWwJIWzEBmeUkzAIGs+N4nkiYHctumyILhUzmR0oWCpnMD4suXHYJBd/dwRAiWFMRYzdZLrRW2NyEr96J/uVn7+OBe08x6F1Gv7ic8TglMBaFpWm3CNIQdYqx4GwPayqMVKAFsY3ECDF6IGIsGKNYJ4goTdPMxyIioK6LMKSBmDKghM53QdBoMWKxtsAYx3g87qIVacvCOpPyKVRR31I4y3Q6pnCwstqnbtdpmpPc/qqr+Mn3X8VlVyGDZSgKUAlobLFmto2wkLz4tJGEPeWTi+Iik8k8r2ShkMk8G3ZFFBb31Gc3WLQLl4cGrEA9hm98Hf3Slx/gu3dtE/0hjPSJvsC3FmsqnHO0foQUETEeMS0xxk5wOIQCi0OjYCxYEVQiaCCoR2NAJWLFoGKQKGAsEh1RDaIGNS2YCVE8KaRvu4oJg6olhpRPUJYlSKRta0JsMDZVTsQYKYyFKAQvGGNx1hDiNlU1YflQzZveeh23varPTbekAIIPkcKlY+SDx9lq4UA+RRQhk8lcMLJQyGR+aDzQot4jLsXZfRMQEWyxWCppiG36eess/P7HzuoXPvs9+r3LmNQlXntp4jcOcHifIhLOGZpmSlE6INL6GoejKCqCh8l0m37PgITkR2AU0YgKCEpEsVgigsSyEwgOxSahIBGVtitpNGiUzhJaECzGOOq6ptcrERHqZkIgUhQWY1OugSEgGNAKjQVGHcYKQkNkk9Y/yZFLIz/1wdfwlneIiINeD5CWNo4oTCrflE4kaNf90lBy8FbDzLMBspDIZJ5/slDIZH5oPFDTNDXWVlhbQbSoJFsl3y2SVUmJil8M+oe/+1XOnSlY7V/P2fVI2R/S+NiJg3hePsHS0hLb29toCGllD7RNoCwKlld6bG4exzqPMxDwaGjx2uCMpDk0elQEi0WNxapJ11gihmnToBgMFmMLnCmJagltxAdYGq4wGo2IMdLv9zHGMKpHECJVVdE2swnbIGIg2GQdbSxFaXFFy/b2E/SWtvmxt1zPO9+zyuXXIKaAwoHQMpmO6PcqIDKeTun3+ggF43HLoD/YfcjnQqFTXl3VSCaTef7IQiGT+aGJTCcjev20Km7ahrIogYLgk5GSM7CxDv/uD07r5/7iLkpzOaqH2D4X6A0O0YQIFkSS1aKYFJEwmvIA0kRssGLnDZpC8ATvUWqGAxDTIAQCNdY2DFcKjh4dsnq4x/JSQW9oWFoq6Q0KjEDdTpmMtpnW8NCDG2xuejbXR4wnHkKJSB+jA0KwaHQEL6im3AURSet+BcVRFqu0IWDMCFcEVKY0TYO2BcIAYh9nCoyr2Z48xqWXN/zCL7+S170JaTuN0e9DiDXet1RlAcBoPGU4WD2gKiJFchIF2WA2k3l+yUIhk3k2KLS+TTbHXdJd3QiWVDVw97fQ3//du3js4Zpe7zLWzwTE9FkZHmZ9YwtbOFzlsA6adkzTTABwYhGxOJMmzhg9GmtcGaj6kcJGoo65/vrLufSyw9xwHVx2FawuI7aXciFwydMg2vRvtWntHQCjqUeEAKGFpobxCM6cRh99xPPg/U/y5PFNTp3YwpoliH2axhBbh5gSS4VS4H1JE2pgA1vUlL1kVa2+wDcVTg5jpMD7iNgpYs9gytO84c3X8dFfOCQrK3RlozOzpsXy0oVSyF2VETmikMn8KMlCIZN5Nihsb9csLVcoMNr29AcOPHzxL9Hf++072dpYItSrFMUqqobJdIq1gcFwSO3bVFWgLSE2qTTRFjhJeQsalBCnuLKlqkYUg3UuuUJ481tu5Y1vGUjRlRwKdLkJe641FRZIJwxQkE4wKGlbxMfkqgjJMtp0N2qEs6fhr+4c6V995SFOnAiE8TJ1U2HjMkU1pI0txio+jmjabZCWqiowUuK9MhlFDh+6jKZpmUzG9Coh6JiqB9fe0Off/9WjHLkEKXtpvEFTbwnwKIpQzI/znHlUAXIzqUzm+ScLhUzmWdC2LYUrUMC3aZJtp/CpP6v1z/74G4y2lhA9SvQDfLA45yhLQ4hTmnaMGiGEgO08C5IvgqetG4KfIqbh2LE+N916jFe+qs+NtyCHjiXnQ+mSFlUDMS4YKYntrgXvI8aYudnRDO8jMUbK0qFdcyYlEPGEoKAWlX6KTASYbsPxJ9F7vgPf/c5Zvv/wOTY2PUhJr78891uYJWKKWGKM9Ko+m5ubiFh6vR4xpvGoKuPJ49zxqj4f+ciN3Hwrogaka/lQN9vdNsQ+/gm7nBuzSMhknm+yUMhkfmhSngA4ppOKnoPpGP7gY2P9k4//NRLXGAyPUjcGIwWKoWk8agRnC6K2lIXivcdoiTUlIQR83KY/qFlaq3n1ay7l1a87xK23p74KPnZtoDs/BsVjTNerAZh7DqhBY0w2iR3aaQlZmFt9k7pBzvo1LHoTzCIOs/zBNqQtjPEIvvn1kX71zgd58H5htNWnbcDZJQq7TAwO1GAsNGHK8sqAza3T1PWUtUMrNE3DeDzmkmNDzp26i1tuPszf+Jk7uOO1SB3AVeCKlsgUM28Y1YmGbLaUyfzIyUIhkwHO6+6440m0y/Z4ZwXrgYBS07SOUgasn4Hf/s0N/cZfPYGYNXxjqduG3qCP9w0BZdBfoZ5GppPA0qCH91uotlhxiAlErTl01PL6N1zDa94A170MKWYNFqkBTd0YoyNGsLbtxjcb145QAIhhZvHMfGLVSOfyKFi7M/mqdmt0syMmZmeHGNPt1kAUUA+TMdz1bfRrXznLXd9+lHrcp5BL8E1F8A5XFqh6fNym7EXE7RhAWVsQ2gnL/cDW+uNcc/1hPvgzr+D1b0akhDa2lM6zs7XQJV0sDmr2cjOZzPNKFgqZi5t5klyXHKfFnokoMp1u0+v3AaGuQ+p4aJrOq8BgYp/Tx+F3fvO0fvlLJ+iVl6MCUQNtnNAflIRY09QeawbEUBB9Ra8o0XadXi/QxjPYcotXve5K3vtT13L9DakqoOiRPBLmvgHzgXXX+4Xef4Bw/A8x6Spd7kP3j+kUvvrFqX7mz+7hye8X4I/h/RJCiTHK9uQsK2sF4iLr5zYpen36vRXq8QSRCYN+yda5bZYPef69X7uF174ZST5MESOGEFIUBSK+bZPltFlIzshkMs8rWShkLm4OEgrzbPsWHEynI3q9IWBp2xZXGEbjhmFvyOY6/M5vntJvfm2dGC5lPAZXGqZ+m7JSAqlPgkZDaMFIhTN9JLZYziFyhpfdeoR3/+R13PYqpEiaBDF+YSAzG2PYcTGEC2s4FAmxxUqFBtheh899Bv3S5x7l1AkwrOAj9Hol25P1ZNTkCrY2x7himX7ZR/HE0OLryGC5oRw8wS//7dfwmh9Dpi0Met1bJNC0U6oi9bEO3u2KfGQymeePLBQyGWC+9aD7zDySthmST0IfxaExRfw3zsEn/u2mfvkvH2P9rKMo1yirIT4Emjglas3S0grbG5G6Dhw9vEzUhq3tdXrVhKWlDd717tt4+zsHcvhYCuuLS+H/GD3GuF3DS+M54OcLgMauxDJ2pZce7v42+qk/O8E93zlN2/aJocAVFePxlMFwieHgEKdOruNsP21BxCkrq8rpsw/R68Fll1s++ouv4NVvQIwDHxsKW3bHIzk4+qA4O9+TyWQyzyNZKGQyi8xyEhYEg/c1rgAfPD4YqqJPO02JfX/0u+if/el38PUAkRVG45Zeb0CIEesUNbC1OWXYv5SlnmVjawsfznDkUuXwsYYPf/gWbrgRWVkDTEoYLMo0+c4qKoDdPSX2u75QRBiPlbInWAtNC07g7Cn48z/d1C987h6aeol22md19XLOnR0xmbZcfvllnDs7QWPByqpja/RI8ocwfbbGJ7j+xpJf+w9fzjU3ISEEysICMZk54efGTNlHIZN5/slCIXNRo12Jncy3IBbzAYToLcYKbRhTuIKoBTGCH8OX/xL917/5AKU7zLn1kywtr2FZ4/SZdQbDCmMjwSu9apm2SY2YXKG08RFe/trAR37+Jq69Lj1r00JZpWTBmSpQNenGxQ6VzIe2J4nxwuBbcC55IMwImgycygI+/5la//jffYeN08u09RrttGIwWKGuR7iywEhFGxt8OEl/YPG1YCRgywmXXDbl7/xHt3Pt9cnLSiRCNKkSw9bU9ZiqWiY7M2Yyzy9ZimcucvZ+BeLCBYxN7kXWpmZKKml+/u630T/+d/dTT0umE0dZruBbqNuG5ZVh6v7YKEXRI7QRtGEyPQ72Cd7zkzfwS79yk1x7I1I3EeOg148gDU07ImrKl9C99sUs/Nxth+zek/hRE3GFZzTeSt4LJHdJ7zepehOwylveWcm/9++/jmOXG+r6FFWlKDWDYcFo+xxRa6b1NstLa0wnYKSgaQyFOcL9923xJ//uQZpU7EHwqUIjiSdLUeRoQibzoyB/yzIZWJiIZzNzV5Yn0LYBIyUxGtTDIw+jf/rHD3P8xIjltT5bkzP0+0eJsc+kXqc/FNCAM4629gz6BSI1h4/WvO+DR/nAzyGXXglGIv2BmdsXWDFdr4hkwmRmVYGLFxNBalKpZMOFFgqRmuGwxFmhbTxl0aMqKgJjhC2i8bz8DuTv/vrLeMNbrwR3Gu/PMRqdYXWtz7g+yfKqY3O7oT84TOMDVb/HuXMjjh2+ka/feYrP/EnU6VbnFBG78s7WYExv/5ySTCbznJK/ZZkMkCbcRVvgVE3QNB5X2NQwieQd8Cf/7gHuues4g94xzp49y9FLD7O1OSIGw+rKGmfPnqauRwz6Jf1ewZnT32dlbYsPfPh63v/BvqwcBmSCjyOC9502MXgfCTGVBFpr0Znb0fwy2xZZrHq4kBiEWaOqQFG4+e/BEIk406AWrroe+dDPrvHKV68i5Wl6g4CPIwZDR4gNzhasn9tiOFhFVaiqPpubnuiP8Ud/8HXu+S6qAeomVTqIM0R/oRM0MpmLgywUMhkgTcCzRkM2rVSVedtnZxwE+MrnvX7tq4+xvHQ1TWOwRY9JPaXoGwIt41GgV65SlNCGderpWS693PCTH7yGd78P6S2DMsISsOJw1s1zEJwrsaaYj0fEk8TL7LJoCmVJe/MX8itsEHpAhbXSjTcCloJDGNYI0WEAr3D1y5CP/vIxuf1VA1r/JIXroiZA09YMh8tMG2VaK2WvQFWIcYm2Psqf/OFxTj4OVZm2ZELjMdYePLRMJvOckYVC5uJmvjBf7Fpo5je5wuI7w58H7kc/8+m7qYrLGY/Be4eRPmhB004pSsPa6hr1pMGIULia4coGb3nXFbzprUgxABHfdZm07Ngu78dsPKG7LPomFEAfqLigX+FUqbhwDBe2bTR1qHSmZDzdpihqMMoll8PP/eKNcturjrIxegQxnslkwsrKCt57NFqWlw6xsbFF1esTfYlv+zz+/ZpPfGJbt7bSw5vCEML0wld9ZDIXAVkoZC5uZrbGgM6sgnX33KcBYgt//icP8fgjU+pxReEGqBqMHqKZVBQuVTmc2zhJ1bOgjtHkLG//iUt49/udrB0F7xVVhzAA7SNa7t5BUNgRB3uFS7IwVgyqKfN/V7LjhUTpcgUsgtk1dxuFQbmEoAgBcXDF1fCBD9/A7XccYjQ6xaDq4euG0jpAGI1qqt4K0wasK7G2YjKFL37h23zn20FTB8yIuJad7aJMJvN8kYVCJgMwbz60UGqn0Prkl/DVr6Df/MaT9HtX0DQlYkqMK9GYGj4JDvWBph6zvCyEcIpX3H6E977/mKwdTQ/f+tG8AjOGTqMsNmKSxeX5YvvkWf8Gzr+8oOjGvDCuqMk8StVhMDRtpPHwspcjH/7IbRw+CkVRU9cbqZw0NDTNlOFwGd9q6isB9PqrTOuCL/zl/YxHdFsa+fSVyfwoyN+0zEXObOVeAKldtC5M3gY4cxL+5OPfQts1mmnB0vAQo9EEY5WoNVVZ0E4VjQWXXHKU7enjXHvTlF/696+VtSN0E6dnMOilZ4zpMkd8V+4Yuye2ey4mRRJeKCZLM/Z2nFwQL9L5HhgTGY+nGHHEYKisoVdC0yg334b81AfuQNwpbDHFhwmRCcsrfUaTKWWvog0NrbbUrWfQP8Z3v7PJZz8VNEaIlGQPhUzm+ScLhcxFTCQlMM7smzmvSZIAn/n0KT3++BR0Fd84rOmckcQjdkrrtyhLR+EMTbOO6ik+8jdfyxXXpgz9pq2ZRSxU0yTqilRcmAQC7KzGXbqweDG7xnTe5YLRjV/2lGgKzLprRloGgx4aIYSunTVgXIsReNdPOHnlqw4j9iwiI/qV0LQTYmxAAsYqxlq2tj1GDqHhMJ/+1HfZWofJpHjhBVUymZcgWShkLmJmJZFhn1B+mvwe+z5846/vw8lhmmlFr1phMqk7s5+AcRPaeI6qB8qUwDne+RN38Io7kHE9BZlQlJHgU0Oo4EEsqGwjZiM996wttC5sL8x2IXaNaaECYr8J+oLQVYtI3Fe4aIgIEe990lZAPQ1UriQquAre98Fredmty9hyG+sMTd1iXEMb1pHCY21BYY7g6xX65TFOn2j4wl80ai6031Qmc5GQhULmImcxF6CjS86LEb7xtTPaTpfY3jZYGRBViBKZTscYCxKFYb+irs/R+tPccusRfvGXj0pQGAwskRojqWrC2mR3HGNESW2qnzmzGVHZqYR4Ic2Ui8mXMEvAdDZVhJSlQ0yKKvR6NrWONlDXcM11yE/+5K1gT1BP17nk6BEm422qqiC0NW0bGC4VTKaR1lvK4hgf/6O/Trbbew/hrt/tdtncf5yZTObpyEIhcxHjECo0pj2GxkeipMZMMcDJJ+DTn3qA8XiVXu8oSIHXiFgo+4bgldj0mWxArwfGnuWt77gCcWnLISLp8TuHx9nFGINhGUhtq1m8fT83RuiqCZLBkVB0lwvZYpruuQt2GjOZPbelS1mk3AxjoCtswHbHaNCHegKvfwPy9rdfj7LN5sY5loYrNHXESElZOqbNFOMaUENbl1TFNfzG/35KvU+dKyE5aBJBfYpk7HhjLEaM0u9fkLmgmcwLlCwUMhc1bRu6Vs6esky/0whtA1/54kTH24bpRGmbSAgh2QMSMaKIUfr9HssrPer6BO98zx3cdCsSBYwFTU4MzL9muxL/ZhPsPsl4B+YemH0uF5qnGsszGKfCYJCqS975rmvlqqsGFFUD0eNM2ZWBBpAGcb5zrCwYbSlPPj7iicdSYWbbBopix5dCjGFnaynufsJMJvMD8UI402QyF4hZMmFL7DpGxgjOwmgEX/3qV0ECIgHrPK6IFFaTJ0AUiA3j6eNEfYKVw553vHuZ1UP79XHaZdaQWaSbw4sKrrwa3vqOG5i0j1GWjhhc589gQLQTDC3WKU0dOXl8g7u+s0VUaNu0kRNiygGBJPjOP8UlFSZK2rrIZDJPSxYKmYuawjkg0jQNrd9pxHTyhOr65pOIbGDcWWx5DluewpZncO4UYs6COU0xOE21dI43v/1lXHFN2g2wDqbNNnudHjP7IFBPdb7t8uo3IJdcbrocDoOVFHFRVWJoCLHGWMGakuBLvvPNR5lsQ+HOj9qI7BfR2Gn2lclknhm5CDlzUdNGjzWWXtkHUt+FcxvwjW99ichprn/ZZRhxOKtYoxgTiWJQClShbQK28Nxy+wpthFBDvx+pCoMhsp8JEcoLpGLhBYBAWQoxppyFlUPw/g/cwb/+Z/dTlCu0bQtRsWLAQtSANRbreiBDHn3oON/9FvqGt6Sp33ZntOgVYwvOd27cU2qayWSeFlHN8bfMxUpEuy0HHxTfQlmUGEliYXUZmhqMQGH272gcgfEEhsvMF6pt3KYylrqtqYolwO0Oc8/sGReFxMVKnF1FxBiCwvYm/A//7SN66sklfCOIK5K7IyHVlwKoQ3WCxuO89Z1X8Ld//VKhAGfT7aE1WGc6QRY7bwqyOMhkfggu4jNUJgNBA0EDzjp6vS6bUaBfpSz9Xh/KPpgSTAHidiwPMGBcEgl1o4TgMdSIpi6UVTHk4KDdYqOnixilqwSBxm8hUlMN4Y1vuZbIOYyNqA+oKsYkQyqNKQlBcFh7hAfv3+D4ieSoqShKmOcp7OQ4HGCqlclknpYsFDIXNVYEK5ambQBou07TvX7KxI/a+RYYD9KA1Bjb4NxOmFsM9HqK0gCR0vYI2s2A+7Jfff/Fic6vA84ZoAWFO14NvcGYokiVJtE3xAAaHRod1glFUVAVR1k/Ezl9YhbwEZSQRMX8SQ46zeXjn8k8E7JQyFzEzCZrT1mkaEJVMs+ILwuwVpDOd1hUMFpitNzdXlk9Qui6HyarZiupD8E8u35XKUQki4WOzmFyOp1iSCYLRQFrR5FrbuihMqI/KDDGEFvFmgHODphOxyiRyTiCrPKtb56ACD7QtfFO5k67n2t/98hMJvPUZKGQucg5/ysQY+p6GGPKttd5T+eOhSZI1oAR1xkhpVbLYFHsTuOnHOo+gEjTTIGIs+WCmRQsr8C73nMzbXuOph7jjGBNQQypzbZ1hqAeYwvG24GHHjhNXZP2hjDU9QRr2deWO5PJ/GBkoZC5iEm1kILbMULszJKMSdciikjsVqMRTNi1MvUtRA8a0/55eiyDUcEudns8bxX7QjJNunCUvRJQiqICHL61TKcBDNzyCuTq6w6BqQkhEL3SthFjBFtavG9wzqFYvv/9DY4/PmuwaZO4W+xqOf8hLvz74j72mcwzJX9TMhcxBtSiatBZD+dd1smpKkJ3LUs9UVtirPHBp1wFmyojBJ5hslwWCTMESXkg3XErnGVQWWKA4RCuv+4oIhNUFWtTIy7vG0QENUKINf3+kLbucc89SttCxFH1SmLcWxoJyWQrRxYymR+EfKbKXNSIWEQsIDvbDESUlqh+5uO3+BeIREzX4Ek1OQDOdidi3H3Z/WSzH3a2KPJXkHmyoW93flU3DT7AsUsHhLiNMYaqKimqSBu2CD4Jh9aPgYiTFe7/3inaev6g1O10TyRnlliShUIm84OQz1KZi5tuJSsCIoJImkgEixFHCI7gC4KvCLEiagX0USp0tmUhC9sW3ZbF7LK3udMOOaIA6fAb4+b5HrNoTL9XUli47ZWO4bKjbRrG4xrrPGUlGGMJHoxT6maKNQNOnZgQWvARINKrin2e0ZOTRjKZH4x8pspc3HRCYRZJmJkgxWhoaoMRwUiXzeBBGwhdXgKh6ycw226YL1gXH2tPZYPuuVzUGGJnJ6ExVSm0bbruCk3oD5CyEqy11HVNZIJ1vmvkZXCFEGkR02N7M7C91QkO4PzIwcL7kY9/JvOMyRbOmRc5T9dPYfftu+aGrnRRY4ohoEKMhnoKkzFMx+iZs6nldNuA92kSCwpCalBUFeAKpd8rGSxZlpaQwZLQ68vcZwHZc73/PxfGujjBLUQeznN33Hvfp+Pp1gV7n/e5Qff+sHBtYsF0CptnoW5he4Rub9dElM11D7rEeDuydugIWybi45S6nlCUFZWtiLFO/SBU2N5qOX0KvfwqJJgqtbPunkt2RXAWPRZYKFld5Klef3ya2zOZlxZZKGQuKDtz3zNroLR7co0okRADVlzKNYgpzyC1GQ7zFoEpC97OF/3Bp5r7UmG0BcefQO/9nnLvPd/nxPEN2tphZZAaFiGoCqoepSWIx+AJqlR2QECwEsF5rHgdLjmuuOoQV1x1iNtu73PpFcjyMjRtepW9fnohSaQotpvNfGiwNlkGJedGASpiNGjcWSnHbkFsLV1i3vn9Ks8/wrPbzD6C43yBonveixghBMVaYeZlpCFttQQfsd3gWg9FkVwSY0xJnlG6492kMVsDZ0/DffegX//aNmdOBzbObeFjMlcKIRBjsl327WmIl7E+GYFahJKycBBTmqlRR+VKmnaCWMdn/3wda9f0xluQoOn5+/30SjQmK+hkrbn3OMXus9KJgCgprLF4+BY8MHZ+nQVD5qVP7vWQuaCc/+l76pWd7DI8jAT1qCrOpP3o6DXlGnSzWfDp/rNzftPA6TPw+BNBz5ys+dZffZ+Nc5H1sxOaWnBmBSsDgi9paqjKAWC6rQmPksQCBFQMxAoRg7UGYyOtn9K02zjX0B8KyITeIHDVVSu8/LaruOFlPVYPIVUPqiq1tC6KWSQ8Ykwg0qQsfymIKhgpd4XKZw2UxMDOnvuCENh1HBdnuoUGVbM/2Xc1Ddo9ToipCdN+iEJTt5RlsUujKCkKo5KiNdvbSYydOIl+99sn+N49j3LuzJS2GWL0KupxSQgB5xzGGELYsWyemV3tEBee3yBqkwujmdDGLaJs0h8GDh8tWDviuPnmK7j8ymWuuAxZW02iQSTtDrm9OSQa0BCIAtYUO/sfi4d3oRompbnmXJPMS58sFDIXFD1vMZwmPpmHd7vKgH3D7tC0ARHB2ZSIqKopsqAwHimDnnRdHuE730b/8i+/z3fveozJWKmqNaqiT1N72jatYAvXw9keqilZLobktbD3e5L+rSCeSMAYh7MlYPDegwasVZp2hC08vV4EM2E0Ps1gyfLj73gj7/2JSlaWoOiBdi9TZt2S54ZP6R8x7ggiMzNokGeyVbCYI7HPNsbiPLz3VLBrBZ3+i3HnGBvjMAhtGygKiwLTaYM1KRFxYwO+dxf6hb+8j7u+9TjeD+hXR0FKNKaS1KYNqArOOYqimB8/jeCcS8fygNcm0UHo4b3HFg1FL9CGbbbHGxhjWF5ehqiItKyuGG6/4wre/o4+19+I4PY87F73TIEQW6w96PM3K68onuLYZzIvDbJQyFw4dOH8u0sohO6fhnQi5oBwuUm/7rx1VKFtI2WRTuz1FO76puojj4z43t2nePzxCfW0AoZoLAg+4kNLVTicc4QQqOt6vrotiiolK85X4p1w6cr51Hhc6fG+IXiSq6A4UIcV100yER+mKFOsixjjCXGMmIAra66/do03vOlaXvU6ZOVQdwRCEgxlsff1LiZFRlRBTLnreO7iwDyGfSa2/U4D3fNGbfGxpbCzARlmEYqoYMTQNunXVuDB+9A7v/QQjz68xfHHG8bjHkbXMLJMU9OJMoPS0l82KDVoih7ECN57RCzOOWLQheecjXX2s8UySFsVOsYUkVnio2+FplZCY7BWULYQOcfy2jbXXFfy6tdfyatee1RWV1PPDmN2SlrFdH08dkVbFo9ZBMJ8DFkoZF7qZKGQuXDss4rbHUpfCJWzcD8i0JIc+BzBd3v2JkWLpyN4+AH0nru3+fqdTzAdL7G91WMyETQ6xBpMAdYZ2mk9L4sUo931zJFRaNu2G0M3HnWIpGvEE3SEGk3llMYSg0miIUrnzwDWWkSUqC1GdP5zCFusHIqsn3uc1bUh73nvG3jnu5HlwxBNCo03bYOIUrqC2QQVYwA1GOsA9/TZ+08lGA7yetgTTdhtcihEjV0uiMV7hxN45EH0j//wYe76zln8dIXJSOj31mh9isBoJzB61RJFUdC2LT5uEbVGteupMTO+wnTdImdRkMW9jcXciUhZOUCp6wkhtpgiWWqHoAx7AwxCiA3oFCMTQtjClS3La4Eff+ctXHP9Eje8DBksdYdklgApKcdh51gsNo/oBGPuG5G5CMhCIXNhOS8EvmcFt+8quatNpCDGNNkJsLUBjz6M3vu9c9z9nRPcf+86Jl5CCENUhxhbYq0lSsDrhBA9/XIIIRJiC6RJHImpY6GGLirAXCjIfAUpgOKZYkyq6xexaEzbFE6SoBAsTdMQQugsoQXViDGGwkXG9WmWBhV1XeP9OjfcvMLb3nkzt78KWTsCZQkhQvAtxkQK12VBzsfwDITCecd34RhHs899SLWgexRajOBDeq220xjew733tvrFzz3Ad795ju1zKzTTVYyusbK8xHQa8NpQlIq10DQe7wPWVF0uSdPlfCQ/hVnXxxhjKp2cr9Zn+QKLlQuREKcYy/x9aoMSY8TagqIoqMcTnEvJj0rAIMToMcYwHLYE8xjX37TCK199NTfd2ueKKxFXJIHgAxTzyEK9cNwcaHH+MctkXqJkoZC5gMxWaZG0QuuKcA4KoZ832Tk0psnq9HH4xteCfv4v7uORh8aU9iiD4TF8qwQNhFijElMOgDHzpWJsLaZzZ0wZ9ynzPU1aEMJO5cTOc+9QVX1ijIQQ8N4TQttNgF1SZRetcM5hraFtW5p2iogwqAaE1hBDS1E19PvC5tYZNref5Pbbr+Qn3v8KXvsGpD9I4fCoMSXwGUBamrqmrFKy5b48Rc7BPGqjbney3vy+SYxFPAZDxKWqge4h2hrOnIGPfexhffD+DbY2BKNrhGYZ51YwYtnc3GK4VDBq1hHjqaoCVSEGwUgPjSDqEbNPSmuMxBjTJA+c3yo6CQVXKm1bE1RwrkDE4r0nhiTKJCpV1Uc15Vc4UxBCoKk9IhOK/hZFb0J/AEcv7XHrrZdx2x3LXHMdUvS6jwk1wixXYkEkzPRaJvMSJwuFzAXEk1ZqClTpBHygSOiSGxdq8FVhMoGvfbnRL3/+fh5+cJt6tIaRo4guMZm2IAFxHmNbjA1oNylFFI2WwlZdR8J01k/h7lk5pHYr3NiVV3blcwtJhNHbHUFgkgYRo6gGvG+ZFQzMJ74uqpHyITw9N8QYIegYuuQ5waMypdcbc8vtq7zl7dfymtemHY+mTVEGzI45VPcMCwdtYdV9oFgI7I7e2N2Tscy2d2LnIVVg1EFIngdf/kLQL3zxXk6fLplOKjSUWFkihmJeRlmUhjpsgzRYF4nR433E2R7W9PB1ygURLGggaEoSkK6EEiNEH9BZKek+1yG0FKVDxeB9ikJYW+DEzHs9OOfmkYyyGOBsD++VqBOUTWyRIj4+bHHosOG2V13KG954CTfchKwcBoNHmPlLFzviavFQZzIvYbJQyFxAPDAFUo27SMXMpQ8gtWBomUxH9HtDoCCEribew5mT8C//+SN6/Mmac2fGGIY4u0TdWHxrMbZERPAhpIS1EkJoqJsRzhkGgwFtXe8JZ8+2PHZyDDTuLLd1cZ9aTdcroqu4IKTqBOI8x8F7j7UFgkGjJYpJHSa7CIYtUhRCY0EhJUgk+lSCaU2gKj1en+Qjf/P1vPd9iLqutK8A1TSWZDutRPXdChiSRco+WxO7kkbb7vgL0CO0DmvT/dugFKUCLRGhnlrKwnL2OPzB75zWL372Ifq9K5k2DrU9BJfEVdw5Hkh6ba4QkJgqGELEmqKzbbZY+oSgBN+AAWcEcRHRSCQixBQJUtI1OwEQxVA3SlX2U9+Htt0ps5RA0EBRpvegbVtiMEgnUjQ6QmgoiiltO0VjiTGgOqLqj7j6BsONN5d88GeukeEKOBtRGsysjXgwqXoyC4XMRUAWCpkLSDdZaRdRwO5JbpxFHGA88fR7q8QWYgPf/gb6J398H6eeLBltCW0TcFWJsz3aEFMfAOMIEZwraLynbqZUVcHqcp/WN5w7d4bV5aV5EqMSu4m+nbeWVg1dLf/iVkKabUUMIShRu8J8Y7FiQSzRCyEKZTEgBEVDqscTHEEtBAjSgtQgEdEeGm3nDR0punLB6FuKosaUp7jxloq/8ZHruP5GZFJDf5gOU11PMFZT/gKRoAErBUksHFTeNxMKNXU7pioOARVtDWIMziUHylRZAQT4yhdq/b3fupNzp4asDW5mY8tQ9Po03qeSRgIimiZcYpcrYIkxoj5gDBRFkSIq3tM0Dc5IarAlAi5iNBLEI9oSJSAaiBKxKNEoRiFKTNcUOLdEUwu+BSMFzvUQEULraYOnbWuqfkmvNwB1TCeBSR1Ai65FdYuqUpoezhlibGjDWXqDbZYPj7ny6sjP/+Kr5dIrkzdE1QMhEoJgbU5QyFwcZKGQubBo6LLHZY8JUM0sabEJUNgVJmPQBj77qaif+tNvsX7aYOQQQUuMMRibVrM+Jmc/VcEYgzWzvetADOCspXAVxsJ4tI6YBjEtYhtc2dAfRpZWDP1h5PIrDjNYsqysDlheHlIUlhiVuq5pW89k3HL23Danjm9w5syEemRpmoJQV7RtQT0BIxWFG2JtKsFs2oA1UFZ9fDQYZ7HGEzWgPkUJVBViihIEP2U47DGdnuDYFZG/9e/dzh2vR2oPVZmcEcvKAC0+jrHGIBh8AGf7HFw5Mtt+2OuzYAneoJpkxuYm/NHvP6mf/czdWL2UGA4x3jAMhkdpYySKIib5Rtiie7yYTJM0gojFStremeVxOGspew2YE9hiTOEsrrQMB461wytceslhVg4tsbpcYksobNpqmE4i59bXWT93ju3RlFOnpoy2I+NtxTclvqnwTUFphpS9JWJUJtOGpvGIcTuVKSoYqRBTJTGETz0k8F2FRIsxU4reiMNHW37m51/Fq1+H2LLrGkrTFedmH4XMS58sFDIXlsWt9U4kRG1AWgRD4z3OLdNOQVv4P/75Y/pXdz4OzSX4doBxVdemMc4tgFNlgXYJbCkh0dmS4WAARKaTEeo9ZS9SVC1HLxly7TWXcNV1cOmlsHoElleQctDZJNsuqc102x5p4Y5Ct5LtXP5i8m44eRz9/iNw8iTc+72TnDqxzbkzU5SCXrECUqS5NJZMmxKMIjIBU1PYtKeuKrRNxJAqKYb9IT6OmDRPcvQy5W3vuIb3fWBJehXzEHjrW4xtsV0eRuuVwvXYf/shHfjoFeMs0DKebjLoDVAqQmsQ4MTj8K/+5YN6393rFO5SRlvgiiWWB6ucPrOBcQVqOhtq0xK1JoQWo11Ep00VHsaAxilBxxRV4NiRZY5e6rjjNZdw+GjJFZeJHDoKvTIVYoh2MsYnHWlJ74PtKigNKYgzTj052N5Cz56ERx+puf/eJ/n+I6fY2GhZGhyjbgwaHUW5BFrQtEoMAqZHjGXXHnwMUlM6pSgKDI4YI20zwRTbDJe2+OkPv5K3vgupBnSCaIKlYj8n/Nl59XxnyUzmxUcWCpkLyx47YZ0njXX7611Vw9mT8L//o6/r8ceUpl5F62XEDFICnImpB0NsUkFD4ZBZPkNMxkcaG7zfpnATDh0tufTSASuHlFe97lJW1uDYEWRpLZXDzScqAWd2UgZ9twhXATcr+e/GH2dFBAs2yzEtrHnofvSub53mvnvPcOrxhu3tAqdLuOIIre+nvgiyRdBNVMYYA1Yr0D6WZYxxjEcbiK1ZO2w5c+4xepXjQx9+Fe96D7K8mrYJ6hYGS5AiC1OcKUlT7H5Cwc+Pbwhgi1TsWTc1RTkk1MmL4t/8i/s4daJk+1wfa5ex1tKECUJN2S/xIVUZEBuMDfMKBkuJtUWqmIgtxk1YXQtcfrXjZbeu8fJXDLnyGsSZ7phpOr4aQVw67uIWkhdJx1ijgkgSDEDs2korULokmnwLTz6OPvn4lK9+6QHOnBHOnAqMRiXeV3jvQEswFTGWqSLFBDB1l/QKeKFthMotE6OnLCNNfJw3veMSPvqLazI8BFEnFKbs8hb2fKyzUMi8hMhCIXNhWchJ2CsSYjcxP/4o+k//t2/xxOMt6ldxcoTpGFxZETRl5qcs/dQ5yRjTOfw1VIXDtyOMmbC6ClddM+Cmm45y8619Lr8KWVkDtTsrWI0pea6wBiVS11OMtZSuQjE7yXSdq6TEnYlM570X0vZBxBKjS4HpAOMRPHQf+u1v1nz7mw/w/UdHOHcFYgYUJRjr8WFC27aYWGHNAGKfEAJVzzBtNohhxNLKEhILGv8k73rXpfzkTx2TY5ex43gtkRCbrkfDnoTGXcmMydCo829K7oQK9QS+8sWRfvlzj3LfPS2WK1G/SusNxnqKyqMyomnHFOUyTdMiGilLh7VCiC3B1xBbIhNuvPEYd7zmcm59OVx2VRJkdBWqsigU5+PbKeFs2inW2u61LBovGVR33o8YoPUNRSFYWxDbtGUiEU6dQO+/D+65+wSPPLzFxkaE2Me5JcYTxRYl1oSUr0AyuJJYpLwSP6Tfr2gbj8oGlI/yujcf4xd+5SpZXUvjF+Ku3JX5R1s1C4XMS4IsFDIXltlKfD7BRqBPiFCP4NQT6P/8P97JZHOJ4fBKNjdaxuPA2toa03qMLbqeCFIglKmyIHqiTsFMKattqt6YK64qeNWrr+T225a55BLEFmkVbm2LcZr6NMxmnW5c8/mr+72fhQiM4qyACDEExBpkwYhA0S7vIiVntk1qTlVU3UNF+N49Qe+5+wR33nmWs2cc4+2IlSUKu0YMyVPCGEOILaotRQUQcUaYNg1tXbO6Fmma7/L+99/Be957pRw6mo6gcSAmmUhZ0+2h7xIKOy6D2iU7+jaF+esp3PnFqX7yT77FYw/XLA9fRgzLOLuUejnU20RTU/YU8BidCTqHqiYfCTtlZTVw6Fjk/T99I1ddi1x+VRIii34NotC2aTvBLEbvJYKmPBPTGSnFoHMDJmPs/LGm002qfolQMu8KuXBKG49gMEhRk/vuRb/2V2e4+66TnD4RmYwdRbmWymOpUVJehWApzTLO9hmPfFdF0RLZpr9UEzjD9S87wt/9u9fKyiEwLhzQwCqTeWmQhULmWbKPk+J5Lot7a/wXfftn9/c7pYdaMdqC7XX4H//77+p4tMy5056iXKYsegCEWM/ccIghZcAbKVPIV6fYIpnprKxNee/77uAtb0PKHtRjKHtKWUoXhZiVO3Yb/dHsEgwpGW9hyLKz2j0vEVClKxHYsZ7WhccKXVtmNWAUtsdw4jj6lS+OufNL93H2pKEwl2J0hRhs6iDpPK1OKazQhAZrU9VA00zplTW96hR18yhve+ct/OzPvUKWViGgWBu6Jz6o6qHtDr/FtwYncO4sfPLjZ/Vzf3E3k+0+S0tXMRopZTFkMm3RKCyvDGnbKdN6m16/wDdtCt2LofUjVKZcde0SP/6OK/ixtyKmgMEQkBplSozgTA+oaJvUOXP+UYgzv4qU17DTvXFPsuCuyphJeg+1InkcdO2sJaWCzD6LwSdBGTw88Rj6hS+c5atfvo96OsD71JXLmoqgBt8aJDiMKbCmSv4PYUKvF1EZM56eY3V1iauudfyX//X14sqkCc3c0fn8bpw7G1g58THz4iMLhcyzYHGiLXZWc/PKhVmUYLF/w2zfvJtIuwZIKYkxpvbQAR66F/2H/9N32V6/BHSZutnGlpGidKkc0DicragnYIs+VjQlQZoxUc9x+GjL7a++lJ//xUvEFmlCSiZ/cWfimTvr7df45+le996fF//2KR5nYc9dFRqfjsa3v45+4g+/x8MPtlg9SowDgk9mT2KF4MeoUaqqIoRA8JGqUkJ7ksPHGt7+nqt5109cIsNliDLCzIVbKpMMU7Dlznvj4xRnS+raUNpkff2Hv/sw3/3WNiGsAqkro5qGXq9iMmloaji8djlEw7lz56hKS2EV2CZwjtXDkdf+2FW8/V3HuPqaHbfrZFbkF47NLLTwXEycex53H8+I2OU+WJuOeQywuZG2Jn73t+7Shx5o2N7sU5gjKX8BgzhL27Y4W9E0DdYKVRmJjFCmGBFUNnj9Gy7ll3/tShksdwJNAqlqcibUZqGSWc+QKg1Rdg0xk3lBk4VC5lkwc++D5KzIntVeJJU5Lq7adwsFNK3yxKTihekU1s/Cb/7Go/rgvcJk+xBVuURgQhs2iZrcC8uin0yaSHXz26NTGLtN0d/m+huHfOCDL+OVr0XS9kLaYtjVulrN3Dn6QhIitB4KA+un4S/+rNa/+PR32DhrGQwuYzwKrKweoW1bJpMRVc/hY5siCn3PZZc63veB63nrOxDjoPETjJt2nR4t2tpU0wfUU6XqSXq+mQmmh299E/3MJx/ie9/dopkewtpVQoxEbRDbzK2t+71VJtst9dRz5NBRiDXKOpPp49xw8wof/JlX8Jo3IDio26bzHFi0MNzvYF+YFXYIgbaxRA+f/mSrn/nkPZw+DVVxGSEUtFEpy5KoXR8JjdTNCA1TnDMU1oEd0R+OeM2PXcLf/KVLpein7ZTR+BwrS0vsfMDSNk0SDcX+/leZzAuYLBQyz4J9hMIiu6IKsDNZ7LZibppA2ROIhq1z8C//+cN61ze30yqvWEUXnAyDBIqiAG8YjcaUxYAYx6wdiZjiNLe/+ggf+pnL5fCxTnx0K2jZsfPbQZUFK8MLgnbiZSaWCPD1v0L/7BN3c+/3Nljq3cBoU/CtpTfoY2zLpD5Lb6BcfrXjZz9yNbe8AqlKaCOUVSrbUwIxCFaWAWialrKXajgVx9YGDAfwpc+hn//sQ9z1zVNoXGPQP4wPETUB50qc6bO9PWFt9TCT6Yi2GbG6vEI9romyQdE/zo+/4xbe8e41uexK0lzY7RpEbTDS/WJP7sD5/Tuef2Yls7PEw1QWmaIN3/kG+sefuJsH7q0RPQqygm8EH2qKMn32YoTS9NEoXZOvCW14jOVDU376g6/hfR/si53lXGrXYIzAPKEUmEVAtIuAZKGQeTGQhULmWbC49XDQXvjsfrBfR8imiZRlqlIgwh/89rb++Z/eSzNdJcYBZa9gNKop7FIyLMKnckdPF4IfcdkVFdP6Ed7xEzfz4Y8uCRbGU89w6HZSC/aNdlz4fWMl0rRTyqLofBkKrIHj34ff+52H9TtfX8dwKdH3UzWDbuE5x6tfey1/42cPcd0NiLFd6SDgbEvQmtgKRdmHaJhOPL2hofVTjC0BBx7+7e+e1S9+9vucOe2QuEq/f4i2DTS+xjpAhelEOXLoGCdPbjDol6ysGM5tPEGvUqrhNj/30Tt4+SuZV11ManBFoCx2qhPOEwkz5ltUzx8xxnlHStgjFhBChO0RLA1hvA3/4p89ql//2kmcXMVoDFVV0rYtbdvSq5YZVqtMJ5HJpKYoPa5ax7pNynKbX/7bb+T1b07vx2TcMhgWLFaXpNecjMS0i6xJzlnIvAjIQiHzLFhMVlzsl9DxDD5ajR9TFAPw8NlPN/r7v/U9JqM16mmkP1ghqKdtImW1Sl3XBD+m1+tBrOj3lSjH6Q/X+cVfeh2v+TGkjlBVHiPJ+llmhjgxBRBkNjlJV1Z5gZ31mlopKwFqxs0mzjkKs0o7NWytwx/+7lm980sPQxzinGF7+hjveO+r+ejPH5Ki35k9FYrIGAi0IeDsENEymUF1WzqTdouy7FNPHe0U/vSPNvRzn3mE8fYK6odU5RCxlunEI04wVplMRvSKEt8Kg2qVyWSKdWOsO83hy7b54M++hre+TUS7lAOZJ/N5dNYr46lEwuL1j5hkxrWTNNn6GmMqpiP4xB9t6Z/98b1Ef4SyGOJbaLyClhj6qSoFQ+kUZBPVLaxpOHZF5O/8vZu59iYkBnDlHq08T75s0c6yXHKCY+ZFQBYKmecIv/DzPollB6ASiWp49D70H//Dr3P25Bpts0RRFDS+RsRixOHKPltbW1RlpD8oWV/fxBVbXHPNlL/9d17HjTenvfE0N42AQBsDhRkmc51uwpolTs56SFxQodCNaTKBatBgpKGNE6zpI7qEn8L2Ofjyl1X/8A8+hZqGX/xb7+ONb7NiytQYygJNu4UragwGHy3OrEKEyRj6g1QGSpfIt3UW/tlv3K3f+to6VXENxFXq1nQ9FECjxVrB2IgPNU6gLEsmoxYjDWLOcMMtPT7yS9dy061I26b+B4mZPXNqSBWjwcg+nwOB1McDflQRnRiTqF2MLnS3kKJiDbWH4Ic4ga98Af1X//Kv2VovcPYQvWqZxhumk0BZ9CjLHk0zpTCe6WSbS46ucersvbz5HUf5tV+/QmbdvxfLa9M/UpWGknJIslDIvBjIQiHz7JiH8xd7Bxh2VUHAvivIWYHhZBv+yT94TO/9rme0XdLrrRFCSxM8znaGQ66gbsYMlwowE0bj49x065Bf/dUbOXY50h8stGAWz3gyYtAfMt8b3lW2uZg3cWGFQj1KE60CUVqsTaHqeuooy9Q86twZ+Oqdj6utlLe+9SophzCarjPsOyyp90Sa/wq8t12Uwib7aUnHxQo8/CD6m//0IU48oVhZZWOjRlyBmBKCwchOC2zRlqK0+KZhWm8yXALXW+fWVyzxvg9czw23pORJA/g2EEJLr+dILhJKCBEjZRIKi8jOxJzY3wL5OT3MXfQAklPioljwNZgCjEnlubEb09Y5+NpX0D/9+AOcfNJgZYletcT2dBtjDEXZYzKaMigGxACFMwTdwBRP8qt/91W86g1Ib6n7ZC14V+wOoDxXlR+ZzPNLFgqZZ8c8pDpLbIzMsrsP6i+QSE2HQoTf/9hJ/ernJjz2SKTfP4KRgtrXlGXaT6/rmkFVEuIUTMtk+hhXXgf/8X/6aq65FjHFnn1g9j7v7Llnz6/z/89r+C4EM6VESqoTExGbPBq8F5x1eJ+S7VzXNVqF1JBIpkDEByjsELTomhul+zRtxJU7Jah3fgn92L/5Nltn19B2NfWB6BW0cUJZOZo6NZfqVwNijPi6wVlBjAfZQMrjvPmtV/Ozv3CVrBwGFYXY4Ey1IMJi1+p6cRtq8djORMJMqAnPt1DYm6Owi1l5rnQfHWkQpkQMIS4hAT75cfSTn3iEE0/UHDp0OXUzZtpO6fUG+FbBFywP1tje2qI/MEybU6wcWue/+m9eI1de0/krzCMJEaFr0vUDl+RmMheO/CnN/PDo4vXeCWGHupnV0bfUzTZNO01/E+CxR+DrXz3LiRNjhkurC82cDCIpGUxpCLFFRGjrMZdfMeSX//arueyamUhYKMFc9EGaRzRmE9Sstl260O8F7vy3sKA0xY5IgB1h4BwUZbf/L2nSseIQ+gh9Cttl4fsdTRQiuNKkBMcAf/Lxqf7Bb9/L5plVCCsgPazp07aKqqAGijISGVO3m2iXMOoKIcZNjhxr+NBHXs6Hf/4qWT4CIlMsAWuq8z4DqcphRiS977PL4uTY9aB4no//gSKhY+bplKyYS9JkXuPMCHHw4+9E3vmeazl0VNganWQwdDhnMCYStaUoYTRep+o7pnWLc4dp6jX+8A8eVjSVvsauOsjrzEsBfJsjCZkXD/mTmnleCQGqKnUnBE9RWspikFawTSrPO3uiAgbdXwjWJoveGBvqZkxhFVUPTDl0BH7xb93E9TciRQmdafFsqb3Deb0DYMfo5/kNdT9zuh4VMlthz7ZuYF57v29lQLe1Q0UMBjEumQkBo0lALDRNsmP+3d86p1/90nFOnzD4ukdUATzWKc4Z+v0h506fJUbPcFBSVY7SRabTs0Q9w8qhbX7yA7fw0x9ak7WjILPSSzU0zVNFI3XPZYadj/2CCzXYfWwVwJHqIVqMRHpDeN9PIbe+4jDDpZatzXNoCFgK+mUFEog6RUzEWgexop6WfP+hMV/4PGpNKoWsNeBkZzuus2bIZF4UZKGQeY7Ya9Oc0G41H2mJtBhSYqETuOcu9Cuff5jtzZLCDYkxElS7dsIeYUrpYGnYw1mlaU/x9ndewx2vRYbLoDpN1r3aB3U7k+rcRXm2ooWdCSo1SJLu8sJgMQwyG3PcffPizwsXY4o04XT+Ub2hpa5hugW//S+f1M99+jEeur+mbStcacHUBLZQ2UZlymg0YmX5MNErFqGtJ2xuHueyKx3XXA//wX9yO299Vyr5a+sWQx/DEFGzUAI5YzGUM/s37LwpDu2aOc0uF5TFz8t8+6wHDEmflRpbQDmEX/zlI3LFVQVVz2BNn+kk4FtFJBClIdKiokQCUR0nnoRPffLbnFtPTxXaCugn34Zui+iF8/nLZJ6aLBQyz575qn2WyLizuncu7cdG9Zgud2EySr0OPvXnD7NxVinsCoXrdSdRJWrq5IcE2mYCWjOZHufmW9b4ifchRQ+EgJ1l1O+KJMSu9HFC2pJYcAZcvO8L4iQ9UzSWuQ/FD5jcFrqtft8FVmKA7U34X/7BN/TLn3+M8XYfK2sM+qs420vNlWKTrIjjNs4qhXX0q4qzZ07R7wcOHQn0Bif59f/4Onn5K5GqByEqVVXMnTTbdmEQstC9M/1i4fUtKLf9jv8FfR+6z8rsAklwagWUCND6sxgLRy6Bj3z0RgZDz9pqn+l4lMo/Jc5bawOE2OJsD4nLPPlYzXe+ualRScZgXV7O7iqITOaFTxYKmR+eXWHxxTP++R8rKykFXwP0Crj3u+g93zmJcz3KsqQNSlChsBaCT5EI8bgC6vYcl10hfOQXrmTlUEoQa+um6xi4MOfMmx3NchYWxMveiekFcpJOc6dBcV1tfSqbYzHJcnGscx+INDkbl8SCBWIN93wT/Qf/r2/r2ZPLnDtrMMahJhDU0gaHhgHWDHDOI3ZEVXqaeovJaMyRw8sYc5LXvn6V/+t/82o5dkVa/QYPzkhqxd1pgbJMCZi7q11gR+jMckBSHoIye39eSMyiNw27PicKsx4ZpTPAiDbAy29HfvwdN7M9fpTV1YrCCcFrakZmLGqEgAcHVW+ZGIZ86fMPsH46HabYBbfEQJyFFTKZFwFZKGSeHXOxsI/ToaaJJlnVClFN6sYY4ZOfeCIl1qnDhzolOEpMJX0YREvUO/q9grY9ybvfezO33ob4CD6MqMoS9bNs9VnBQxIYO5JlwTJ6cby7xv1CI4XodxL9uuO6a9W+O2NeSZP5X9+J/n//5zs58fiAc2cKDq9eQ4iOEJS28QSvCCVGKoz0IDjqsUdDw3CpxRbHeedPXM+v/tqVcuhIMmpyLr2H3s+ep3NtZCYa9nbQnF3YP0XhvHD/83IQnzE7nxd7/pg7sVA3qXOkD/BTH0QuvUwR2UDjFA1gTWpxPbOGDiG1yNZYcv89m3zvOyih62liAVqQpns/M5kXPlkoZJ4li5ntC+xawQtgicFigPu+h979neMU9ggxxpQMpg2FTY2IYlQKWUNDn8l0nZfdeojXvMmIOrAuIlqAWrogBVEiEZ/2h4GIRSm6izs/uj3vQbEnF+BHzvnH7ry5iphmGVp2yk9htvodjwK+gU/824n+83/819hwI+ONFdSvogwwMkziwBisU8RECJbYrII/xqC6DCGydskmv/hrd/BTP3tYpNoZjPrkweCKiEhNVXl82CRoS1HM8hFmWwtPIRB2vd6W81/PhSCJskiJdrkr59PrqiFayj4UA/iFX34l1XBEZISR1JjM+/Q6nCtTwymdAoZ2cpg7v3CGs6dThYV0nz1jIzuRjEzmhU0WCpnngIXJYrF/bmfr27RNijWYEg3wl589QwxL1DWINbjCUhQVIhYfWogR5yxGPIPhmI/+zZdz+AiI8RgD1pa0re/CFWniMSgGg8FhKBAKBHd+0uIzXcE+5WS3d2X/dPc56H6GeZ3ootBaeF7BdF0vFwSFGgip9LEwln/xG9/TP/r9v0bjMaaTgsHgCMb1GI9qREuEAmMMxirolBCnaLQ4a2ibJ7jias/PffR23vy2UvoDcK5FTFoBQ4osQKSutwFN20MSunGlUe7rYbHvcZklbl5okTbDYha7Wu6JcmhwVOUSiw2cbrsDecvbrwc5gyssQoFvxoRYY43DSJkcRe2Qfu8y7v7ucU6eRGeVmiGmN9f7PeI6k3mB8kKpE8u8aJlNEN1pVBc+UpK2Isqih9IybaDegAcemDBqhX7f0vqW0lQ0E+hXBbgRvhnj3ICgZ7njdYe54lrEleBjizN9VKGoDCE22O5Ef54V7sIEH2OLscnDOMbkzBeiwxhQdGHC2z3ZhZDK2JhtJ8+3WGaT3X5mTU8nDHaPrQ0R6wxm5vGgqTxvLhbEgBgiLYJFSbkCBHjsUfT/+OfHOXF8hdCWRLEY19D4MwSUqjdI2wPiMMYQtcaVNT40iATEnOGOHxM+8KGbue5GxIfUfhoK6rpNyYsLVNUKs+0lJ7P9g9l7vXC9jzCTXcfXzh/nwq5V9nRv3GcoEcVi0GhSREBTVOCNbznMX37uBGFyHZNJQzUIYCJt28eaJXwLGiKFKbBuiS9/8TQ33XIULBipSAfpApp9ZTI/APlTmnkO2CdbX1pmSW5BASxFAd/9NjoelVhX4WPAGEtUQaOl8WDUUJaG0egE4ja449VXMlje/Ww+aDeHpslql0g4LxIQMdYyGY+hs+8djSYYk4RADEksQGqLHHWWcdaJhH1f64ynS9l/+pT+wqXmQGmkDSHWhKhoFzGgO3aplLCkmVrGY3jkIfSf/m8P8vijBZvnhsQwRGyJcYJ1EecM1qb98mF/wGQ6pq3HjKcbuLKht7zBLa/s8+Gfu1muvwkRwzx8DqRW3t2odqId0o11USTsM9kL563Md993lofxQjj9zMazWJrq5/+2Nom2MNNxJKFw9BLkbW9/BU29Qb9nUpRGPbH1oBZjSlBLDMK0jnz/0dOcPjWTmRZVi3PlhXrRmcwPxAvhm5p5SbKTtRa8Ag6N8NWvnmQ0mlC4ihi6CTpGrFNi9ISgWGvxcYMbXnYZt72yEKPgg8eZNHnt2I4vmiZ0J3npLibOIxptHen3l5h93AfDCvBYmyYC6Va4RgJGpijbwBSRuDPfzQXIYkb/vkpiYUx7vfzj7kPTPa6oIWqy+XFWsFYRy04DK029BqCitPDNr3n9x//w6zz28ITRaJIiBc5gxBIjBDVotHgfKYvkHNivLAblkksuoaymvPntR/gP/+Nr5Kpru5HFWSnrQa9n72t7qbFfZKhDmJc1GpNaei8twdt//GWytAJFlUorRUz6bMqObbQSMMbx+PfPcte3pzNNSggviPrcTOYZ8VL8xmdeYIhYInDyBDz04GM0je/smU2a2EKgLB3OQNsGYmhZXhV+/F1XsDSgO1HP8iB2bHlnjX52M5vRd26brZRjgNYn8VA39T5/m2bmNId3ZZayjzuizu77dF+f/W7fPWbVNC6RlFcxv0+nMUKXitHWhraGz356ov/m//g8Z08XwArGFpSVxbjUzKluIxpTSDvGiA8NMUyopxusrgnj6UP8zEdu42d/YU0Gq8liuG7S6yuK3ePcvYe+3+t9qZ0+9r7GiGqyBp/lF4jMykLh8ivgla++Fq/ncM7gTEFRWFR3bz8N+kvUE8PXv34/41HXDcW+1I5d5qVMzlHIPE90k3kAZ9PJ9Z7vntN6qqDJTdCIQ4xQtw1aeKwFjyXECVdd2eO2OxCV2Wq3a34AO/78Ip3z4+IeeNzz/IH+oJw74jlniEBRDrtd8pagLTFYrKlS/wJm/SNmmfkF0N+9kzAzzNmn2dX+LN5ntr3hMNpNQiogBRAJsQE8RiqsFaKH8Rb8/u+e0C9//gGMXEXblBTlkBBagnpUhRDAaEFRFIgkk6vgDSsry0yaE0R7iv/8v3w9178sdX4UdsTB7Jh6D9YlMZYE2TN5bS81dl63qqYeG7Pg0cLPKvCGN1d84YsnKItLiN5gnRB8QySkiFBMArd0h3nisbNsbUDZ73p5ZDIvEvLHNfMcsN/K3sxvsQq+ge9+5xHEDLCmIsZkBmSK1B2yrSeUZUlZFBirXHfjGr1B9/cWZlKgbZjX8RsRdroQLpTozZi55knEWEPdKK7rCbG5ASurgCmwAtYV+K5azzrHTgOprg+DeNi3hG7RP+KpWNwHnz1ITPsLXRBEuw1wa9IL1M6g6tRJ+L3fPqV3fvlxTLwSY1ZwzlI3NcZK95DJq8J0iRVJJNRYF5g2m9z88hV+6VduksuvScKkbgJS2F1+WSEqSkyOg9B1Xtz9fl5szMSSSIp+oTvRBRW4/mXIkUucbp5paNsW5xTFE2LKE1ENjEceZ1cITc2JE+ihY8jMcTyTeTFwcX77M88fe8L00mXBT0bw2KPrxGBxrkBjumPschIUT9QWEaWoIrfedhhxYAtIHf1Scp+zqa5f5hnrs4ZKnJ/IqAYxgWm9BcR0Zo9w/An4+L99QL/+laBb6zBrie1sWgCmHY1q4TIrfdivSdNiFcQCB5ZX7v7beWOgLnIiIqSeCI7tLXj4QfR/+f98W+/66xF9ewuhvQRrDuGDIs6Csag4Ig6xJSKREKdEn/oQiD3Fm952lF/+tSvl0qvTJDcZN/QqQfBdp87YlexFimIn7yJt7bxUcxKeKbE7DrHLT9hp02kdDJfhdT92Pdal6IPSYq0hRp8MmIwSgiIMCO2Au771BFZScmTOUsi8WLiYzwCZ54uFM6AR8BHqCWxtRJpaEVPO9+abpqEoihRijw0hTrHOc8ONiOlEwuIkPFvNee+J+jRh8c75rqp6tB5cAaGFL/zFaf3UH9/Lx/7NX/Hgfei5k8y1hjFdEqFCjAVonyQWOsUjbScYIs/YWW9+PA7IWZhvpaT7aoT1s/D9h9D/9R/cySMPBqaTZYIf4Fyftk2VJM6WoI4YOsdLTeZMQosrJwyWN3n/B27lb/zsMbnsyh2XxcEwtVMO0SOi3TYD2C4aMRMP7mKIj58n5sye69S/IRER0S5hkbl9xGtfd4Sy6hJjNeJm2zlGMQaqso/ogOnIcPdd38dK+l6EGJ73l5fJPBdkoZB5VjzlorlbnRuB792NWlYx0mM6aej1BoQQKIqiC9k6rFNCHPGq17yMpZXZg7RI9wxm4dPqnMNIsthNHQnTJKikqIDOV/mG1icrJgJ87tNR/+QTdzHs3cYTjw75R//TV/niX6Dbm912sgVPk1IGTJq0iabzhxBUG2AKNMm28BmuC3WXWNgJS4hNq9Q2pJJNVZiO4YufafQf/v072Th9GU6uIcSCNk6wRYva5PoXvEGjoyp7GAKuAGcs0+lZDh3b5Bd/5eV8+G/25Mjl6T0QwMw7appkPQzMJsCZKJuJh0w6BoVLuSOzcsn5sep2vK6+Frns8kOITVEx7xuKMiWXtjGgqrRNxNllttbhxIkknq3Jmw+ZFwf5bJB5Dtj/Y6RdOZkqnDg+ZloXoEXnnZBmzhAC1qaTqjVK2ffcfLMhlZi3nRnSUxkYzVwY595EiAmIhE40FISQtha++mX0n/6TP2Zt+WY210tWl26h4Gb+6Pfu4rd+87iON7un0pK23REAYe5p4BAp0Vl3o7nl4x7zodmvFo/FTMioQdWy6CNgjKFwfbyHzXX42L85oZ/8+P2ov5a2PoSVNYqyJGrNdn0GH0eIpFW/qjIdj7BOmUzO4MoNbnn5Eh/6yMt509sQcZ1ImI+n206Y9WSY/+4iZd+5em856F7izrUoxsElx5ZwNiAmCYNZCa+IEJBU+RMLmmnJ8cfTzRfxUc+8yMhCIfOcsDeysPhzU8Ojj5yirR1GklVzCAERSR4KnVCAyGApcMvLU41i3Hsq3Wvk04XpNc7Wey3KGJEpSgs4iFAaOHcS/uB3vs7K4EaefGzCoHeMrY3IaFQwnazx9a+u84//4f168om0o2ALoY2BIAFTdCv/CDEUiAxBXOcPsVckxH3HO1vRp4vMSyx9bFNEJMCZU/Ab/+g+/eLnTrF+ZpXpeBnDkLpJWzJlLzDsG4Z9R6+0iAYMLctLJb6dMlzyXHL1Bn/r71zDm96O2GInfrFjJLTX6Gg/sXCRnRaekVg4v3Qy5c4EjIWrr11GTNNFG0Bj8ucQEVQDIoqIoZkWPHj/hLzrkHkxcZGdETI/aqJAXcOJJ9ch9hBTzjvsmc5UyBBxpsCHmrU1w+rh9LfqI7u7KLJz3SmRGDqxoAABmSc3pmqCtoWzJ+Hv/w9f0/FoiRhWWVm5nNYrYg3GFaytXc725pB77mr4h//v7+hD30vl80YsYpIZU1c6j5lZFEfXbUfs5zC4EwXZMYdaoFNV0YNohfdw/73oP/lfv6EP3BvYWl9mOLgC6/pUfUPUBh8aIOVmbG9vMhpvEMI2xkyZ1idYWt3m1tsG/Of/l1fKNdcjTZP20fedA59yt+SZnBKerofFS4Wn944wAJo8FVTG3XYUzOpJklBQ1HSRs9jjsUfPoS/1Q5d5SZGFQuY5RUlbDouMtmG07XF2gO3cFaN6jBGcGNq2pXAl3jccOVYRujC9NX12LIPhvAmqK1UztktC7DITFANUhBbw8Fv/6kFdPwMbZwPRF9TTlsHQ4YqAqxrOnDvF0vBK6tExjj+6wv/yP9/N5/8Cbafp9dShpfZxpj2oa2jaroxy30TFRTvgnRkhdK2GtSuUUAXfwjf/Kuq/+I2v88gDJVtnVjl66FpGkzHRTJj4DaScYgpHGwy+TdsW/b6wesjRtGewxUne/ONL/Cf/1ZUiDsoSen2hbfzCWJKomb0/s8te34mnJ+5zealjnuYCq4cAM50bNIlYVNOWgxKIOk1bTHaF9bNNV/WQ6x4yLw4ugrTmzIVmfVM1BsGaXrfC3ikpVE3lZyIWJHL0kiFBoYyQ7AT2RhNmMVuTQvrMJjw/X/cbKtoGmjH80R98X7/9rYeweiXDpSOMtgJFadgcbWGs0jZjhksD1je3OHzoGJPJiNMnGj72r77G5uat+tYfX5LVw1XaeiBFAcoqpSfEODNLotMyhiQOdiaAWW6A6p5cAYV2Cnd+pdGPf/ybnH6ih4YjLC1dyomT2yytFUybDaJO6PeHhNbgW2XYX8G6QNOeY3t0hmOXRn76w2/hHe9BJi2sLDPv5ZlKHXWPt8SzeSf3+kBcrMl4u429jIHBElJWqmGaSl5T47GZaBDQgErAmgHTZsK0hn7XcupiPYqZFw85opB53llfXwccISghxFRfLskISUkhWe89zhnWDlUU5e4JdefEvCgyEnG+cldULRp7aCxQD6GBb33zPpztc/bsOt439AclSpMuGqj6Aza2t1g+1GPqJ0RVnD2M40Z+9199h0/+4aY++kBa/EU8bdwE8ajprI9/AGavKXh48IGJfvHzZ/Rj/+avaLauphkfQkMfHyK9JcvZ9cdZWnUUhcVaS2zjrMcW4+0R0/GI5dXIL/3aa3nzjyPWwlJ/lgMRGG2fQ8RzUPvn2LXnfmZmUQfxEl4RP60Pxk40QQT6A1heqdJ7NffDSFtPxgCmJcSWGIQYHOPx8/8SMpnniiwUMs8RB3yUFLa3ajQ4gocQUsOmZIMbQQ2Fq2jbgLWGsqedyRJ7Er52yh0XV7JiArMogxWHNQUiKfxeVvDrf+/dvOK2qzh0VFDWCbpNiA2DqodRy2QcWF5aZTxZp243EdvgnGP9HPTcDfzpJ+7j039ykkcfAqOOfrVC61tUoT/rFgx7JpTzw/IhpghE2yQTpc9+9gF+57e+yHS8yrkzUFWHCMExnU6xVrjkkmNsbWwSfepIKKL0egbjxkQ5yc23DfmP/tPX8urXI/1Bevpp175CRBguLT3Dd+vpMvz3Q/ZcvwQ5z1hr/7uEkHJBqhKWBkUyDwuRWXMyjYLpnDZDaPGxJQalnqI7vT0ymRc2WShknhWy62IQYlfSSIp6B6jHJULVJXO1yb3ORZrQdi6IqR2vdcLSimVWFDD319+139+VFnZPmnoumu7a7ZzfLfSW4JqXIb/yd6+RW+8YEHkMV2zhxIO3hLqg79aYbrdYa+n1LY1uUMd1ir6laRy94gY+9aff51//s3v0wbtRPFjtp/yHbiJpZpEFnf+PpqnnP/uQkjYjcN+96Mc+9gCf/rN1fHMLbVvhKoN2Rk6qSmiUdgL9Yo2V4REmozG9nqEotzmz8U1+7C2r/Bf/t6vlplcixqQVrTHQ783GZLrjZPe+QXveK8v+Gf0HsXjfxb99CfO0YsHPExovu/QIMaS8hLpdp7Aea3r4pgBTIAas8zRhymTa+XZkMi8CXuLf8syFYWclrRGCN4QQwdh5I6dAKo80xnTdE9MZeWYhLJ3/wvkn6v1KEQ/wMbAwmsJwFX7t118pP/2h1zNcmgDrTJuzDIcFbdPQ7w/Tyb1uqcp+ygnwio9CPXUcO3IrD97n+Y1/9Nd86bNerUJhU9knXfRilqSowRK8UpYz62eHFWjr5OPw2791Pw/c1zAc3sxkukRRLOO9x4eGshIG/QKD4GsIjbC90XDZJZcymT5Jy2N89G++np//5WukvwJ12+xe3O86Vk83if+wk/z5iXwXLykyJiSxNhj2k4QyBQZFTOenoEmUpU2zSIx+ntCaybwYyMmMmecV1c5uOca5MNAYk/Nh9+8Q27kTYFX16XojcX5l4TOcnBYmzOFSmsQHS/Dhnzsia6tH9N/+7ldYPzNJPglxQGXX0FCgQYmUbG9MUfVceukRRttnWV+f4OwKpx4f8Xu/9T1Gm7fpO96LFAOYNNsUpcG5QVfJYIAePkyIMeBsgW/gC59B//jj93D6hMGYVZowpigrQugiIaYrg/QTghecHVK4ISqeU6ef5NBRz/s/9Bre+ROlFL1UQdGrygMPQeZHgyCops/rcNgnxs3uM23QmDwUEOmEsEFjmHcyzWReLGShkHleUYUYfdc7QDBi8FGSIY0IxkAIEWsMqpoaM3U2CM+c/QTETldH61Jd4/YI3voO5NLL3qj/6l9+jRPHn6QaXEnTblHXNdaW9MsBsapo24bRqKapPWXVp3QVwgpbG2f5wz/8JifPXq4/9eFL5NDRJcDPT/zJJhlU+1gLZ07DX3zqpH7pL89w5mSBhjWs7dGrGqbTKSaCcxVI0/UUCBRliZFAiNsY23DdNUPe+b5refu7EAqofUtVFhhddFzM/OhJn7nQRQeKyhFC6guhMSU1atd5UkSQaAgau4Zo+b3LvHi42GOHmWfNU9fRy2JlniyW6qU9bp2l8kvsmhEt/vHsh1nB334f14MsdlMppTAFWtrQsrQMQeDGW5H/5r99vVx3gyNykqBn6feVqmdo25peUbA8GDLdbhkOjmIYMpm2tD4QpWRj3fKVz5/h//e/P6DTEWxsupSs2I3UBxhtgq/hT//wlH7xLx7niUdrSnuYQX81lW5ODVWxirHLNF7xoaUohMFggCsEYya46gy33B75yN86yhvfmryfrEC/LDCkLpEXh4/BCxkzn/Bj9Kh2VT2LRmESMHMhWXTC4UKNN5P5wclCIfMcsHey2qkzNwZcYbDWzD3wBYtg510KrUsVDTFG6inzvVuR/R57Hw4oAZyNzdBgXAsS6Q2g6AMO/t5/9lp5w5uOsXJokzacBp0S/ITxZBMlMFzq4axhNBoBYIuSuoGqOkzwl/JXd57lv/u/f15HG9BMuuhJV1LX1PD3/7u79TN/9iD15Ai96ih163GFYK1QTxVnhzhXAqabWGA82WQ0Pc7aJSNe++ZV3vehS3jFq5CiTI2E0uuFuh7hbJ5tXggYkxxIJ9MRajqTbutAZW7hrISUq9Btt0k+82ZeROSPa+Z5RQScs7jCzM2VjHEY49AohNDiCtsleAnj7WdQdLe3LfCi58LcdyF9tNvQAkr0U5QGiNSNp9eHw5fAL/zqVfLWd1zC8sqYpj1Dvy8MBoYQNghhg/XNU6wdGiIOxvWU4fIqqhWbm8rhQ7dx4vE1/vv/x1/qQ/ej41FKWnzkIfS/+39+Ux9/tA/hWjbOOaqqz3DJcW7jMdQ1HD16iK3NCRpaeoWjsCv4VlAZc/nVwuvfNuC9Hzgs19+MmApcmQyb2kYRoFf1iCFvdF9o5tWxETY3ttPPqmmPCIMYnVezQDJismJwB9lrZzIvQHKOQuZZsN9qf8G1rsvEdwWpvXFnsCSSwrKqQuy6RyoRVVJEYVYFeV5VgxycKb5v4qOltAMaP6VyyfTA09KrLIoSo7CyBh/6uSvk8KFL9c8+8V1OH38ca1fTGMUwHBZM602sMWAtW5tTCtej1x9w9uwWvfJSpqHgn/zjr/Gen3y9Ogef+fQ32VofUo8rKneYQU8ZT89grKc37NHUDevjEUtLQ+rpBv2BI4QGYcyVV5e86W2X8/o3DeXSK0BoMURULa5Iq1SNEbGC2akfzVwg5q3NI4xGdfpMx9hVygpid3p+pF4hAWM1RxQyLyqyUMg87ywvD1GOY0wqDTOmYtqkigBbCJPJhKIoMK7k7JkxMQxIXjSLroH7lEAexDzJz6EYStdZGUPntJDuJF3ovqjg3T9p5dCRV+rH/vXXeOKxCatLVzMaRYxpU/6AqShtRTSWEARMjbUWYoGqsHWu4A9+5y6Sg38PwhBr+/jYIkYxYjFisBQQPBpaUI+RSAhbTNuTXHG14yfe/3Je83qRwcpMJKQmQ2ZWrC+kcWv+6r4QEIHpBCoH33/0ONZcg/cRVxZ4Fbyf0OtVNOOA0uAKodc3DAY5oJB58ZB1beZ5YieqsLRcEWKdkroMXYtpnYdjVZXgI6hjtJW88kOAnTDBD1G3v2sbwpGUx26TIAPU45hEhYNbbkP+g//T6/mxN13OuXOPgNY4a6mKHlYMIQSsCMNhn7J0jMfbKA7iEMJhNFyChmMQDoNW6RkkkOylU4KbsxVV2acoFecaqsGU2j/OTS/v85GffwVvfpvI6iEoHNRtved158TFFxLzT6eBzS0YT9L7rJJKgmdlwZA6SDojKDVFGSmrCznyTOYHIy9LMs8TO3sBh49IsjSkxbrkmyBSpeTGKBixab9dLWfPjCAuETzYH+TTOWv/vPfXB+UzdHfv91LppAosLcPSzchP/Y2rtFcu842vnWG67TFumCIDNlVGbI1O03o4duwY9bhOTam0glABkSgp0x3jMcbQtpHCVYQQ2FwfsbQ0oLdccm79+wyGY9745st4/4eu5LobklliDOAc9Iulbrg7pZ6oAYkgnV9ztxeeuUBoEnVPnEHbOuXeOOeSqLRC66XbjgDXs/gwYmlYMhyQkxQyLxqyUMg8d5znpBhBDKtrSK9vdDL2GFPSeo8tKjSQ/BWKgtC2eA/nzkzRCMV862EWBdjLYi+F7vYDxMKucS00PpRuf3k6hd4gPeb2pOGGm3pyyeFVlpdW9LN//mBngOSIqkzGGxTWUVUVdTPunnOWK2CIiyWdCsErzjmIgjWK7Rnq+gyNb1g7NOWNb7mO97z3kFx+TepYYSV1zWxbpXAyf9z921jPfs5C4YKicPokBF9iTIEVi9dAURTJsjxKVw4TiWHE6qEler2U3yCQBUPmBU8+w2SeG86boNNkpgr9Plx66VFUU58HMem2VDomGHEYcfhW2d5q2Vz/Qc1oFpowLfY2mHHQY0n6q16/W6SrYWnYQwwsH4af+XmRn/nojSytbNM25+hVDhHFORj2HdtbZ9LrIIC0aZUvdfq5m8CbWilcD+89SM3amkE5zXB5k5/6G6/gIz9/SK64Jk0a9SSJl9QrY5KOwd4uhjJrtT3bUslf4QuJdu/N8ScUDQOCl27boUmdUU3KYRExafvNjLjsilWsy+6MmRcP+SyTeR5RlLSF8LKbrkOMErXFWiGq72xtO7FgLBot9STy4IPdHwJP/RGddZRcvPjuwlMKhMSsy183FyuIpN81cUo1hPf+FPIzH72Rq68rGI+fwJgG307YOHeWlZWlNKnL7HGaTjD4bkKHsuzRTDyFdQQ/5dSpB7jmhgE/9wuv593vLWS4mrY9jIXhMNlNex8piyK9jn17XVh251xkLhSadq544skNRPqglhgjUf28FDgGTT1NoqfqwTXXDpGumVeOJmReDOSzTOZ5JM4jAzffDMYoqoGitF2SF1hr8T5gjMPaAu/hm994jLre5+GecgWmpJX27NJ1m9z3ZDwTFAEjStApQUdExoQwAlrKUphMx6iDt78b+YVfupZrb7RUZUOvKrG2SBUMB44lCZfKWdo2dadcWu5z7fVHed9PvYIffxfSW04Wv8RpJzbS1oOzDrRgOqnT703cVR2qXTWH5q/vhUdhNILHHzsJWiFisdbgnElGSzG1onbOgSjDpZKrr0Vm/SEymRcD+UyTeRaYnes9E3IynCmY7d5fdiVi3Sg5MZoqCQUJYFOoVjGpJW+oePD+42xtA1Q7nZv3FQl7z7QL49kVbXgqAjF6nDVYk1oEx67/b39oMaVn1MDtr0L+z//FLfLKVx+jbh7H2Q1i3E7PpbZzhzQ79RkKBk/bbjBcapi2D3PFtcrf+Xs38Ma3Ib4bftQGKSxIoG3H86E3daDXG5JET8s8SvKUxyPzg7PTEn33cV1sbX4ACnUNZ8/CyRMbtE0khAKVMjU/6wzGQkht1Y0Z0x9GDh3qTMnze5h5kZCFQuZZkVa2kCazursA0SDRQIiUDlwPrrm2wrkebV2kbpIuUvttXGVRsdS1xcpRtrcGPPRgrVG71s2ka+/pBEmkbRp2l01adofkd5dC7s5dmP1eECylrbq/qzBmgDGDhceBYdcj4tAx+Fu/ckTe896rMe4hnDsLQAgVojblF0RBoqDBICi22GQa7uYd713l1/+zS+XqlyHqkglVVLCuNx9vUfbmdhFlr+tfPH9NZudlSHd5Tt/Ji5FkAKbE+dbTjlhIn2eNLRqTSGvbgAKNr4koUaEU+L3fekCtLDHor9A2jujLVPJLQ9TA6qEBW+MnKXojXvnqq/ERnIBvyIIv86IgC4XMc8TCCmxhMS8mCYm1NTh8zEBsQQ3WFIBiLajp9nOloG3A+5K7vnmc6NP+PaTmUnbu1hgx4uar+Ke+HMSOWEgXt7PhvGADrd3rskV6dWuH4UM/e5n8zEfexNLyBB/O0BtExOysPkWEfk/w4TSD4RY/85HX86Gfu1JWj4Cnu++uNtoL4903J+EH9JDIPAd0wsykZk+pDNLiPRSuQlGaFk4dhzMnle1tj486jyQoBmfL1Ndjsk3VE6zz3HzzlZSO9HglWe1lXhTks0/mOWKf1XuHdDbOt77ieqJspwZNgKgFbYmhgZgaJmFqiqLge3edZbwJaGq4owvGjKoW8wOZLDyTse9HRFCiBpCIK5KWWF6Fd7z7kPzkT7+aY1eOaOJ91M1JnAVnLXW9Reuf5NLLA+//4G28+ycHcvhQqmgorcFg0OhxNhsoXVgM82jNgkt4KnlNEabUpnznsxaTfxZtaClKeOB+dGuzIYYiuW+6MSrbqFo0liCRppliTUFRVFx9DYJAG8giIfOiIQuFzHPE7Ey7p9dDt2qOCrffUcjyaiTGTSwCmvo9qCbHRmO61bZaTp8yfPvrqIb090qL0nRujoLsWpH/sDyzlXrrJ0DqPjmZKrWH/hDe9d5K/oO/dwe9pZOsHmmJsk5km0OHhGq4yd/99dt5z/tLGa6kiaFuZnkGhtZPYdZiO/MCoNs6k8VcEEfbtIChbZXWQ1lAUAg+ZZZ+566TTKeGwi6l7QYzBlMjGDSmbpGuSF1Grr7yUqoe8/4nUZsL9FozmR+MLBQyzxEO2KdJUTeZ+wAra/DyV17GtD1JWRnUg7VFqnhwkRCnxNgwnXpis8qff/IJtjboWhx45vkPM/HxnM2x5sC94jbUVIWD7vn7w0jVtak2Jdx4K/Jf/dfv4fobK3z8Pj4+wnU3lvyX//WbuOkWpKhS6WNRQq9y3WuJVKUhhFkHrMyFRvAILecljkrXBVJkXqXgW+iVJY88hN5916M00wIjfdo24MMYpKawDlGHI3lviJ3yxjdfgbGAgDEeI0+TLJnJvEDIQiHzHLJ/8mCMaQUlBt70pstxxRZVaQlekZDaTYsJRGqMMRALBr1jPHj/ae6/B9UIEYeQekTMQrbPv2GNSaWKQFCPjzXSeSS0XtHOcO/aG5Bf+ds3yWvecITXvOEwv/prl8v1NyChM3RqwxgRjzER72t8aABJTaUyLxAW+2mE+W+LosD7iC1SjozvPssa4RMf/2s21iOFXcIVqXlDEhSd8XaMhKD4dsqRo45XvQYpytkjd3sYWShkXgRkC+fMs2L3NqthfpLdY6dsjKcNjhtuRq65fkVPPLKNlTU0GFAh2AbwGNdL5YZS4NwKX/j8Oa6+/hDHriyIaXefoC3OFDx3XZaT1fS+vSL4/7f35t92VNe973dVs7vTSEICAUIgWmPA2Mb0RhJgsIENsU3i68SO/ZLcMa4znu94t/sb3i9v5MY4Hkkc28M3wTjYCWAcn4MEEqjDFiB6bEDYdGpAvXTO2W118/1QNddeVbvqnH2kow7NzxilfbR3NatWrVprrrlmEwc+iiI/FmIQIYw8wCJYqgrXjpcVFp0BfOv/vlIBPfW0kwROpNACRSGUFYdljt0vxUjxxII9S+J22PM4cRD4EWwnfk5RFH/72kugN149BNc+D7aqIQwASzmoOMOIIiCKfCgiUBTBLUX4xKfOQnkYOr103J6Ox30KwuyRpirMDXqQzVhoKU6RHMK2IlRrwIUXLUCnvReOE8G1awC5CMPYBiAMIoSBwuTkJCqleXjlhW3YswsUBkCEOOkSJd4VR97RmhEdM0VPPB/CKALgwLUrsJSLMCLYloLrOAjCAH4AuHYsHjlVwK0AoUWwXcAPAN8jOHYFyrIQRT6gCJYduzx6HcnTcMJAhmEjCByQC4jgluP5lB/FUUb9AHjmN7uB8GxEUQVeN0Cr1UIYElynBpANojCOnWB3MX+BhU9dNR+e31O0WZYLsWYUThaklxLmGKNJJf1gmCgZLBVC2cDn7zxPzTtNIQibCIIAFlyU3RoojAdO13URKR8hAQqn4Z9/+CamDgCdZhkRAMcK4fltzI3alv0hc85FgG2VEc8hy1AowbZK4LgHjuOg5CReHU4ASzWhrCZsuwMgziroOkoLUZalkusoILJQKpXFj/5EggAzfgYQICAPlhUgIg+2DbSbwKsvgn770kG0JoYAKiGyItRqQ7BtB512CIUSXLsEirpwSk2MnubjnGVQ5Rq7WwKADSLRKAknB9JKhbkhNTmydK6DNBGUFadzvv6Gj8FxplApK0RRhGajhZJbgVIKvt9FtVpFp90FhSVE4Tw8NjZJ1RIQRrHzORGSjnauMJJKmRgxFeKVOt6yrqA+pg+ZaGS6JEeiK55IpJ6Dg1hYiJ+xrQgRQkCV0O3Gg/wvH34VXmcYlcrpCHxCuRynEO92fFQrQ/A8DxEFqNQIsPfhC3dchuERIAo7UImGLQoUlIrdLwXhREdaqXBkUGYzjcIUByACABshESxEKJeA628oozbcQsfbh6GaAyKFMFSwbEIYdaFsFxEcOKUyGpMBntm0Db99EWRDoesBZXdojhS3OWfJExbyNiBxp+sm910GUAOomkpnDW3dnqi3+8IFC8cLbRubiv3hIH6WsYFiFBK6XaBkAb986CAd2OMi8KqIQicxXIwQEiFSsYBsWQTbVvC8Q1h2QRmfuT6OnUAIEISdJNgWh/0WhBMfaanC3KCiHC1C/P/YO8EBRbGxo+UAS8+HuuzK09HubEelFqFaK8HzvNjv3HHgeQHKpRoUbAShjXazhp89+Dvs3Q247lB86jkZbDnKTrrMg0sh7E5nx0F6IitHSGAreqs3OEjmwBMMw1ZFC3IWgCrCqIKyDbzwLGjL5vdA0SjK7ii8bgCnXEK73YbtWKhUHLRaU6hVXSjVRqQOYeXnLoOygcD34NouwjAWGm0b8PMSnwnCCYgICsIcwVkbgZ5BWC9btCLAtUoACJYF2C5w+xfOwjnnlTDZ3AYoD6VSCYEfwlIlRGEcwKkbdlGrDcNWw9j9gY8143vIawJBN4mSd0SYSwrmq2AsQ0w7mJuDi5PWFOhjuQac+Asz50RWRhGODwroSyCWPMfAA1wFfPA+6N8ffAahNw/dtoVWu4FqLbZliEAg+HBKhDDyAeWj1d2DKz99Lj59dVl1/RCWZUHBRjlxowQgXg/CSYM0VWGOyMvUGE/7bRtGkKQIgI8gAs67EGrlrZ9AEO5Bt3sQw8M1BD4QRAolt4ZOx4OlHHQ8HxRZcNR8PL3uXTz9FMjrAtZcDLKpfAvmfRR4Q6SSS8UeESkv4z7hQqGXpMrpfSVCwomBfo5AX3dIcfKmQ/uAf/3JVkwcKiHollApD4GUD588+F6IkluBH7Tg+U1USi78sIXheQHq9XPglgDHCuDacXTHeOnJAlEsLAvCyYAICsIckRUUotQnx8iP4xJ6IHSgLODaG2x12RXnwHZ9+EEbtl1CFJaglAKpCI5TQrvdhbIiBL5CZ2oBnnr8bbz8Isibq+x7fcICqwVC6ERXKeGAE2ABoHK8mRGsLSTLMIkgQb2EU/GZAxDaILSRigIoHGMixPYlPnINVAmY2A/88qG99OZvJ+DgDDh2Db7fxYKFw2i2JgCyoZQNyw4QhE0oC3BdhZtWXoHzL4aKCEn8DcThxxMHGzr60cIEYc4QQUGYI7KuXvH/gyAeCCOKbRVsy4UFB27Jhh8Cp50B3LjiPIyOhpg4tBvlcglEIfygjUrJRRhE8TGOC9upYXj4HOzdBTz6yGb8/q1e38uD8GAYmS5ndUz2frPxyvi8M53bSK8pzAFZLVDRNh2B3jiteRgCT64J6LnNH8BSZ0BRDa1OGyF8NBoNDJWHUCrVEHQjVEtl2JYHL9yLeQt83P75kooIcCzA9+N8ESW3hCiM3wPLVoii7gDlEoTjjxLJVpgbsurbzP9NAz/jN9+P9/jJD/fTy88fQLM1BN934bouuoEP16nC9wJAEcpOCYgIQdRAqTaJoXn78O3/50YsOgtqdDjOMhn4HhzHgqViQSUM49C7imLXNkII244AeCAQFGo5Zc7eiyEAZV+XvuUDs+MvzkqZsm04mpzoyxuz6X442qfxSSkhgE8W6duOrWQsKE4bHgJEKo5poc/jA6oNP+pCqSoUhnFoL/DUE6DH/+Nt2Nai2CAx7CIIm4iUgq1G4dAQLCojIg+evxvD8ztwq5P4i7/6DK74DJQfApUkZLPKGt5aHCrahszXhBMdaaHCHJGvUdCk1u57vzkuEATAvX+yUM1b6MHz96LkRuh22xitjcZ7WxYsZccWD4oA5cDrjKBxaD7+7m8fw853Qe0m0GoAjlsClANCiFZ7EmY6BctCkl/BBsGGH2StIU3BoODVmNHAcZDQzEZMBvN8R+vzREbNYkPOZ3q9B9k1oDCklJpfWRYsW+njo4gAZcMLQjjWfCgMozUFPP5Yhx5/7HdQ1gJ4noV2N0QEG255GK4zBJCFKArQ7XYA8uE6IXz/IK74xOm44tNQ7Q5QKgG5GoOT4bkIgoFoFITjS7IkgQh47RXQj7//Ajrts+B3hxGFNuCEvVzTKkiiGwIW2QB5qA514Ac78ef/1424fnnijKiASskH4MGCgzACKHRgKbsnOPDMlEl13lnNQhFzE1kvM0me08+ZOP5jFmsEDqcfUohtQKb5OYGIEEURiMhI3BTHPPASg0QKgcYEcP//+ZBefXkvyqUz0PUidDxCFLpwrCosq4Qw9BGhDRuEsl1Fq7kXZ5/rwsc2/L//32eVR8DQMBBEEUp23D4UZcvF9y3RGYUTHxEUhONK4AOOHcfPtwBsWg/6yf95Dq66EO2WA8dxACdERF6cjAkRHLsCB1VQZKHTbmJkFIis3bjlc5fg9rqraqOAWwaCqIOSFbdvxdH2CHECHyBO0JPVEOi/s8JC0ZrDkS0dHO+37/gLCgEKQ2jPSOJJMtvliwQC4HsdOE4F8IHdHwL3//gD2r6thVbLQhgpWK4NBQcKNUSBizBwAISwXQ+uE8AiD8AhzFvUwX/59lU49wIo5cb2DbbTCwYdX9ZsUznLWoJwgiKCgnB8iSj2cyTA9wHfAx762Q56cvUujA5dilbThW0rRM4kwqiNMLChUIKiClTowrbKaLUmMH8h0PG247yLSvj6/3UJll0IBRuI4EOhBVspWEg8FAigxNlA2egfLWc7eqoo9mo4jM+5SzRsoTcADfZpIUrW7g+//Ef8OVcURDkMgjiLZzZnGVGc9dMBAAJe+A3oxz98HiOVCzDViNDqtKFsCxEslEpVWCqO8UFEcF0XSilEUQPALlRqB/Gnf74c1y+HUonJgSIkEUn5smbgLYDdJE8ASU0QZkQEBeE4wq6TIRRcKBVrFjpt4P4fbactz+wD+WdCqSHYrgc4BJANiux4WYJKqLixtVi3O4lKLUDH+xALTg/wpXs/iSuvghqZj2TS1gWFARxVQ2IFB4oKBIVBMJcuVIDDGajjUD3xvxbUYXyaTH+dWCxIf8IUFI7LJwoH+MEpiIFgrL0QYsGADVuJ7RMCYM+HwOanD9Gv1+1Et30aDu0PMDxyGiLloVx20eoEUMoGRbHhpGUBtqPgeyG63oc4fXETX7jzCtx8e1WVa/G1LCuI65mQGNUCCj7Syw0iKAgnDyIoCMeRuJOfnJjA6OgCAIkSmoD9u4F/+vvnadeOYbQb8xD4VbhuGVaJQBQiCuN15iDsIggClJ0ylCJUqzb88ABC2oNLPjYPX/vGJWrB6UBtCDpgpEoGkVhQYOtzxuy5B/F64OMP34qAkgF79p+pgkx7HQWVeHn0Po+udcQgn8CMSzczGWDkrQgZmgpKnl0UxQICHzpxCNi3C/QvP3gOH+xQKNmLYGEEQA2NZgeVqou210ZtqALfC0GRFUdXpAghtVAqh6iNTGHFzWfj7i/OU3ZsQwuKuvCDFiqlYXS6PirlWlKsrC0GL0rI0oNw4iOCgnB8CfzEfxFApOD5BLdkodsGpiaAH/zDa7R3Vw2H9g0BGIXjACFCRFEEZUUIow5GRocQdiN0OyEUANuJ4Lo+YE+iUmnghs9ehBtXzFdnnpUMFir2tkgbleUxqHvkkajQj1T9nhUYYk6eiWrBQDlot8Ruh9o7ojcgExSiyNFKDCKg2wbefQf0m6dfwYsv7EDYWgYVnh5nIlUuPA8ol6sgK0REPiIK4Ps+HLuCiltC159EGB7E2edWcPGlw/ja1xcppxJrppQFEHWSjJOABQfs/ph+HmLIKJxciKAgHF8iJB18or6Pkih2iDULu3YAf/93m+i935exaMEVmJoiECnUhmxMtg6hXHYRIQKi2A3OVip2p4yHCSgrQBgcwoKFEa698UJ8dmVVLT4Tcf+dMWwD0uvKQOKRoZKZeOKhoVT/frOFyFjHzsoKZrkyv+nrJgNjGEKnLtblRWJlb868i8qreqr4PLLnz7uPvrKZ5TiKEgvHJogShY7lAICPEAGiCLCtCggqlkUJ+P1boPH/eAdvv7UfFkbQatqw1XxEgQulHFi2CyKFIPBAdgDHBUKvi3K5DIpshEEHyplCuTqFz9xwBv7s62epUjUJJa7vk20R4gdnGtH2Cs77ASIsCCcDIigIx5ds86P0n2EATBwEHvg/79Ozmz/AgtHLEYYltNoTKJfL8IIIsAiWIkCFsAggUoh8IAwUhqpD6HoNBMEBDI36WHKujfMvHsGlly/GJR8vKccCqrF2GGEIhFFs/GYlmuEgjAfJ9EBZsC5+GPQF4pnVwQXfz9ILgGa5akBAsmaPVJyKw6c4SFVvmSRzRKIh8LsBqtV4+cIP0MuhQEDoAwcPAC+/1KWtr+/FtncnsWunB9c5DUPVM9BqdhFFIcrlCpRVgp8YKzqOhcjyEYQdlGwHnXYDjgO45RbI2ovP3/EJfOkrI6rrJ0taKS8GIBYCYpsEhRIAN32LWjAmSMAl4WRABAXhOBIh7lBtIHLSS9dItAqJxmHiAPDT+9+gX2/Yg+HqBVAoIwxdRHChlA1lBVBWCJvX/aM4sFLkK5Tc+PeQGrBUAyEm4Za7GJ4X4HO3X4HzL5qP886DspMEj7y1Oz0hIi5tgCjyoSxKwvvYAFwM0tFTZvRWiRlhb0oej8JEsYqBP1lvHpvTG0aQ/LsV22qw7QERJZoKjhWAnjUf0DfFJzX94kcQRvr6ShGUSqvRzfvKG9Cnx1y3zx7LmqW4TrifUkppA8F4r9g00+vGxokVNxZiXnsJ9JunD2Dr1t0IulXYagRRVEKnEyT2Bg6CyEO1ZqPT6cD3LDh2BaWSA6UU/KAL3/cwXBtCEE0goF2Yt6CBe+79FJavHFZ+CNRqAFQEhRCxcaKuCMQ5JCLENhhu2jzBAnrpxwdrP4JwPBFBQTiO8MzLAaJMR5uMG91uhFLZQrcTe0Ns+Q3o3362Ga2pCk6bfz46HQshWXEwHURxFh4Ath3HYOi2PViWBd+PZ4/VigO7pADyYbkNeP77WHiGi0ULF2BkXhVnnDEP552/COeeCzW6IFYrKyfx4EyM1E2jOAqnn4RbKl5CAcXaCvN7IP6POUzw8oa5zGHCywCWFZcj5KWQTM06yRcBa7ij9LIJq8vDRKOgKP/TTn6nML4WhZnfrd796PtSvf+z5mFgpUXe9TP7RRTfTwRgcjJuF3v3gra9dxDv/uEgdu1soTVVQhjU4LfLACqIQhtRBB1oSdmA4yp0upNwSw4c20UYEjzPQxgQXLeMUslBtzuB6lALCxZN4Iv3fgZX36gU12MYBiiVuNFmBQX2ckhiPYhGQTiJEUFBOI5EIMQJcxR3tKZWP/G3J4r71iBO+YDnnyP62f3PodEYhmWNIopKALmxliGwEATxTNVxLARhG7WhEiwrDueL0EEQ2gi6Foh8VGptQLVhKwB2BEv5CNCFBQ9wQpx95kJUR1wsXDCKkflVDNds2KW4eCGAkh3nmLAo/zPoJj4RESEExUsjloKjVCx4GIM8CwesVidKYgBQTyFgWfF3rhsvj4TGwGqew04EgrITny8Kk6WVMP6/LucM5UeY+IQkn/y9jVhwci2+v97v/EnWzPVjUaInKfg+9JP7i4BuALSmfOw/NIGJAwfRaPloNmy0mj7CQMVLCHDR6XgIfAVlubBRgrLjGAiAhXKpijAM0e36SbuyUa5YUE4Dnt8EyEXJHQYFLrreIdRGGjj97ABf+8aVuPhSqCiK6z6WWnKMErVyJLOckmujIIKCcHIggoJwHIm1AAAlanyr178ms67AIzhub7bWaBAcW2HfB6B/+Zc38N77TXjdKiiswLXnwbFGQJGLiAIoFcIPG3BLFsLQRxBEsFUNUENwlQvXiYM8dTtNRFGAcsWGW7IQRR6gfNgOISIflhXBdgBlhYiiAEHoI4oiRFEQ2y5ME1CoXKqm/m8pB5adLFtYCgQrUatbIApj+4ooSNTtIWzb1f8HIliWA8ex4DglKEdBKQKpCIgUIgoQhUBEAWzESwV+N4jPGwJh5MfZCxFCRbHDnprB2pBTJFtW7B7oOLGmxrZt2LaNMAz1dfn8EQWgKB7dfS8srh8Aue6R2roy1hRZVnw9y7KARHsUhiHCyEXglxGhBIsikE2wQbDsZDlGETqdDkpx0gUEQZSkG1UolSoYqs1DGFiYmDiIUO3H0LADy7LQbrdhKcLIPIWrrzsHt39hSC1aDLilWPjyuk2UyqWknE6xrUhBm++3yRBBQTixEUFBOK7ESoQIlhYYgNjCrmez4Hse3KSzRzJj7nTiWfJP/mU77dwe4sMdDXTbLhw1H7ZVQ0QugAiwI8DyEQRdWDZQLtUQhArdVogoAuYPjcQDXBRoNX8QduLBGREcx4njNkQBoiju4G3bjgdM10LgR9MKCoEfQSXTa2XFAhF/wlIICIiItGAQX6JngxBrF8KUzYJSBMtyQBbBdW2QirSAEQUEqEgLCiWnjN6sN/6ey6eUAoXTu2fyPROR3oCegFEul1MCCgsifP8ltzJt/eRbSPSCMbluvCQQBEEslCTLB7Ztw1I24LqwbBeKAD8MQGEs1BARwjDUzw8qDpbkKAthFMDzPHjdENXyIgQ+oVwBqsOEZvND+NFefPzyxbjuxvNx42ehlAOUnFhICAIfjqsQBR4s5QKWC26yKQ2DGUhKaxB63hA92wQREoQTHxEUhONKr/XFHaliAzByezupCGEQAOTATpLskBWvVZMPbHkW9OtN7+G9tw+h26qComEgqiIiOxk0QoRRN1aVu24y4BDKpSF0mh24bgm2suCHPiiMYDk2HFuBAAS+D8u2YVuAsi1QGCEkdsc0DQbzB0JLOX3f80AagQCnhJAUEEUIcwbjMOwFg+LfOLlRhBBupWfkSBQCUTyTthPNBQsMLGAo6hlDWpQIHigeyJUhWORpBFjjwAIFl5u3QBtJ5KAH1qyw0Bs8oyjRZqh4th+HTo7iDQSyCCHF9RFrHOzkDHay3BRrf2wnue/QT5ZvnFg4C2yUSi58v4FWZxdOWxzi2hvPw403zcd5F8SPN5Hd4DpJmSlKjCjsnkCg7Q6S8vcJCn7SxlloK0OEBOFkQQQF4QQhMj7z1nzR+z/i7whA14vXyVtN4NlfB7Thqd/hg21tOGohLHsUnTZBWbGNAiweiOPBlywbrqrADwkqigcdWymQUqAwhB+GKDl2smYeIbJiY8lIRbDYs4CsxD4gP1Sxnuknow17D8SBkiz4ZIMQnyMyxCZ+L8nqDYxKWyFCL33AjpdY+LxaQFBO/H/EgoTKCjBRwQx/GkGBEOolhdh2JNYApdI4JwKCVRR4IXt/APpyPhiDrLk0ktdXkcX1Cb0koZSC67qwbRsUkP6eTG8QsqCUD4saUNYkKpUOLvzYPKy49SJc+RkoywWCxFU2dnNkuKzcMM2lk+ncZrMC0ZElExOEY4kICsJJDSFCFPVsG/Z+CLz6EtGLz72L37+1BwtGl6HVBrodhYgsvb4eRRH8IF7/DgmpFMS8Hm9ZFoIgiLNMIlnfVpEWNCwCLMSaD0UWSEV9n47lIkI80zc/Y5uBCAEPGDxAKzs1QEewUjYKcYAHFkC8ePBWIaxEc2BZDmwLsJQDZREc5UALCoYAY1G+YJP9NN0y4/tOfzqWG9dJpFJLDnkCh15yMe4vMDQm05FnS0FEsB2Fjh97KpRKJZTLVYAU2u022s0mhoaGoBRg2yq2DbGiZIknAqIpuNYBfPJT5+HT15yBCy6GOv0sJPaFEWIXRyR1wUaHXD+mUCCaAeGjjQgKwklMlBgtWgCcOOlPrMXH7g+AV1/u0OqxF+F5I/A7VURBNc46aZXi9fnEOj0ehHrr2iwwpGfGycBgCApEKg6oQ1ahoBAFsbGhBRuwYtV/SLEtQRD5cThqFWnXBQUrFkwsO7GZUCCKkqv3HAVj7waCbbk9zYZFsJQDx0JPcxElRpAZwSCrYZhu6cQUAFIaBYQIKUiVSylLl1sp9tZIl9v8v20ZdVsACwlZ7QKpCBH5sO04o2jgKwS+BQUH5XIZlRLQ7oRQVhcRGuj6h+CHh+CWAyw4rYYF8xzcdccVOG8Z1GIWEGzAD0NAeXAdDqyRk8p6VgaMgnByI4KCcBITAQjhB104ThxXPx6HYuO2KALaU8DWN0DPP3sIW7fuxtQEgKgKkI0wsuD7PpTtwFEOLMdOVuwVooAQRhFsy8rERVCJlwEhIhVbus2QAZEHOBY6WCDxIz+xNaA+tbplWfGSh3FMX5wDijUIAHpLIUrBgkrZDljGqWc7vhXN5GMinTvD3N8c2PUSA/XfY/yDaeA3+zJYdhK7kRwoy4WKHEQR4Ps+grCFoWEHIaYQ0UG41TbOPKuKj1++FJ/45EIsWwY1VInLTyqOwumWASBIvHFUz223z70RIiwIpwwiKAgnMREAP3b3A2d5suCHiREhxSGgbQeIfOC9d0EvP9/Cm69/gIP7PYRhFYiq6HqEwAsRgeBYsRU9IoUgjDUBEVRsOalsWEnEonieHsaz2uwau4Ft29oAMVXyKIqjR1IZFKmegaKxHxmCglJKx2HgOANQARyXABXoaIwAYEOlBlc1h4KC2V8QrF4kquxvhoCQPV86aiSlyld0/fx+ykIYII5OSUCEAAoBLDuEUwrhlLro+vsx7zSF88+fh0uvXIJLL62q0xcDsADfizVQ5RIyngmx/w1FThwFkgUFU0DQsRJk2UH46COCgnASEyEMPNiOA8BCt9sFkUKlUop/owiWskCJqyUlAZ0aU3GK4YMHgI3rd+LQRBeH9h9Co+UlZgJlOCgjUg5cVYIfKlAAxGKDDdgWVKQQIgTZQWzciPyVfkQRgiiCIgIpBde2AcuCY8Uq8sCP17hjR4ow9QkVJ5SOZRMLRJFW3StlASpE2SVApdf5TaEhOwhbOa97dAQz4yAKk4HfTiJGOkmo57RtQxQhFR+CklgJsQ1FMayVMPsp9n5QyobXjeC6Lhw7QDdsIAobqI4C5yyZhzPOrOGzK85EdQhqdB4wNBrnpuAImxFFcFSExL8FBIpdPCMA5MJ1qvnahFTkRQnBLHz0EUFBOLmJgG4niVSYjDldvwnLUnCd2NCQAEShlWgEejNyP4hnlFNTwAc7QDt27MO+3Yew/0ATU4c8tFoR2g0fnm8h6FoIQzs2XlQuFClEiBDZYWKTgP6lAQXYKnGDjAjKtuBYNizHhq1im4LA83ScBXPtn+MRUKR0gCZCiCgxaoxtEBSCIOyb0SsYgkKUmdEb/50ua6Tep6B/4FDIZEdQKg4MZdsKluXAMmwklLIRRQHCkBJXRRjGmQBCa9qCsKDAmhbLsnQcC9uxMDxcQ6mssGBBFWcvnY9l55dw1lKoefOBUiXO11GpJrYrKo6U6YdAtZREtgwD2E5iqIooySNhgciKhZ0+24RYixVvAFCBeDAIH3VEUBBOXrKzPQBh5CU+80CYzHZ7SYQoNsCDl6ShLgGo6lwMQLxU4XWBTiv+DHyQ142FkTBxk49dAhMNhTX9jNy2kQyOxjHJ8SqOMQVl9fI36Fuj3hYPvL3/R4gHPqhkZqzSHoZmjohB5rrTCQzZ7qEvDXe8lK9/y+aqMNNfm2GodaruGYQVpXp1F3svxEKh68Z/D9WgHDcWCtxy7DSSrEDBtihJ2BTbmwAObCse/NmGxUr2j6IgMd5M2k5IsG03U5rYJgbwkk8LIigIpwIiKAgnNzquQiYOQ56BoZ4NxsmoCGWAqr1zDPIqZAe2I3x9EgeKPiGC7fvCMGssCMAyNBblngYjj+kEhelNCAfDol6VZPNUAACbXLBgoAUELtwRpqnW99cndATJkgIvBGW8F8g4Dtm/i2qGBQUjAiNciKAgfNQRQUE4ieEOmy3NcgQE0wgNQC+9by8C5LRvQGrwMa8XJYmik5FuQHfD/lwH6bJSMtuFKTRwUbTrRbJvvJqCEBGsGeIhTPcZHeZxFjICSk6Z+4MxGfWquCYPV2SJYBU8vf6U16zamEHHoo0UBymTxFAQTg1EUBBOYlhDAMRpfq0CNzaj4ycOcIScWSgG1xDoabTxqWb5OR19a+MF10lc+w7HHnEu3nylsyAe3tEgZyBbieIzmAO6Ec0zd2duB4agyO6PKW0CC4NGOVkoyD5vcZEUTgFEZyacxLDqF/0zxZSQYO6PtG2Dipch9ECgjEHBJDv45MykZ/3Jf2cFh1kOQIc7Vg0irxyN6/aw5uAkpqYDxc9JoefuoNUyiI9Vxt99FAgJeQKpIHxEEY2CcPKS67qWnREmoXd539QyBIfpDdEbEJD5nE7loHoaisO+B8q3MTDiDKS+y2oUkFPEY8lhdB+U2DXEwZoGVfPPRPbZob99ZNHthZ9/5vjsufMEPdEqCKcAolEQPhqkguBwXIFp1o/1AJEnHORhjg5GnH/FxpOY/dKDAogDCmUGG/1fLTBkfjiBBqesW2gSAiIOGJXzO9tYKP28jlSvUfDMzDoqvAQvQ7C9idVf1+b5+oTNWRVWEE5KRKMgnNRQZjY6c7+dmR3OZKPQZ8xofsbni8cOC5QYOA7+mTbFnKa0xfdFSBtJDmiMSEmwav394Rhjqvg8UWJMOdvP2CD0SJnBmDDXK8ZwK0kJCU5mWSrz2We/ULBMJQgfMURQEE5iIlBqRqig+pRkWdV2Zr15UPpGtPicR/r2sN1+3oCZZDHQwxBlrhZHYDy8EkwnnMz2PNMJBAqq73sCJYJCLGAdVUMJFqRSAoLp3shbZonKPHfKE8IUMozjBOEjjAgKwklOdn07r9POMWg8QRjk7TvRtduz16REhvhzrIgK/i6wbQAKhcM0J1Z7EoSjgQgKgiAIgiAUIuKwIAiCIAiFiKAgCIIgCEIhIigIgiAIglCICAqCIAiCIBQigoIgCIIgCIWIoCAIgiAIQiEiKAiCIAiCUIgICoIgCIIgFCKCgiAIgiAIhYigIAiCIAhCISIoCIIgCIJQiAgKgiAIgiAUIoKCIAiCIAiFiKAgCIIgCEIhIigIwkcYM418GIb6b8/zAAC+7+v9giDI3fdoEkVRqjxclna7ndqHy9bpdI55GQXhVEcEBUH4CKOUQhiG8H0ftm0DALrdLkqlEgDAdV14ngelFBzHwcTEBADAsqyUkHG0sCwLnuehVCohCAJ0u10opVCtVgEArVYLlmXBtm1MTU2hUqno7/l+BEE4uqhj0RkIgnB8CIIAlmXBsuI5QRiGsCwLSins27cPpVIJo6OjiKIIRATbthEEATzPQ61WO+rli6IIlmVp4UUphSAI4Ps+XNeF4zj676JjBUE4uoigIAinAEEQIAgCVCoVreZnrUK73Ua1WoXv+yAiPbt3HOeYlMu8ztTUFEZGRlK/K6X0RkTwPA+O4xyT8gmCIEsPgvCRp91uw3EcVCoVBEGAUqmklxaiKEK1WkUURXBdF91uFwDgOA5ardZRL5vjONrugIi0kDAxMaEFAtu2U8JCpVKB4zgpuwZBEI4eolEQhI843W4X5XI59feOHTvw+uuvU7VaxQUXXKCWLFmilx+CIND7H23ylg8ajQaGh4fRaDTwyiuvULPZxMUXX6zOP/98ALFBY6VSkaUHQThGiKAgCB9hWDAwhYXx8XGq1+up/R544AF85StfUbxPGIbHzFgwCAIQEVzX1ULA6tWr6Y477kjtt3r1aqxYsULVarVjtjQiCIIICoLwkYc9HizLwnPPPUfXXntt7n5RFCnLsjA5OYnR0VEQEZRSx6SMprCQkNsxbdiwAZ/+9KfV6OjoMRVmBOFURkRyITU7IyKEYQjHcbB27VridePJyUksXLgQn/nMZxQbmEkn3cO03nccB88++yyxtf7k5CTK5TKuu+46VavV9Ox+LmbFfI6JiQm8+OKLVC6X0Ww2US6XoZTC8uXLFQCton/zzTdRJChs27YNy5Ytw8jIyDFT63P52T3T9339/zxefPFFrFy5stATYhCISG9593ishCNBOFkQQUFAGIZ6Nuf7PkqlEiYnJ3Hbbbel9tu4caOebQLQ/u9CDKvNAeDgwYPIqvcTlb8ql8vaTfFI4cH1gQceoG9/+9up3zZs2JBacgCAJUuWFJ5r2bJl2oCQhZ6jbavgOI52y+TBfzohYMGCBYiiaODBnDWm5v5sFDnb4wThVEUsgQSUy2WtHeCIeCwMmKxYsUJ/fyQzuo8SHDHQsiztVQD0Ih6a1Ot17VUwyGA1CJ1OB67r4oorruj7be/evSiXy2i1Wro8n/vc53IvOj4+ru+DORYGjTyzB6DbExHp8mT5kz/5E8Vl5KiOs73OIIiAIAg9RFA4xeEwuDyQzJs3T1u/F2H6tp/q8IyeBQQiQqvVwpe+9KXcylm/fj0Bcxf50LIsbN++HStXruz7bcWKFarVaqFWq+kIjQCwd+9eZQ7E4+PjqNfrqtPppJYcjoX7oVIKlmUhCAIdQbJUKqFer6v77rsvVcbt27er4eFhEJHWegxyfm6n7A7K7dv8v/mdeawgnMroJbrjXRDh+MICQqlU0v7slmWh2Wzm7s9qYnFL68E2He12G67rolqtIgzD3FkxCxQsbB0ppVIJr776ap/EMT4+jjPOOAO1Wk2Xj693+umn47bbblMAFABVr9dVGIaoVCoolUq6czhWy0pcPjN3QxRF+O///b+rIAh0GZcuXQog1qIcTp4HMxZD3sb7CIKQRnr7U5xSqaTXfEulklaN54XvXb9+PXzf17NAATraIQAd/pgHnmuvvbZv1KnX62g0GjqI0JEShmGfLQQQa4ZYCLRtGxMTE7AsC41GA0BPzc9LTaw96HQ6qSiIRxsOMQ3EbdG2bURRhEOHDiGKIm3seeDAAb3UUK1WB9Z2sNCTJxQA/cKDeYx4hAmnOvrdkJdBaLVaqFarqQ40MczLaxx6p2Nh7HaywIaMpitiEhq5rw5/9rOf4Y//+I9VFEVHXH9btmyha665Ju8nBeQbnGa9LjjAEWN6vhwreInELC+Xz/zO931wvQ1iTJvn4mkuOcx0j6JhEATRKJzyBEGg17B5BmrOkrPwIEJEIiQAfYZ4ruvq5YVqtYof//jHfceMjo7Cdd05qb89e/b0fTc+Pp5aUgKgbQCA2EiRwzq3220MDw8jDEO99MRCgpl2+mjB1+AlEi7v5OSkHsSzbrjsNTKIMW12oI+iCL7vo9vtotPpoNvtwvM8+L6v2zUfJ0KCIMSIRkHQmLOvJJhNoUbB3NecgW7ZsoWmpqaglNJ5BG644QYVRZFWK1uWhd27d+OBBx6gSy+9FABQqVT0QPX++9tx1VVX4frrr1VBEMFx2Mod4BWPIIhg2xa4L+fZpe/7Oi0xkHZZNOMWtNttvPPOO/TCCy9g4cKFAJAaHHfv3o1ly5bh1ltv1fcbBIEenLJxBnj5ho3xuEydTgejo6N99fjhhx+qM888U6v4zXrnATOrseH9MtEW+869c+dOdcYZZ6QGUiJCt9tFpVLBG2+8QR988AEcx4Hrumg2m7j++utVtVrty9bIdZYNbsSJpLZu3Up/+MMf9PccehmI4zJceOGFuPXWW1Wr1UoFccrWn/l9p9OB4zjYsGEDWZaFUqkEz/OwYMECXHXVVarZbGJoaCj1TPg7E75Gp9PRcSUmJyfx2GOP0QcffICPfexjqf23b9+Oiy66CJdddpmaN2+evgY/G66L7HPJtqtqtYpXX32VJicnEYahXo665pprVLlc1st9bND60EMPES/1sXsow+8Pp90237VjGRBLOMUx1+NkO7U30/I7iZSXR2pfzjhIFGf1yztgampK7/Piiy9SEshpIO677+/I90N0uz7CkBCGhCCI0O36qbJ3u12z3KnN8zy0220QEXbt2oUf/vCH9NRTTw1chrGxMX0PfH7P8xBFkZ6FZq/H+wVBgLGxsb5z/s3f/A3xsby/eW4+F5ebiNDpdFL3m3feNWvWkLkfZZ7R1NRU7nE/+9nP+o4z2wMRaTdLIsLDDz88cP0RET3yyCPE93fo0CFdN/xdGIb6GRIRVq9e3XeOsbExarVaqfKY5ex2u2g2m4iiCJOTk6nnsXXrVsq77yLGxsbokUceoTAMEUURgiBAt9tN1QlfK9sGoijKreMHHniAKHkGnufl7jNdeXbu3Hnc+wjZTs3tuBdAthNnOxxBIQxDeJ5ndpZ9TExMgIhm1TFmeeWV1/S1wzBdbp618d9G+UFEmJycRBAE+Od//ufDvj4R8UADc7DiQZ61B/y9OehNI5T01SV/8rn4PqIoQrPZ1Of0fT+3Ph955BGjnuLzdTqd1Hnyjlu1apU+zix7EAQp98G33nrrcKqOiIjWrVtHL7/8cqp8WUGTy5yUJ8XY2BiZz5q3RqPR134peU7vvvsuHnvsscMu8/r16+nNN9/UZebtwIEDum7N733fR6fTya3jRPjBL37xi8Muzz//8z8TL5dkyySbbEdrO+4FkO3E2Q5HUBj0mCMREpj16zdSo9FCEMTX7HTiztIcbHgQ4e+azSa2b98+J9dn3n33XS0ckFF/PPvkcvCgl3zXxxtvvEFZn37+2zw3n9c8XzJQ9WEO8uZMl89dNJN99NFHiSge+HKeKYIgwNatWw+7zrJlnJqa0uXrdrupwT8MQ6xbt67vOBbUsnVBxjNgobTT6eBXv/rVnJSXqKcNYKGEy83lNW0cqKC9P/jgg3SkwipRT2AiOrL3XTbZBt0khLNwRJhr8mwYlyUvW6Hxm/67aB9m5crlOHhwAkNDVfh+iHK5F8mP4b/Z3uA3v/kN3XbbbTjnnHMKz7tu3Tq0Wq3Ud9OVZdmyZfTggw/iz/7szxQLBOVyWQcOchxH22MQxevISVCj1HnefvttXHrppXofoLfebUYpZOt8pRTa7TYqlQoeffRR+su//MvU+fgabE9geF7o8xcZAPKau5mOmu8DAPbt24dLLrlkTuqwVCpRqVRSbA9iBk/itfvpoi4qpeB5ns4PYYYg58iha9eupbvvvrvwHAD64lxUq1Xceuutuft+/etfx/j4ON18882K6zTvGQG9IGZZRkZG8Kd/+qczlmVkZAQrVqwoLHe9XsfDDz9Mf/RHf6QkOqpwTDjekopsJ852OBoF3ox1+Rn56U9/SkTxrN/3406eP4lm1j50Ol7KRsGcjZp/b968edrz3HfffRQEAdrtNqamplJLCh9++OGM5UhUyPB9Xy8LmJoGrqNGo4H3338/t27MWTUVPA9eI8/cXx/PPvss5dUDl5E/8+6L1//z7CQajUZhXYyNjRHbA7RaLT1oT01NYcuWLYV1NzY2Rtk2xM+CiPD000/nHsOCmTmj5r/5Hqd7bmNjY/Tee++lrttsNrFv3z40m0288MIL09oysFaDMvVKyXNij4pBNFh8rmaz2aedajQa2Lhx47THf/jhh8e9z5Dt1NiOewFkO3G2wxEUTMO9ZJuWHTt29A16ppqeB9wXX3yx8By8np5nRMZ/T7fcMDY2pu0mspupeudyTdfp79mzp+8c3Onz4M/3lKdOf+KJJyivHNmwwma5XnvttaLi6GPZ2JLryRQ6pls/N++dz5cM3n2wOj4MQ7CFf/Y+kjqYtry8rm8e//jjj/ftbKrczfrhENpRFGHDhg2FF0valK6Tdrudst1otVrwPA/dbhdPPPEEjY+P557noYceIn6mHNcha28xk6CQGIOm6jmKIkxMTKTOs23bNhSVIyu0yCbb0dokjoJwRLiuC9u2QUS5iZBM9u3bpxYvXqzV2Xwc/5+IdETIyy67TD3//PO55wnDEHv27EmpqInSXoLvvPNO7nIH5zUYHR3VKmIeMIA47oDp9mlZFj7/+c+rsbGx3LI899xzNDU1pctlfpZKJYRhiFqtBt/38dZbb/Udz4IWAB0VE+j58fNv7N5HRHj//ff7zvO9731PPwN2GeT8DpZl6XtiF9QsfG0e9ExXyM2bN/e5YG7cuBF/+qd/qjiy4sjICCzL0gaJQLyMUiqVsHPnzlwfvtdee404rTQv3QC9es/DzJHBrqK8RBIEQaHKvtFoqCuvvFKXw/M8VCqVVOjmarUKdse8/fbb1QUXXIBVq1b1neuP//iPddvjJSHLsvTSw0zvwcMPP4x7771XuwwDcf2HYYjR0VHtohqGIZYuXYobb7wxt/5mWqoThLlCBAVBYw5Mu3btKtyPZzzZY6dbL/3Od76DRYsWpfy+eZ0ZQGowA+KB8eqrr1Z5+RLq9XpKHc/XZ6Gh2WyCB+8sd911l74ID0YcP4DPw7CvuuM4uPPOOwvLwgMyd/pmPdi2rQfO//Jf/ktuSGcenDk2ggmXgSGi3AHiz/7sz5T5DPgYtpVg2B+/iLw8Htu3b+/bj91F+Z55Rs+5IlqtFhzHQRRFWLJkSW7ei9/+9rdwXbfv/qYLdsS/M+VyWd/f6tWrc4PCvPDCCxgaGtKCKQD9vLP3agpIl156qSqybbn//vvJFFrMpGDTRXvcsGFDbsKwcrmcOo4FcCAWOB9//PHc873yyisE9DJpHotEXsKphwgKQioiHTNdVL7DyfXwrW99S7Xb7dTAOUjSoSIDuvfee494JmkOimEYYvfu3bmD6WuvvaYHGVNImQ4etGzbxs0335x7wCOPPJIaNExMw8IoinIHzFWrVhF38Bx1EOgN9qbw8OKLL+YmgKrVanp/U5twpDQaDXBQLBMe2Pg6bJDIxpi1Wg2NRkOXYf/+/Vi/fj2AWBth3t+Rwm0xr02Oj4/j4x//uOJnzQPqoIGKzj//fPWd73yn7/slS5ZoDwiTmSI6zp8/H7ZtDzygR1GEWq2G6667Tq1Zs6bv92effRYTExO5z3o2abgFYTpEUBBARKkONPFVL+zFZysk8EBWLpf7lhpm4uKLL1Zr167t+/6tt95KlZnXq23bxhtvvJF74k984hOKNREcHW8QeM1/aGgod6A///zzUxoNxrw/ntkvWrSo73jHcVKzSXOg4ayOzO7du/uOtyyrL5V09vqHy/DwMM4444y+ke+2227Dli1biJceeMmDvRA8z8Pw8LCOmvjNb35TJYKWWrFihQKgvva1rx1xWEG+x23btuUKh5dddpmq1Wpaa8P1M6igMDw8jHvuuafv+3q9zjElZlXeT37ykwqIheRB3iMu7/z58/G73/2u7/clS5ag2+1qTZK5fCMIc4UICkJK7c8DWtEgaqp+Bx1om80mWq2WnnEC0IZ+M7Fv374+dTwALFy4ULvjmevwURTl5ql45JFH0Gq1DivkLZ+71WrlrhcvX74c3W5Xr5+bgpBt26ksjldffXXu8sP+/fv1oMDnMcvKQXbyBsMbbrhB72gaQM5VUqdly5blfn/NNddg06ZN5HkeXNfVkQtt205pi/h5sOEfMxdqcq6jl156KdeO4txzz9X/z+aMGAQiwqJFi3KXnTZv3qzb8yDtanx8XBtMDgq/M0SET3ziE7n7mPeVta8RhLlAWpLQZx8AFM9IOKfBdPtkOeuss7RqnGc+PLAC0bTb6Gh/XAZGqfT6MBAbJn7uc5/r23fFihWKUzs7joOpqamBOlIWmlzXRa1Ww4IFC3L327FjB5l1aA70PDDwEkbeoPPoo48SG+TxdQFoNbVt29i0aVPussP8+fP1/3lGPxfLDmbZV69enfv7LbfcgrVr19Ljjz9ObJDY6XTgeZ4+1rZtnb6a65y1OnNBURbIqakpLajxdc22O4igO53tzbJly7QQOOg7UavVUCqVUkm6poPbrFIKF154YZ80Mjw8nHLH5SUuWXYQ5hIRFAQA6Q4uT40OAE8//XRqUB50dn7ZZZcp3/f1/r7vY2RkZKBjpxtMiKjPCDCbGIgZHR1NJfKZyaiPyXbm7XY7d6DfunVrqs7MtWo28APiAfIzn/lMX8X99V//NYDeQJ9NOOU4Tq7HAhvbmSp1M1DSkcL1f8cdd+TOqoFYI/KFL3wBjuPQ+Pg4rVq1irrdLkqlEprNJoBYq+A4js4XMVNQpdlQ1A7ZINfU8HC9mrYtM8Hpw/PgQdpU+Red95133tF/czryQeBz5y1brVy5MiUksGeMLD0Ic4kICqc43KFk7RTyuOmmm3Rse2BwW4WFCxfqjIKsmuboejMxNTWF3/9+a+HvpuGf53mF3g6mdT675A0yULmuq5cCOCJfHm+//XbfcgF32GzZz7+feeaZ2rDP5Lnnnsvt3SuVCnbt2pW77MBr3owpMMzFYMHeDL7vo16vFwoLTL1ex5e//GWMjIwQAFq/fj0lwaZ0SnOu07lQjbOGK+9c5557rh7EORCWOTjPZqC+6KKL+r4fHR3t8wCabja/dOlSvVw2qKAKQLu9Fi0lmR4SXF7TaFgQjhQRFAQA6YElbymC4bj8s6HZbGLBggVaA8DGb4OonoeHh3NtDoB4AOVz8N95Pv9PPfWU7rw5PPJMvu4Md9LsZ180+F5wwQWpY4BeTAIT27bRbrdzXQ737t2r9zEHoCiKsG7dur4L33fffQB6nhVArPHIluNIYG8GFnZuueUW9fbbb+dqVfKo1+s477zz6LHHHqOXX36ZgN5S0Wzb0XTceeedfd+deeaZ+jmbYbEHVfsDPQE6T+2/fPnyPo+h6QQF3/dRq9Vy42YUwe+L67qFSyDZ5RQWnOZKqyQIIiic4phxDLjzjKIICxYsyJUUpqamyHXdVGdoHpcH72+u9/Y6PWvaLQwJlpU/k3KcWEgwNRMXXXRRX7lvvfXWvjj8efECinBdV6cZLhKgtm/f3jeL52UA9gzg61erVXz1q1/NNWoEegO8mf9hyZIlfdf8i7/4C8X3wpi5NubKmM0c0CuVCi644AJ11113qe3bt8+oYWDq9TquvvpqjI+PEw+QczGQcZCnJ554ou+33bt3p2bhprBoPsesQJdV3RPFIb3zaDabxPvwuQ8ePJi7b7lc1p4hQHHeDROzjorKwNq6uXKJFYQsIigIfQN81mo9D7OjNaPbHQ2mG1DCMNQdbhRFWLx4ce5+Silt3NYzpBwMVvtO50XAESXZvoNngqb3gekRUSqVcmflTz75JBFRqv537NjRF3Hwsccey03ANdewfQTHnWBtE0cNrNfrqtvtqp07d6qf//znM2oa6vU6hoaGaHJycs7ai+lZYnLgwAFYloVDhw6lvmfNVlaoM/8227TjONi6dWuuesZ1XcXn5M+i+8oukQzaBs04IXmY7694OghHA2lVgu5ozE7GNPzL29ecPfPAcbQEhZnc/EzVa5Ex46FDhzAyMgLf93U0v0FV8yyIsFdCnq3AVVddlaob7tSnC4Rz2mmn9f3W6XRgWVZqiScvLoTrunPm/jgdpkEmezKw8MP35roulixZgq9+9auqXq+rRqOhxsbGphUa8jw4DodsuGmTHTt2wPM8zJ8/P+UZweXnNjxTADHf93O1BBwfJBtWuui58LVmuyQ0k6BgGh+b9yEGjcJcIYKCkLJN4A6nSFDIG/iOloDA555ORZuNzFjUObLtAseJGNTq3ry3IAi0mjfLxz/+cZWtm+wgZqZSBoDrrrsud/mh3W7raIdFgsntt9+ujoULnFJKxz8olUratc80DDTvi4gwPDyMu+++Wy1fvly9/vrruQJDvV7Ha6+9dsQjGV/7gw8+6PvtYx/7WF9wr2zui2wkRV7nz3qwzJs3r+/8b775JoaGhlKChpnzIQsvvx2u+2LRe2ba8BzNd1E4dRFBQUjZKeTNTEzM9dusVuFoMdMyCFvmcznyBibzvjib4iBr5GYMfcdx8Otf/zp3cDNdGs3ESllXU/6erfHzysoxCYioMGQz38uxgG00WF2ftVHhNsEzaxaYRkdHcdlll6kib4lt27YdcdlYkLn99ttzha4gCHDo0CHtBWA+86zXjemZwnXr+z7a7XausHbrrbfmGtpO9+5wmQ/nfSkSLoaHh/vcaQVhLhFBQUh1MkUxFJjsDM3s/Nj1a66ZSVDIDlwXXnhh3z71eh379u3T+w9aVj5vqVTC3r17cweMBx98MGUrkfUaycae4C0MQ3zqU5/qGzEqlYrWfLAnhMlFF110TAeDNWvW0CuvvEJPP/00bdy4kTZu3EgcW8BsBywsZAUw3/cLozvOBZZlYdmyZdi0aVPfbz/60Y+IA1KZLoPm82K4/Oazc10XGzduzBUOP/3pTyvzXk0vlTwG8SrKgwXyPDuMtWvX6uW27DspCHOFCApCSlCYKRBNuVxWpjBhdniTk5NHpXyDrMWb5bj00ktzZ7DPPvsssfvg8PDwQBbifO1ut1sY56Beryv2i2fNghmuOm/5gVmyZAmyuSzuuOMO7N69G5Zl5QomF110kTpW2oQoinD77bfjmmuuwcqVK7Fy5UqsWLECDz74ILGbqWnkCEDHTDBDUl9++eWFXh5HCgsAeRlPv/3tb+Ptt98mM7sjUxRJk/E8D2vXrs1NV37//ffrv7PvQtH7Y2Y7nQ0sKHS73b6DeRnNvK4ICsJcI4KCAKDfp71oVsSz+7wlh6OlUZhuUMx20tMZKdbrdaxdu5ZmkxiIz//DH/4wd8AYHx/H6Oio/r+5HMPr3WawJwCp3A9Afkrvhx56iJ544om+G/nRj36kjzsWWoWi5ZHR0dFUGOYgCFJ5D2zb1uW0bTt3Vj6oa+VMsDfJl7/85dwH+tZbb8FxnFTQojxXVpNut4tms4nbbrst95rf+MY3UgfkeQFlycZvmK0rY17ciax9iCAcDURQOMUxjbyY6Qbms846C0B6lj+TVTYPJjxAsh/9IB0br/PnwZkggfR6s1IKN998c65W4Z577sHq1asJ6N1nNjeCafOQDJT0X//rf+071/r161Gv11OFM2fWHIGQKfKfv/vuu/tu8Morr8wdGL7yla/ofQfNPsh2GYMMTFlDO8/zUoIQU6/X8fDDD+sHyIGZTCHMXJqYrqxmTgy+9kzBhfKCFVmWhc2bN/d9f+edd+Lpp58mzrzJIaT5XKwJ4zIDcZTMBQsW5DbQ5557Ti8dZT0ZpvP+6Xa702qXpkMphaGhodxlKvNcpsAmCHOFCAoCgJ6XAw++eXkFgF6kQu7QeWCZzu1ramoqtSbM1xq0QyvqeC3L6tNw8GA1NDSElStX5h6YaAboX//1X4nPb7ozOo6DiYkJ/PjHPyYAuZoEALjkkkvmxIJz/vz5fbPr5cuX96nmx8fHMW/ePD17HCS6pDmrn85408wxwap8judw4403qg0bNvQd89WvfhXj4+P0+uuvE9AfIdJ1XRw6dAjj4+N000039R1/6aWXpoSyUqmkQ3sXtT/f93V+Dz6Ol5OUUrjhhhvU3/7t3/Ydd9NNN+Gcc86h8fFxMgMXdbvdlCD08ssv0/j4OC1fvjz3+j/60Y9w7bXXKiDtxcDYtl0Ynpnda/n5Ddr++X3ME/QmJia0EGjbNhzH0cLDIJEfBWEQjr4jtnBCk6x9pmYmMxlbZWd7PDgU2RKY4XO73a4OBzxIZDr2UCiCI92ZnTNnKxweHsbvfvc7XH755bnHfu1rXwMAevLJJ1MaCcuycOedd+Kv/uqvCq+7efNmXHfddTOWfyY6nQ6iKBrI2I+FIn5eg9QfEA+kfGyRVoHrjA3jTKPVIAgKBz9DmKEnnngCrVYLlUoFH3zwAc455xzU6/VcW4Tx8XHcdtttinNucB4NFv6KgkmZURU5DHitVoPv+7o+/tt/+2/qySefpLwsoiwkchmyv11zzTW51+X9v/GNbyjWIpiBvjzPA2fPLBLI5s2bl3pmgzw/jvngOE6ui+bo6CgajYb+zQz0VRT6XBBmiwgKpziWZekZPs/kzFlJHhylj1XrzWYzpXbO0u12QUSoVqspdbwZzraImWbC5m+NRkMHwFFKIQgCXH755WrLli003QBw++23T1uGLGNjY7jrrrvmxKCQ6zkx9pt2Leazn/2sAuKEQjyLHCRfhjl4FdVl3kyYZ6nlchnXXnutWrduHd1yyy2F15mNceLnPvc5ZYY0Nq/darVSOStMlFJoNpsYGhrKDWoVhiE8z8Py5cvV+Ph4oTZotuUdHx/H7bffrsz65kRkZvk9zysUADqdTsr4c5D2Yy7L5AUTm5ycTAkQpluuIMwVsvRwimOu85dKJYyOjurBNg+lFEqlktYK8HHVahULFy7MPWb+/Pmo1Wp6XddM1DMIRSp2ntnxoDk8PKxVweVyWZ//05/+tNq7d+/AeQmKGB8fx86dO1W9XlfTCUazgdXDQRDgu9/97rTXrtVqaLVa+r4HERKAeKnHjG+Qh+d5Om8Cq/05eReX78Ybb1QvvPDCoLeWy9q1a9Fut5Xrumg0GvoZmcJBrVbTIbHzMLUebMhoZujkQfv2229XDzzwwBGVFwCef/551Ot1xe2djXaVUlqLAPQ8EKYLjDTbiJrmO5YngLCww0uAZpuQeArCXCGCwikOzzbNwTgIgsLENs1mM2W4ZSY8Klpz3blzp/6NO7uZBi6Gl0by4JTXpgGemb663W7rGd/pp5+Oer2unnjiiVlb24+Pj+Pxxx9HvV5XS5YsSVn3HymlUknbRdx7772FJzz33HMBxIPobHJVmIOabduFqb15kC6VSqk1bjN8dblcxmc+8xkVhuFhCV0bN27EypUrValUgm3bGB4e1u2uXC5rzRYRgQ0Ps3BkzKznCgtPjuNgcnJSR5H86le/qt577z31v//3/551ef/xH/8R+/fvV1deeWUqn0OtVtPRM4FegC2OyljUXn3f178NOojzfkSUm0J9fHxctwczSBTbTwjCXKCKDNCEUwPP81KzEFaNOo6DTZs2EedP4Jna5ZdfrlqtVmrGZy4hPP/888Rq/06nA9d1ceONN6put4soilIq5uni9JtMTEzg1VdfpWq1CqUUJicnsWzZMnX++eenysCzS9OvXCml17/ZIt2yLOzZswdr1qzRwXjy2LNnD770pS8pTpHNA0KpVEKn05mTNWDTDx6IjemmpqZQLpfhuq5OZrV8+XKVfVaDLN2Y1+FAT++88w527txJvLbf7XbxiU98Qp122ml60DFnr1EUpWxLzDrevn07Vq9eTWeffXbfNd98801ccMEFuPnmm9WCBQt0nbHwxjYGps1BEAQ62NTLL79MnufptrZ48WK1dOnS1LJLt9tFuVzW7ZhtFfh7bmP8/8cff5ymMyJ8//33ccMNN+BTn/qU4nbMdhSWZaHRaKBSqcBxnD73V7N9ffjhh/jggw+IDRgbjQY+9alPKW5vg7Z93pfv9+mnn6ahoSGEYYh2u40FCxbgiiuuUEQEfi+zwpMgHCkiKAjaYM1MaJMdwLgj5n1d100JGaZbmHlcNra+6e89mxDKrAY3BzDWSpjJfkz3ObaM5+BH2UG13W6jUqlojw0eTLOJdYo63mwdHS6tVksLUDzwmOGEzQGL62DQa2dDcpt1mL03oDdDNyMY8jM2rznTQJdtD1NTUxgZGcndlwU5s8xskJcN7sVtD+i1SdMFlJ+xeZ/m+c02ywOr6eKYHfhZC8Pun4zZnrLxGMxcIuztY16D9xkklLN5HT6vKZBk74PLMBtBRBBmQgQFQRAEQRAKERsFQRAEQRAKEUFBEARBEIRCRFAQBEEQBKEQERQEQRAEQShEBAVBEARBEAoRQUEQBEEQhEJEUBAEQRAEoZATXlDgKGqcRZAD0XDoVzMwDIenNUP6mlHYzLCpHErVDF3cbDYBIHX+7DWyZToWmPdglotjYJixMIIgmHV62aJYGhwRziQvBC3XexAEM6bOjaJooPTIfB4um5l2mMMND3KfXDYOppMtOxGlnnu2rPy92d74e/47W0+8L7fVLFx+Psa8NzMg1SD1NAhm2ObJyUn9Hddx9pkNmv4YSN+r+czy2imnWJ5NDgLel0NRm+3bzFNiXo9TUQ8Kp9TOto9sYirznJ7nzdnzmQ6zDQLp++dyM2ZdDNoHmO8HU3Rf2X5w0DrmcvI1+J4GqT/et+h+8tpqXt+ftz9HczXLmT1H9jiz/zpW/f+JwAkvKDiOg0ajocPGcjQzjmhmJobhkK4c95yTzjSbTZ2TgDuXcrmsQwxzIxgaGtIR0zgMrBnhLCuAzEVUvkEwBSTXdXVDzUZ6a7fbcBxHh64tiuufPbcZnY+TDgFIherl++Z4/Jxa14TT4QK9PAwM78vhgdvtNtrtdmrwMAfcbNQ7Dv0LxNkTO52OLst0lEolTExM6Eh2RKQjNfK9c5KhIAhSg79SCt1uN5VS2Iypz/XDn1xHvC+3U7OzbzQaOkpgEATwfV+HgubETAB0RL+5wIz+Nzo6imaziVKppOuYy8g5AjhfwSDtx7xXMxIgX7PT6ej8Gxzd0LKsvvZRBNddrVbTZSuXy2i1Wjq3ghmtkss0qDDSbDZ1tkXOhMplzws3zrlHipI0zTVmhEqOPMkRR7nc/N5wUi/XdXUfMBN5fRtHXQXi58dCmm3bur64bDPBEV+VUrrfiqJI972D3D/Q6w/4/eT3l/t3s98iIp0FlwVjvi7fV7fb7YvUarZfU7Ax9x0kE+tHkRNeUGi1Wjo3fafT0ZIlv0DcEfEshgePbreL4eFhnZ6Vw/1y5wL0UvyanYr5d3Yg4k7OcZyBwq/OFRw62Zx5AukZfzY+fxAEA2cXZJRSOlY8awf4Hvn/XAbHcfT5zRC/DOcpMDNTAr1ZWrVaRbVa1XXKW3a2z503n7PT6SAMQ1QqlYFnTXxt7nDNQYs7Dh5sTOGIBz/OeMnptYH8GY7ZafOMk++Bj+W23Gw2dT4Hxhy4Z6sVKoIFWk7gBcQCcbvd7hMIzXDXLHgPAidI4ufNocA9z9PvGKeHBuJ3mkNnz4TjOKlsljxocSZNk8OZ7WVTNw8NDen8GvzczTZphk4+VjNKridTw2FqVTgVOw9i2QnOdJiDPtevGba7Uqmk6npoaEhrbAZ5ftz+W62WPmez2USlUpmVRsIUaLgP5ucwNDSk+y2eNHK7Gx0dBRDXnWVZqFQqOrss0JtsZYVWM1W3OaZwXZ1qmTlPihDOLAlmk/Bwo+H89CwVdzodDA8Pp+Kpc2ObnJxErVbTsyZuBGZMde4g+Hq+76cGEM/zEIZhasZxtDDLyBQlo2FhiF/IbBKhIljYcl1XDyp87myOhGyMe7OzaLfbqbS7/Hv2mGazqWc92fOYf/MMP7vfbJLdcBuZnJzE6Ohoqs2woMLXYo0N19t0iZ/MpEM808vmuDCTEbEgy0Kf2SY9z9Odffb4uYLvO9smsu3LzA0xSOIr83gzH0i73UatVutrP6yGNjUB08FlyOaiyP5+uPC7w+UyB07zWtn+ATj2M8rpcjmwIM91UVRfWbhdmM/CbLOch8RsO9m8IzNh5towyz3I8WZ+ERZ6eaBmTRi/Q2beGRbwm82mFhayeU7MPrQowRqfi4XbvJwzpwInvKAwNTWlE8EMDw9rrUCn00G1WsXU1BTa7TZKpRKymQB934fv+5iamsLw8DCGhob6kgVlO0qzEezfv1/PUBzHQavVwujoKIIgwKJFi45Z4hV+CbZv347h4WGdja5Wq2FoaEjPirIJkQYtHyeVOXDggL5eo9Gg3bt3w7IslEollMtlXHbZZYoFCVb7mYl4TMyEOFyn27Ztw1lnnQXXdfuEEQC55wHSWfmICAcOHMDk5CTOPffcge6P6y8ryHA5eVBjdajv+7pjY7UjX8dsL91uF7Ztp8rNdXnw4EH4vo8zzjgjJejyMpJt2zh48CA6nQ7OOussrU4lolwB6nDJS+S0bds2jIyMoFarpZaSeLlueHg49axmgrUI5rMwr7t3715MTU1h6dKlqcRjg3a4rCkol8sIggDtdhv79+/H0qVLEUVR6hz8vPbs2aPTiw8KDxb79u3Ts+BOp0NDQ0Nq0aJFANA3mB5tzMERALZu3Uo867dtG+edd5467bTT9P55CaymI4oi7N+/H+VyGXv27KGFCxcqnjSUy2Wt2ueJGLdjnoXPdB1+xqZQnNXwDXI8kBYAut1uKoMtABw8eBCe52HevHkolUqpiR0nD+Nl52zby5sATUxMwPO8lBbjwIEDtGjRItVut3HaaafNWmt70sIP/ETdJiYmQES0Zs0aYgmXpf8wDPHDH/6QmEajoWduRATP8/DUU08REdHY2BjxuigbXnGn7Xkems1m6roffPABaBrGxsboWNy/53nwPI//P2153nzzTeLBhpKlipnOz3VFREjuqfD8L7/8sr5n027CrEtKZpP89/r163PPt2rVKnrmmWdS5eW/zUHTPBc/o3//938f+BlwHfCyCZ/T9338zd/8TeH9fv/739fnDoIArVZLl4vrzDTS6nQ65nPSdbl69Wri9VOieH2b9+d9nn/++dR9hGEIbstHurEgZJ6br/vTn/6UiAhTU1OpY/j3n//85zPWr3lvXAee5+Hhhx+mDRs25Nbt3/7t39L+/fsHKn9e3f3qV78iot7zbzQaelLAzyvpL2YsPyXvGD9L87nkwe8ZZdrm0d7CMMSGDRuo6H0y3wXWxJnv9gxbIY899hixgJCts0HLTUR44IEH9DmTvnVWG6cg5/vj71966SV6/PHHC+vk9ddfJz6ekuebNYo3y8l/+76P5NjpOGbP/3hvgyWzP46w2ui2224DEaXU/ZZl4eKLL9b/f+mll+imm27SWhLXdfXaGhsfsXRo2hi4rqulS14/O+uss/R5f/WrX2HevHl63d91XVx11VXqWMwq8mZc69atQ6lUwsGDBzE1NYXR0VHU63UAwP3330/f/OY3Fc8MZ8JxHHB9MePj4+h0OgiCAGeddZY2slu6dKkC+mfZpqEVq9eBWCOzcuVKfc4gCPCHP/wBl156qS7v+++/j/POOw9Avmq1UqnopR+2L2DV7+7du2e8P56F2rat/3YcB08++ST9r//1v3TZut0uRkZG4Hke6vU6vvWtb2F8fJxuuOEGxTMHnjW3221976xWNWfm5trrF77wBTz66KN09913K9bOeJ6XajcLFy5UYRii3W5jeHgYlmWhWq3OiYqTiLQ6+uDBg1iwYAGuvvpqBYC+9rWvAYBuJ91uF3v27NHP5j/9p/80ozqD30dz1rlq1Sq69957dd1u374d8+fPx8jICOr1Ov7H//gfAED79+9XCxcunPH8LIiy/QTX73vvvafbibksoJTCbbfdNnAdmbNa027kP/7jPzB//nwttA0PD6Ner2N8fBxDQ0M455xzBr7G4eL7vjbonpqa0s8GANauXavvs16v4yc/+Ql99atfVfz+zdbYev369QjDEENDQ9i/fz/q9TruvPNOPProo/SlL31JcV1ntQTTwar6JUuW6O9++ctf0l//9V+rQZdGeXmPnwtf84EHHqA///M/BwA89dRTePXVV3HJJZfgzTffxP/8n/9T19X69evp5ptvVvzesYYq79pEpJc22BByfHwc8+bN00LK0NAQ9u7di5UrVw7Ux34kON6Sykyb53lawn/uueeIH5YhLWtYqmaJMdmHiIgmJydTkihLxHweNgDi85vnNjUY3Gkdq9kEG1Nl7lXPrnif9957T//+wAMPkCk1z7Tx/XI9P/7448Szd64n8/9mfeSVlyiW3LMz/8wshIhizUKiNUrVKav8zGfG3z/44INEFM9MB61DLpN5n2vWrKF9+/bpOuBZy4cffqjLNzY2Rjzj5vLzp1kPWW1VdlbabDazz1Lv8+6772r7GjaanMs2ZLaVbB08+uijZNazqQkZ9Pym9sO87x07dmTfp9T7/OSTT854DT6W78HzPDz66KP62fB+OW2Rmfb8Zl2z9oLLt2fPntS5Dxw4gKTMtGbNGspr/0dji6II77//vr6nn//857Rjxw7s3bsXW7Zs4XqgsbExymqPBmwb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';
+const logoSrc = 'data:image/png;base64,' + LOGO_B64;
+document.getElementById('navLogo').src = logoSrc;
+document.getElementById('footerLogo').src = logoSrc;
+
+// ——— TRANSLATIONS ———
+const T = {
+  sk:{
+    'nav.about':'O nás','nav.work':'Práce','nav.services':'Služby','nav.partners':'Partneri','nav.contact':'Kontakt','nav.cta':'Nezáväzná konzultácia',
+    'hero.badge':'AV Systémový Integrátor','hero.t1':'Konferenčné','hero.t2':'miestnosti','hero.t3':'na jeden klik.','hero.sub':'Navrhujeme, inštalujeme a spravujeme AV systémy, ktoré fungujú jednoducho — bez technických problémov, bez zbytočnej zložitosti.','hero.cta1':'Nezáväzná konzultácia','hero.cta2':'Naše projekty','hero.s1':'Realizovaných projektov','hero.s2':'Spokojnosť klientov','hero.s3':'Servisná podpora','hero.scroll':'Scrolluj',
+    'about.label':'O nás','about.h1':'Ako','about.h2':'pracujeme','about.s1t':'Analýza a konzultácia','about.s1b':'Každý projekt začína rozhovorom. Prídeme k vám, pochopíme vaše potreby, pracovné procesy a priestor. Žiadne šablóny — iba riešenie šité na mieru.','about.s2t':'Návrh systému','about.s2b':'Navrhujeme kompletné AV riešenie — od rozmiestnenia zariadení, cez kabeláž, až po používateľské rozhranie. Všetko overíme s vami predtým, ako začneme.','about.s3t':'Realizácia a inštalácia','about.s3b':'Inštaláciu vykonávame čisto, rýchlo a s minimálnym narušením vašej prevádzky. Každý kábel má svoje miesto, každé zariadenie svoju funkciu.','about.s4t':'Odovzdanie a školenie','about.s4b':'Systém odovzdáme plne funkčný a naučíme váš tím ako ho používať. Jedno tlačidlo spustí všetko — displej, kameru, mikrofóny, osvetlenie.','about.imgcap':'Obsah tejto sekcie doplníme spolu — fotky z vašich realizácií, tím, priestory.',
+    'work.label':'Referencie','work.h1':'Vybrané','work.h2':'projekty','work.sub':'Každý projekt je jedinečný. Tu je výber toho, na čo sme hrdí.','work.t1tag':'Zasadačka · Bratislava','work.t1title':'Executive Boardroom','work.t1sub':'Kompletný AV systém pre 12-miestnu zasadaciu miestnosť s integrovaným videokonferenčným riešením.','work.t2tag':'Konferencie · Žilina','work.t2title':'Konferenčné centrum','work.t2sub':'Multi-room AV riešenie s centrálnym riadením pre 3 konferenčné sály.','work.t3tag':'Školiaca miestnosť · Košice','work.t3title':'Training & Huddle Room','work.t3sub':'Flexibilný prezentačný priestor s bezdrôtovým zdieľaním obrazu a akustickou úpravou.','work.t4tag':'Open Space · Bratislava','work.t4title':'Korporátny Headquarters','work.t4sub':'12 zasadacích miestností + recepcia + lobby displeje. Jeden systém riadenia pre celú budovu.','work.t5tag':'Huddle Rooms · Trnava','work.t5title':'5× Mini Meeting Room','work.t5sub':'Päť identicky vybavených Huddle rooms pre rýchle porady a remote hovory.','work.cta':'Chcem podobný projekt →',
+    'serv.label':'Služby','serv.h1':'Čo','serv.h2':'ponúkame','serv.intro':'Od prvého rozhovoru až po dlhodobú servisnú starostlivosť — sme váš partner pre všetko, čo súvisí s AV technológiami.','serv.s1t':'Návrh projektu na mieru','serv.s1b':'Komplexný návrh AV systému prispôsobený vášmu priestoru, tímu a pracovným procesom. Zahŕňa akustickú analýzu, výber technológií, projektovú dokumentáciu a 3D vizualizáciu.','serv.s2t':'Realizácia a inštalácia','serv.s2b':'Profesionálna montáž a konfigurácia všetkých AV komponentov — displeje, projektory, kamery, mikrofóny, zosilňovače, riadiace systémy. Odovzdávame funkčné, otestované riešenie.','serv.s3t':'Servisná starostlivosť','serv.s3b':'Preventívna údržba, vzdialený monitoring a rýchla reakcia na poruchy. SLA zmluvy s garantovanou dobou odozvy. Váš systém bude vždy funkčný, keď ho potrebujete.','serv.s4t':'Videokonferenčné riešenia','serv.s4b':'Integrácia s Microsoft Teams, Zoom, Google Meet a inými platformami. Hardvérové riešenia pre plynulú komunikáciu medzi miestnosťami aj s externými partnermi.','serv.s5t':'Riadiace systémy (One-Click)','serv.s5b':'Programovanie a inštalácia centrálnych riadiacich systémov Crestron, AMX a podobných. Jedným dotykovým panelom ovládate všetko — obraz, zvuk, rolety, klimatizáciu.','serv.s6t':'Konzultácia a audit','serv.s6b':'Bezplatná konzultácia pre nové projekty. Audit existujúcich AV systémov s odporúčaniami na modernizáciu. Pomôžeme vám rozhodnúť sa správne.',
+    'part.label':'Spolupracujeme s','part.h1':'Prémiové','part.h2':'značky','part.sub':'Pracujeme výhradne s overenými technológiami od svetových lídrov v oblasti AV a konferenčných systémov.','part.note':'a ďalší certifikovaní partneri podľa potrieb projektu',
+    'cont.label':'Kontakt','cont.h1':'Začnime','cont.h2':'projekt','cont.intro':'Máte projekt? Napíšte nám alebo zavolajte — radi prídeme na obhliadku a poradíme bezplatne.','cont.email':'Email','cont.phone':'Telefón','cont.addr':'Adresa','cont.hours':'Pracovné hodiny','cont.hoursval':'Po–Pia: 8:00 – 17:00','cont.fname':'Meno a priezvisko','cont.fcompany':'Spoločnosť','cont.femail':'E-mail','cont.fphone':'Telefón','cont.fservice':'Záujem o','cont.fopt0':'— Vyberte službu —','cont.fopt1':'Návrh projektu na mieru','cont.fopt2':'Realizácia a inštalácia','cont.fopt3':'Servisná starostlivosť','cont.fopt4':'Videokonferenčné riešenie','cont.fopt5':'Konzultácia / Audit','cont.fmsg':'Správa','cont.fsend':'Odoslať správu','cont.gdpr':'Vaše údaje spracovávame iba za účelom odpovede. GDPR compliant.',
+    'foot.copy':'© 2025 InoVision s.r.o. — Všetky práva vyhradené.','foot.gdpr':'Ochrana osobných údajov','foot.cookies':'Cookies','foot.contact':'Kontakt'
+  },
+  en:{
+    'nav.about':'About','nav.work':'Work','nav.services':'Services','nav.partners':'Partners','nav.contact':'Contact','nav.cta':'Free Consultation',
+    'hero.badge':'AV Systems Integrator','hero.t1':'Conference','hero.t2':'rooms','hero.t3':'one click away.','hero.sub':'We design, install and manage AV systems that work seamlessly — no technical issues, no unnecessary complexity.','hero.cta1':'Free Consultation','hero.cta2':'Our Projects','hero.s1':'Projects Completed','hero.s2':'Client Satisfaction','hero.s3':'Service Support','hero.scroll':'Scroll',
+    'about.label':'About','about.h1':'How we','about.h2':'work','about.s1t':'Analysis & Consultation','about.s1b':'Every project starts with a conversation. We visit you, understand your needs, workflows and space. No templates — only tailored solutions.','about.s2t':'System Design','about.s2b':'We design a complete AV solution — from equipment placement, cabling to user interfaces. Everything confirmed with you before we begin.','about.s3t':'Realization & Installation','about.s3b':'We install cleanly, quickly and with minimal disruption to your operations. Every cable has its place, every device its function.','about.s4t':'Handover & Training','about.s4b':'We hand over a fully functional system and train your team how to use it. One button starts everything — display, camera, microphones, lighting.','about.imgcap':'We will fill this section together — photos from your projects, team, spaces.',
+    'work.label':'References','work.h1':'Selected','work.h2':'projects','work.sub':'Every project is unique. Here is a selection of what we are proud of.','work.t1tag':'Boardroom · Bratislava','work.t1title':'Executive Boardroom','work.t1sub':'Complete AV system for 12-person meeting room with integrated video conferencing.','work.t2tag':'Conference · Žilina','work.t2title':'Conference Center','work.t2sub':'Multi-room AV solution with central control for 3 conference halls.','work.t3tag':'Training Room · Košice','work.t3title':'Training & Huddle Room','work.t3sub':'Flexible presentation space with wireless screen sharing and acoustic treatment.','work.t4tag':'Open Space · Bratislava','work.t4title':'Corporate Headquarters','work.t4sub':'12 meeting rooms + reception + lobby displays. One control system for the whole building.','work.t5tag':'Huddle Rooms · Trnava','work.t5title':'5× Mini Meeting Room','work.t5sub':'Five identically equipped huddle rooms for quick meetings and remote calls.','work.cta':'I want a similar project →',
+    'serv.label':'Services','serv.h1':'What we','serv.h2':'offer','serv.intro':'From the first conversation to long-term service care — we are your partner for everything AV.','serv.s1t':'Custom Project Design','serv.s1b':'Comprehensive AV system design tailored to your space, team and workflows. Includes acoustic analysis, technology selection, project documentation and 3D visualization.','serv.s2t':'Realization & Installation','serv.s2b':'Professional assembly and configuration of all AV components — displays, projectors, cameras, microphones, amplifiers, control systems.','serv.s3t':'Service Care','serv.s3b':'Preventive maintenance, remote monitoring and fast response to failures. SLA contracts with guaranteed response times. Your system will always work when you need it.','serv.s4t':'Video Conferencing Solutions','serv.s4b':'Integration with Microsoft Teams, Zoom, Google Meet and other platforms. Hardware solutions for seamless communication between rooms and external partners.','serv.s5t':'Control Systems (One-Click)','serv.s5b':'Programming and installation of central Crestron, AMX and similar control systems. One touch panel controls everything — video, audio, blinds, air conditioning.','serv.s6t':'Consultation & Audit','serv.s6b':'Free consultation for new projects. Audit of existing AV systems with modernization recommendations.',
+    'part.label':'We work with','part.h1':'Premium','part.h2':'brands','part.sub':'We work exclusively with proven technologies from world leaders in AV and conferencing systems.','part.note':'and other certified partners depending on project requirements',
+    'cont.label':'Contact','cont.h1':'Start a','cont.h2':'project','cont.intro':'Have a project? Write or call us — we are happy to visit and advise for free.','cont.email':'Email','cont.phone':'Phone','cont.addr':'Address','cont.hours':'Working hours','cont.hoursval':'Mon–Fri: 8:00 – 17:00','cont.fname':'Full name','cont.fcompany':'Company','cont.femail':'E-mail','cont.fphone':'Phone','cont.fservice':'Interested in','cont.fopt0':'— Select service —','cont.fopt1':'Custom Project Design','cont.fopt2':'Realization & Installation','cont.fopt3':'Service Care','cont.fopt4':'Video Conferencing Solution','cont.fopt5':'Consultation / Audit','cont.fmsg':'Message','cont.fsend':'Send Message','cont.gdpr':'Your data is processed only for the purpose of responding. GDPR compliant.',
+    'foot.copy':'© 2025 InoVision s.r.o. — All rights reserved.','foot.gdpr':'Privacy Policy','foot.cookies':'Cookies','foot.contact':'Contact'
+  },
+  hu:{
+    'nav.about':'Rólunk','nav.work':'Munkáink','nav.services':'Szolgáltatások','nav.partners':'Partnerek','nav.contact':'Kapcsolat','nav.cta':'Ingyenes konzultáció',
+    'hero.badge':'AV Rendszerintegrátor','hero.t1':'Tárgyalók','hero.t2':'egyszerűen','hero.t3':'egy gombnyomásra.','hero.sub':'AV rendszereket tervezünk, telepítünk és üzemeltetünk, amelyek egyszerűen működnek — technikai problémák és szükségtelen bonyolultság nélkül.','hero.cta1':'Ingyenes konzultáció','hero.cta2':'Projektjeink','hero.s1':'Megvalósított projekt','hero.s2':'Ügyfélelégedettség','hero.s3':'Szervizszolgáltatás','hero.scroll':'Görgessen',
+    'about.label':'Rólunk','about.h1':'Hogyan','about.h2':'dolgozunk','about.s1t':'Elemzés és konzultáció','about.s1b':'Minden projekt egy beszélgetéssel kezdődik. Meglátogatjuk Önt, megértjük igényeit, munkafolyamatait és terét. Nincsenek sablonok — csak személyre szabott megoldások.','about.s2t':'Rendszertervezés','about.s2b':'Teljes AV megoldást tervezünk — a berendezések elhelyezésétől a kábelezésen át a felhasználói felületig.','about.s3t':'Megvalósítás és telepítés','about.s3b':'Tisztán, gyorsan és minimális zavarással végezzük a telepítést. Minden kábelnek megvan a helye, minden eszköznek a funkciója.','about.s4t':'Átadás és képzés','about.s4b':'Teljesen működőképes rendszert adunk át és megtanítjuk csapatát a használatára. Egy gomb indít el mindent.','about.imgcap':'Ezt a részt közösen töltjük fel — fotók a projektjeikről, csapat, terek.',
+    'work.label':'Referenciák','work.h1':'Kiválasztott','work.h2':'projektek','work.sub':'Minden projekt egyedi. Íme egy válogatás abból, amire büszkék vagyunk.','work.t1tag':'Tárgyaló · Pozsony','work.t1title':'Executive Boardroom','work.t1sub':'Teljes AV rendszer 12 fős tárgyalóteremhez integrált videokonferenciával.','work.t2tag':'Konferencia · Žilina','work.t2title':'Konferenciaközpont','work.t2sub':'Több termes AV megoldás központi vezérléssel 3 konferenciateremhez.','work.t3tag':'Képzési terem · Kassa','work.t3title':'Képzési és Huddle szoba','work.t3sub':'Rugalmas prezentációs tér vezeték nélküli képmegosztással és akusztikai kialakítással.','work.t4tag':'Open Space · Pozsony','work.t4title':'Vállalati Headquarter','work.t4sub':'12 tárgyalóterem + recepció + lobby kijelzők. Egy vezérlőrendszer az egész épülethez.','work.t5tag':'Huddle szobák · Trnava','work.t5title':'5× Mini Meeting Room','work.t5sub':'Öt azonosan felszerelt huddle szoba gyors megbeszélésekhez és remote hívásokhoz.','work.cta':'Hasonló projektet szeretnék →',
+    'serv.label':'Szolgáltatások','serv.h1':'Mit','serv.h2':'kínálunk','serv.intro':'Az első beszélgetéstől a hosszú távú szervizgondozásig — partnerünk vagyunk minden AV-val kapcsolatos dologban.','serv.s1t':'Egyedi projekttervezés','serv.s1b':'Átfogó AV rendszertervezés az Ön teréhez, csapatához és munkafolyamataihoz igazítva.','serv.s2t':'Megvalósítás és telepítés','serv.s2b':'Az összes AV komponens professzionális összeszerelése és konfigurálása — kijelzők, projektorok, kamerák, mikrofonok, erősítők, vezérlőrendszerek.','serv.s3t':'Szervizgondozás','serv.s3b':'Megelőző karbantartás, távoli monitoring és gyors reagálás a meghibásodásokra. SLA szerződések garantált válaszidőkkel.','serv.s4t':'Videokonferencia megoldások','serv.s4b':'Integráció a Microsoft Teams, Zoom, Google Meet és más platformokkal. Hardveres megoldások a zökkenőmentes kommunikációhoz.','serv.s5t':'Vezérlőrendszerek (Egy érintés)','serv.s5b':'Crestron, AMX és hasonló központi vezérlőrendszerek programozása és telepítése.','serv.s6t':'Konzultáció és audit','serv.s6b':'Ingyenes konzultáció új projektekhez. Meglévő AV rendszerek auditálása modernizálási ajánlásokkal.',
+    'part.label':'Együttműködünk','part.h1':'Prémium','part.h2':'márkák','part.sub':'Kizárólag az AV és konferenciarendszerek globális vezetőinek bevált technológiáival dolgozunk.','part.note':'és más tanúsított partnerek a projekt igényeitől függően',
+    'cont.label':'Kapcsolat','cont.h1':'Kezdjük el a','cont.h2':'projektet','cont.intro':'Van projektje? Írjon vagy hívjon minket — szívesen meglátogatjuk és ingyenesen tanácsot adunk.','cont.email':'E-mail','cont.phone':'Telefon','cont.addr':'Cím','cont.hours':'Munkaidő','cont.hoursval':'H–P: 8:00 – 17:00','cont.fname':'Teljes név','cont.fcompany':'Cég','cont.femail':'E-mail','cont.fphone':'Telefon','cont.fservice':'Érdeklődés tárgya','cont.fopt0':'— Válasszon szolgáltatást —','cont.fopt1':'Egyedi projekttervezés','cont.fopt2':'Megvalósítás és telepítés','cont.fopt3':'Szervizgondozás','cont.fopt4':'Videokonferencia megoldás','cont.fopt5':'Konzultáció / Audit','cont.fmsg':'Üzenet','cont.fsend':'Üzenet küldése','cont.gdpr':'Adatait csak a válaszadás céljából kezeljük. GDPR-kompatibilis.',
+    'foot.copy':'© 2025 InoVision s.r.o. — Minden jog fenntartva.','foot.gdpr':'Adatvédelmi szabályzat','foot.cookies':'Sütik','foot.contact':'Kapcsolat'
+  },
+  pl:{
+    'nav.about':'O nas','nav.work':'Realizacje','nav.services':'Usługi','nav.partners':'Partnerzy','nav.contact':'Kontakt','nav.cta':'Bezpłatna konsultacja',
+    'hero.badge':'Integrator Systemów AV','hero.t1':'Sale konferencyjne','hero.t2':'bez komplikacji','hero.t3':'jednym kliknięciem.','hero.sub':'Projektujemy, instalujemy i zarządzamy systemami AV, które działają prosto — bez problemów technicznych, bez zbędnej złożoności.','hero.cta1':'Bezpłatna konsultacja','hero.cta2':'Nasze projekty','hero.s1':'Zrealizowanych projektów','hero.s2':'Zadowolenie klientów','hero.s3':'Wsparcie serwisowe','hero.scroll':'Przewiń',
+    'about.label':'O nas','about.h1':'Jak','about.h2':'pracujemy','about.s1t':'Analiza i konsultacja','about.s1b':'Każdy projekt zaczyna się od rozmowy. Przychodzimy do Ciebie, rozumiemy Twoje potrzeby, procesy pracy i przestrzeń. Żadnych szablonów — tylko rozwiązania szyte na miarę.','about.s2t':'Projekt systemu','about.s2b':'Projektujemy kompletne rozwiązanie AV — od rozmieszczenia urządzeń, przez okablowanie, po interfejs użytkownika.','about.s3t':'Realizacja i instalacja','about.s3b':'Instalację przeprowadzamy czysto, szybko i z minimalnym zakłóceniem Twojej działalności.','about.s4t':'Przekazanie i szkolenie','about.s4b':'Przekazujemy w pełni działający system i szkolimy Twój zespół. Jeden przycisk uruchamia wszystko.','about.imgcap':'Tę sekcję uzupełnimy razem — zdjęcia z Twoich realizacji, zespół, przestrzenie.',
+    'work.label':'Referencje','work.h1':'Wybrane','work.h2':'projekty','work.sub':'Każdy projekt jest wyjątkowy. Oto wybór tego, z czego jesteśmy dumni.','work.t1tag':'Sala konferencyjna · Bratysława','work.t1title':'Executive Boardroom','work.t1sub':'Kompletny system AV dla 12-osobowej sali konferencyjnej z zintegrowaną wideokonferencją.','work.t2tag':'Konferencje · Žilina','work.t2title':'Centrum Konferencyjne','work.t2sub':'Wielopomieszczeniowe rozwiązanie AV z centralnym sterowaniem dla 3 sal.','work.t3tag':'Sala szkoleniowa · Koszyce','work.t3title':'Sala Szkoleniowa & Huddle','work.t3sub':'Elastyczna przestrzeń prezentacyjna z bezprzewodowym udostępnianiem ekranu.','work.t4tag':'Open Space · Bratysława','work.t4title':'Siedziba Korporacyjna','work.t4sub':'12 sal konferencyjnych + recepcja + wyświetlacze w lobby. Jeden system sterowania dla całego budynku.','work.t5tag':'Pokoje Huddle · Trnawa','work.t5title':'5× Mini Meeting Room','work.t5sub':'Pięć identycznie wyposażonych pokoi huddle do szybkich spotkań i rozmów zdalnych.','work.cta':'Chcę podobny projekt →',
+    'serv.label':'Usługi','serv.h1':'Co','serv.h2':'oferujemy','serv.intro':'Od pierwszej rozmowy po długoterminową opiekę serwisową — jesteśmy Twoim partnerem we wszystkim, co dotyczy technologii AV.','serv.s1t':'Projekt na zamówienie','serv.s1b':'Kompleksowy projekt systemu AV dostosowany do Twojej przestrzeni, zespołu i procesów pracy.','serv.s2t':'Realizacja i instalacja','serv.s2b':'Profesjonalny montaż i konfiguracja wszystkich komponentów AV — wyświetlacze, projektory, kamery, mikrofony, wzmacniacze, systemy sterowania.','serv.s3t':'Opieka serwisowa','serv.s3b':'Konserwacja zapobiegawcza, zdalne monitorowanie i szybka reakcja na awarie. Umowy SLA z gwarantowanym czasem reakcji.','serv.s4t':'Rozwiązania wideokonferencyjne','serv.s4b':'Integracja z Microsoft Teams, Zoom, Google Meet i innymi platformami.','serv.s5t':'Systemy sterowania (Jeden klick)','serv.s5b':'Programowanie i instalacja centralnych systemów sterowania Crestron, AMX. Jednym panelem dotykowym sterуjesz wszystkim.','serv.s6t':'Konsultacja i audyt','serv.s6b':'Bezpłatna konsultacja dla nowych projektów. Audyt istniejących systemów AV z zaleceniami modernizacji.',
+    'part.label':'Współpracujemy z','part.h1':'Marki','part.h2':'premium','part.sub':'Pracujemy wyłącznie ze sprawdzonymi technologiami od światowych liderów w dziedzinie AV i systemów konferencyjnych.','part.note':'i inni certyfikowani partnerzy w zależności od wymagań projektu',
+    'cont.label':'Kontakt','cont.h1':'Zacznijmy','cont.h2':'projekt','cont.intro':'Masz projekt? Napisz lub zadzwoń — chętnie przyjedziemy i doradzimy bezpłatnie.','cont.email':'E-mail','cont.phone':'Telefon','cont.addr':'Adres','cont.hours':'Godziny pracy','cont.hoursval':'Pon–Pt: 8:00 – 17:00','cont.fname':'Imię i nazwisko','cont.fcompany':'Firma','cont.femail':'E-mail','cont.fphone':'Telefon','cont.fservice':'Zainteresowanie','cont.fopt0':'— Wybierz usługę —','cont.fopt1':'Projekt na zamówienie','cont.fopt2':'Realizacja i instalacja','cont.fopt3':'Opieka serwisowa','cont.fopt4':'Rozwiązanie wideokonferencyjne','cont.fopt5':'Konsultacja / Audyt','cont.fmsg':'Wiadomość','cont.fsend':'Wyślij wiadomość','cont.gdpr':'Twoje dane przetwarzamy wyłącznie w celu udzielenia odpowiedzi. RODO compliant.',
+    'foot.copy':'© 2025 InoVision s.r.o. — Wszelkie prawa zastrzeżone.','foot.gdpr':'Polityka prywatności','foot.cookies':'Cookies','foot.contact':'Kontakt'
+  }
+};
+
+let currentLang = 'sk';
+function applyLang(lang){
+  currentLang = lang;
+  const d = T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(d[key]) el.textContent = d[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang;
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    applyLang(btn.dataset.lang);
+    // Update widget clock after language change
+    setTimeout(() => {
+      const clockUpdate = new CustomEvent('languageChanged');
+      window.dispatchEvent(clockUpdate);
+    }, 50);
+  });
+});
+
+// ——— NAV SCROLL ———
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ——— CURSOR ———
+const cur = document.getElementById('cur');
+const curRing = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+});
+(function animate(){
+  rx += (mx-rx)*.12; ry += (my-ry)*.12;
+  curRing.style.left=rx+'px'; curRing.style.top=ry+'px';
+  requestAnimationFrame(animate);
+})();
+document.querySelectorAll('a,button,.work-card,.service-card,.partner-item').forEach(el => {
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2)';curRing.style.transform='translate(-50%,-50%) scale(1.5)';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';curRing.style.transform='translate(-50%,-50%) scale(1)';});
+});
+
+// ——— SCROLL REVEAL ———
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, {threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ——— SMOOTH SCROLL ———
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+</script>
+</body>
+</html>
